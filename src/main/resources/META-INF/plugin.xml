@@ -23,6 +23,9 @@
         <lang.syntaxHighlighterFactory
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslSyntaxHighlighterFactory"/>
+        <completion.contributor
+                language="Glsl"
+                implementationClass="glsl.language.utility.GlslCompletionContributor"/>
 
     </extensions>
 

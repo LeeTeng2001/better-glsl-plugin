@@ -10,10 +10,19 @@
   elementTypeHolderClass="glsl.language.psi.GlslTypes"  // gets auto generated
   elementTypeClass="glsl.language.psi.GlslElementType"
   tokenTypeClass="glsl.language.psi.GlslTokenType"
+
+  // Utility
+  psiImplUtilClass="glsl.language.psi.impl.GlslPsiImplUtil"
 }
 
 glslFile ::= item_*
 
 private item_ ::= (property | COMMENT | CRLF)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+property ::= (KEY? SEPARATOR VALUE?) | KEY {
+    mixin="glsl.language.psi.impl.GlslNamedElementImpl"
+    implements="glsl.language.psi.GlslNamedElement"
+    methods=[getKey getValue getName setName getNameIdentifier]
+}
+
+
