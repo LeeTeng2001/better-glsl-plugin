@@ -13,8 +13,10 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import glsl.language.property.GlslFileType;
+import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslFile;
 import glsl.language.psi.GlslProperty;
+import glsl.language.psi.GlslStructDefinition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -73,6 +75,31 @@ public class GlslUtil {
         return result;
     }
 
+    public static List<String> findDefinedStruct(Project project) {
+        List<String> result = new ArrayList<>();
+        Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
+
+        // Get all defined struct
+        for (VirtualFile virtualFile : virtualFiles) {
+            GlslFile glslFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
+
+            if (glslFile != null) {
+                GlslDeclaration[] declarations = PsiTreeUtil.getChildrenOfType(glslFile, GlslDeclaration.class);
+                if (declarations != null) {
+                    for (var def: declarations) {
+//                        System.out.println("Declaration: " + def);
+                        if (def.getStructDefinition() != null) {
+//                            System.out.println("Is Struct: " + def.getName());
+                            result.add(def.getName());
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Attempts to collect any comment elements above the Simple key/value pair.
      */
@@ -81,7 +108,7 @@ public class GlslUtil {
         PsiElement element = property.getPrevSibling();
         while (element instanceof PsiComment || element instanceof PsiWhiteSpace) {
             if (element instanceof PsiComment) {
-                String commentText = element.getText().replaceFirst("[!# ]+", "");
+                String commentText = element.getText().replaceFirst("//+", "");
                 result.add(commentText);
             }
             element = element.getPrevSibling();

@@ -25,12 +25,13 @@ private segment ::= declaration | COMMENT | CRLF
 declaration ::= struct_definition | variable_definition {
     mixin="glsl.language.psi.impl.GlslNamedElementImpl"
     implements="glsl.language.psi.GlslNamedElement"
-    methods=[getName setName getNameIdentifier getStructDef getVariableDef]
+    methods=[getName setName getNameIdentifier]
 }
 
-identifier_type ::= int | float | IDENTIFIER
+identifier_type ::= void | int | uint | float | double | bool | IDENTIFIER
 
 struct_definition ::= struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R
 variable_definition ::= identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
+
 variable_val ::= IDENTIFIER | FLOAT_CONSTANT | INTEGER_CONSTANT
 

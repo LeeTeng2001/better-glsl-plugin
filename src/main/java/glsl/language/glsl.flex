@@ -28,14 +28,35 @@ ASSIGNMENT_OP=("=")|("+=")|("-=")
 
 %%
 
-<YYINITIAL> "int"                                { return GlslTypes.INT; }
-<YYINITIAL> "float"                                { return GlslTypes.FLOAT; }
-<YYINITIAL> "struct"                                { return GlslTypes.STRUCT; }
-<YYINITIAL> {
-    ";"                                { return GlslTypes.SEMICOLON; }
-    "{"                                { return GlslTypes.BRACKET_L; }
-    "}"                                { return GlslTypes.BRACKET_R; }
-}
+// Basic types --------------------------------------------
+void                                { return GlslTypes.VOID; }
+int                                { return GlslTypes.INT; }
+uint                                { return GlslTypes.UINT; }
+float                                { return GlslTypes.FLOAT; }
+double                                { return GlslTypes.DOUBLE; }
+bool                                { return GlslTypes.BOOL; }
+
+struct                                { return GlslTypes.STRUCT; }
+
+// Symbols ------------------------------------------------d
+";"                                { return GlslTypes.SEMICOLON; }
+"{"                                { return GlslTypes.BRACKET_L; }
+"}"                                { return GlslTypes.BRACKET_R; }
+
+/* GLSL STORAGE QUALIFIERS */
+//const                   {return CONST_KEYWORD; }
+//in                   {return CONST_KEYWORD; }
+//out                   {return CONST_KEYWORD; }
+//attribute               {return ATTRIBUTE_KEYWORD; }
+//uniform                 {return UNIFORM_KEYWORD; }
+//varying                 {return VARYING_KEYWORD; }
+//buffer                  {return BUFFER_KEYWORD; }
+//shared                  {return SHARED_KEYWORD; }
+//
+//centroid                {return CENTROID_KEYWORD; }
+//patch                   {return PATCH_KEYWORD; }
+//sample                  {return SAMPLE_KEYWORD; }
+
 <YYINITIAL> {ASSIGNMENT_OP}                                { return GlslTypes.OPERATOR_ASSIGNMENT; }
 <YYINITIAL> {END_OF_LINE_COMMENT}                           { return GlslTypes.COMMENT; }
 <YYINITIAL> {INTEGER_CONSTANT}                                { return GlslTypes.INTEGER_CONSTANT; }

@@ -60,13 +60,17 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // int | float | IDENTIFIER
+  // void | int | uint | float | double | bool | IDENTIFIER
   public static boolean identifier_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_type")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDENTIFIER_TYPE, "<identifier type>");
-    r = consumeToken(b, INT);
+    r = consumeToken(b, VOID);
+    if (!r) r = consumeToken(b, INT);
+    if (!r) r = consumeToken(b, UINT);
     if (!r) r = consumeToken(b, FLOAT);
+    if (!r) r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;

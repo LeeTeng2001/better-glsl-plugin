@@ -14,10 +14,12 @@ public interface GlslTypes {
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
   IElementType VARIABLE_VAL = new GlslElementType("VARIABLE_VAL");
 
+  IElementType BOOL = new GlslTokenType("bool");
   IElementType BRACKET_L = new GlslTokenType("BRACKET_L");
   IElementType BRACKET_R = new GlslTokenType("BRACKET_R");
   IElementType COMMENT = new GlslTokenType("COMMENT");
   IElementType CRLF = new GlslTokenType("CRLF");
+  IElementType DOUBLE = new GlslTokenType("double");
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
   IElementType IDENTIFIER = new GlslTokenType("IDENTIFIER");
@@ -26,6 +28,8 @@ public interface GlslTypes {
   IElementType OPERATOR_ASSIGNMENT = new GlslTokenType("OPERATOR_ASSIGNMENT");
   IElementType SEMICOLON = new GlslTokenType("SEMICOLON");
   IElementType STRUCT = new GlslTokenType("struct");
+  IElementType UINT = new GlslTokenType("uint");
+  IElementType VOID = new GlslTokenType("void");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

@@ -53,14 +53,4 @@ public class GlslDeclarationImpl extends GlslNamedElementImpl implements GlslDec
     return GlslPsiImplUtil.getNameIdentifier(this);
   }
 
-  @Override
-  public PsiElement getStructDef() {
-    return GlslPsiImplUtil.getStructDef(this);
-  }
-
-  @Override
-  public PsiElement getVariableDef() {
-    return GlslPsiImplUtil.getVariableDef(this);
-  }
-
 }

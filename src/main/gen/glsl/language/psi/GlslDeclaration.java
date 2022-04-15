@@ -19,8 +19,4 @@ public interface GlslDeclaration extends GlslNamedElement {
 
   PsiElement getNameIdentifier();
 
-  PsiElement getStructDef();
-
-  PsiElement getVariableDef();
-
 }

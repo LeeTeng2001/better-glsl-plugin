@@ -6,27 +6,11 @@ import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslTypes;
 
 public class GlslPsiImplUtil {
-    public static PsiElement getStructDef(GlslDeclaration element) {
-        ASTNode node = element.getNode().findChildByType(GlslTypes.STRUCT_DEFINITION);
-        return node != null ? node.getPsi() : null;
-    }
-
-    public static PsiElement getVariableDef(GlslDeclaration element) {
-        ASTNode node = element.getNode().findChildByType(GlslTypes.VARIABLE_DEFINITION);
-        return node != null ? node.getPsi() : null;
-    }
-
-//    public static PsiElement getIdentifier(GlslProperty element) {
-//        ASTNode node = element.getNode().findChildByType(GlslTypes.IDENTIFIER);
-//        return node != null ? node.getPsi() : null;
-//    }
     public static PsiElement getNameIdentifier(GlslDeclaration element) {
-        ASTNode keyNode = element.getNode().getFirstChildNode().getTreeNext();
-        System.out.println("NAME IDENTIFIER NODE!");
-        System.out.println(element);
-        System.out.println(element.getNode());
-        System.out.println(keyNode);
-        return keyNode != null ? keyNode.getPsi() : null;
+        // A declaration must have a name node.
+        var defNode = element.getNode().getFirstChildNode();
+        var nameNode = defNode.findChildByType(GlslTypes.IDENTIFIER);
+        return nameNode != null ? nameNode.getPsi() : null;
     }
 
     public static String getName(GlslDeclaration element) {
