@@ -5,6 +5,7 @@ import glsl.language.GlslLanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+// This is the leaf node
 public class GlslTokenType extends IElementType {
     public GlslTokenType(@NotNull @NonNls String debugName) {
         super(debugName, GlslLanguage.INSTANCE);

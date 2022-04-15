@@ -1,15 +1,16 @@
 {
+  // Attributes to generate the parser definition
   parserClass="glsl.language.parser.GlslParser"
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="Glsl"
   psiImplClassSuffix="Impl"
-  psiPackage="glsl.language.psi"
+  psiPackage="glsl.language.psi"  // location to generate
   psiImplPackage="glsl.language.psi.impl"
 
   elementTypeHolderClass="glsl.language.psi.GlslTypes"  // gets auto generated
-  elementTypeClass="glsl.language.psi.GlslElementType"
-  tokenTypeClass="glsl.language.psi.GlslTokenType"
+  elementTypeClass="glsl.language.psi.GlslElementType"  // class to represent internal node
+  tokenTypeClass="glsl.language.psi.GlslTokenType"  // represent terminal node
 
   // Utility
   psiImplUtilClass="glsl.language.psi.impl.GlslPsiImplUtil"

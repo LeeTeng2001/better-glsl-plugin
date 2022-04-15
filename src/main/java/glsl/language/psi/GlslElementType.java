@@ -5,6 +5,7 @@ import glsl.language.GlslLanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+// This is the internal node
 public class GlslElementType extends IElementType {
 
     public GlslElementType(@NonNls @NotNull String debugName) {
