@@ -1,6 +1,7 @@
 package glsl.language.utility;
 
 import com.google.common.collect.Lists;
+import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -53,12 +54,18 @@ public class GlslUtil {
         List<GlslProperty> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
+
         for (VirtualFile virtualFile : virtualFiles) {
             GlslFile glslFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (glslFile != null) {
                 GlslProperty[] properties = PsiTreeUtil.getChildrenOfType(glslFile, GlslProperty.class);
                 if (properties != null) {
-                    Collections.addAll(result, properties);
+//                    for (GlslProperty property : properties) {
+//                        property.getNameIdentifier()
+//                        if (GlslTypes.STRUCT_DEFINITION.equals(property.getKey())) {
+//                            result.add(property);
+//                        }
+//                    }
                 }
             }
         }

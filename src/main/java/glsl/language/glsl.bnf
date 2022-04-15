@@ -22,7 +22,11 @@ glslFile ::= segment*
 //private header ::= '#version' 440
 private segment ::= declaration | COMMENT | CRLF
 
-declaration ::= struct_definition | variable_definition {methods=[getStructDef getVariableDef]}
+declaration ::= struct_definition | variable_definition {
+    mixin="glsl.language.psi.impl.GlslNamedElementImpl"
+    implements="glsl.language.psi.GlslNamedElement"
+    methods=[getName setName getNameIdentifier getStructDef getVariableDef]
+}
 
 identifier_type ::= int | float | IDENTIFIER
 

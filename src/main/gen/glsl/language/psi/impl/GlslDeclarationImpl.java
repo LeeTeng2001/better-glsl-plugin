@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslDeclarationImpl extends ASTWrapperPsiElement implements GlslDeclaration {
+public class GlslDeclarationImpl extends GlslNamedElementImpl implements GlslDeclaration {
 
   public GlslDeclarationImpl(@NotNull ASTNode node) {
     super(node);
@@ -37,6 +36,31 @@ public class GlslDeclarationImpl extends ASTWrapperPsiElement implements GlslDec
   @Nullable
   public GlslVariableDefinition getVariableDefinition() {
     return findChildByClass(GlslVariableDefinition.class);
+  }
+
+  @Override
+  public String getName() {
+    return GlslPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return GlslPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return GlslPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public PsiElement getStructDef() {
+    return GlslPsiImplUtil.getStructDef(this);
+  }
+
+  @Override
+  public PsiElement getVariableDef() {
+    return GlslPsiImplUtil.getVariableDef(this);
   }
 
 }

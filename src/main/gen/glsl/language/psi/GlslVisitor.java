@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public class GlslVisitor extends PsiElementVisitor {
 
   public void visitDeclaration(@NotNull GlslDeclaration o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitIdentifierType(@NotNull GlslIdentifierType o) {
@@ -24,6 +24,10 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitVariableVal(@NotNull GlslVariableVal o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull GlslNamedElement o) {
     visitPsiElement(o);
   }
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslDeclaration extends PsiElement {
+public interface GlslDeclaration extends GlslNamedElement {
 
   @Nullable
   GlslStructDefinition getStructDefinition();
@@ -13,12 +13,14 @@ public interface GlslDeclaration extends PsiElement {
   @Nullable
   GlslVariableDefinition getVariableDefinition();
 
-  //WARNING: getStructDef(...) is skipped
-  //matching getStructDef(GlslDeclaration, ...)
-  //methods are not found in GlslPsiImplUtil
+  String getName();
 
-  //WARNING: getVariableDef(...) is skipped
-  //matching getVariableDef(GlslDeclaration, ...)
-  //methods are not found in GlslPsiImplUtil
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  PsiElement getStructDef();
+
+  PsiElement getVariableDef();
 
 }

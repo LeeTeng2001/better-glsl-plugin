@@ -27,9 +27,9 @@
         <annotator
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslAnnotator"/>
-        <!--        <completion.contributor-->
-<!--                language="Glsl"-->
-<!--                implementationClass="glsl.language.utility.GlslCompletionContributor"/>-->
+        <completion.contributor
+                language="Glsl"
+                implementationClass="glsl.language.utility.GlslCompletionContributor"/>
 
     </extensions>
 

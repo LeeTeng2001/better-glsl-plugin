@@ -6,6 +6,7 @@ import com.intellij.patterns.PlatformPatterns;
 import com.intellij.util.ProcessingContext;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
+import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class GlslCompletionContributor extends CompletionContributor {
     public GlslCompletionContributor() {
@@ -13,10 +14,13 @@ public class GlslCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
+
                         resultSet.addElement(LookupElementBuilder.create("int"));
                         resultSet.addElement(LookupElementBuilder.create("float"));
                     }
                 }
         );
+
+        
     }
 }
