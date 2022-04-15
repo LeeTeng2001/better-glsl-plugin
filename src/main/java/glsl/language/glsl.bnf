@@ -16,14 +16,17 @@
   psiImplUtilClass="glsl.language.psi.impl.GlslPsiImplUtil"
 }
 
-glslFile ::= item_*
+glslFile ::= segment*
+//glslFile ::= header segment*
 
-private item_ ::= (property | COMMENT | CRLF)
+//private header ::= '#version' 440
+private segment ::= declaration | COMMENT | CRLF
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY {
-    mixin="glsl.language.psi.impl.GlslNamedElementImpl"
-    implements="glsl.language.psi.GlslNamedElement"
-    methods=[getKey getValue getName setName getNameIdentifier]
-}
+declaration ::= struct_definition | variable_definition {methods=[getStructDef getVariableDef]}
 
+identifier_type ::= int | float | IDENTIFIER
+
+struct_definition ::= struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R
+variable_definition ::= identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
+variable_val ::= IDENTIFIER | FLOAT_CONSTANT | INTEGER_CONSTANT
 

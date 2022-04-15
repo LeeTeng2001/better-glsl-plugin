@@ -9,15 +9,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class GlslCompletionContributor extends CompletionContributor {
     public GlslCompletionContributor() {
-        extend(CompletionType.BASIC, PlatformPatterns.psiElement(GlslTypes.VALUE), new CompletionProvider<>() {
+        extend(CompletionType.BASIC, PlatformPatterns.psiElement(GlslTypes.IDENTIFIER_TYPE), new CompletionProvider<>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-
-
-
-                        resultSet.addElement(LookupElementBuilder.create("Hello"));
-                        resultSet.addElement(LookupElementBuilder.create("Peter"));
+                        resultSet.addElement(LookupElementBuilder.create("int"));
+                        resultSet.addElement(LookupElementBuilder.create("float"));
                     }
                 }
         );

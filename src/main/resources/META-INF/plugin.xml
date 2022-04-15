@@ -5,6 +5,7 @@
     <vendor>leeteng2001</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.github.leeteng2001.betterglsljetbrain.services.MyApplicationService"/>
@@ -23,9 +24,12 @@
         <lang.syntaxHighlighterFactory
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslSyntaxHighlighterFactory"/>
-        <completion.contributor
+        <annotator
                 language="Glsl"
-                implementationClass="glsl.language.utility.GlslCompletionContributor"/>
+                implementationClass="glsl.language.utility.GlslAnnotator"/>
+        <!--        <completion.contributor-->
+<!--                language="Glsl"-->
+<!--                implementationClass="glsl.language.utility.GlslCompletionContributor"/>-->
 
     </extensions>
 

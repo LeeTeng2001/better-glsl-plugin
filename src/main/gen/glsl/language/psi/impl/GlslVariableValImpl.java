@@ -8,41 +8,23 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public abstract class GlslPropertyImpl extends GlslNamedElementImpl implements GlslProperty {
+public class GlslVariableValImpl extends ASTWrapperPsiElement implements GlslVariableVal {
 
-  public GlslPropertyImpl(@NotNull ASTNode node) {
+  public GlslVariableValImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitPsiElement(this);
+    visitor.visitVariableVal(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
-  }
-//
-//  @Override
-//  public String getKey() {
-//    return GlslPsiImplUtil.getKey(this);
-//  }
-//
-//  @Override
-//  public String getValue() {
-//    return GlslPsiImplUtil.getValue(this);
-//  }
-//
-//  @Override
-//  public String getName() {
-//    return GlslPsiImplUtil.getName(this);
-//  }
-  @Override
-  public PsiElement getNameIdentifier() {
-    return GlslPsiImplUtil.getIdentifier(this);
   }
 
 }

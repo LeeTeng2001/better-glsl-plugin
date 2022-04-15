@@ -54,14 +54,15 @@ public class GlslUtil {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            GlslFile simpleFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (simpleFile != null) {
-                GlslProperty[] properties = PsiTreeUtil.getChildrenOfType(simpleFile, GlslProperty.class);
+            GlslFile glslFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
+            if (glslFile != null) {
+                GlslProperty[] properties = PsiTreeUtil.getChildrenOfType(glslFile, GlslProperty.class);
                 if (properties != null) {
                     Collections.addAll(result, properties);
                 }
             }
         }
+
         return result;
     }
 
