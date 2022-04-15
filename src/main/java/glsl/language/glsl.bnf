@@ -1,0 +1,19 @@
+{
+  parserClass="glsl.language.parser.GlslParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Glsl"
+  psiImplClassSuffix="Impl"
+  psiPackage="glsl.language.psi"
+  psiImplPackage="glsl.language.psi.impl"
+
+  elementTypeHolderClass="glsl.language.psi.GlslTypes"  // gets auto generated
+  elementTypeClass="glsl.language.psi.GlslElementType"
+  tokenTypeClass="glsl.language.psi.GlslTokenType"
+}
+
+glslFile ::= item_*
+
+private item_ ::= (property | COMMENT | CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
