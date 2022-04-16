@@ -22,59 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class GlslUtil {
-    /**
-     * Searches the entire project for Simple language files with instances of the Simple property with the given key.
-     *
-     * @param project current project
-     * @param key     to check
-     * @return matching properties
-     */
-    public static List<GlslProperty> findProperties(Project project, String key) {
-        List<GlslProperty> result = new ArrayList<>();
-        Collection<VirtualFile> virtualFiles =
-                FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
-
-        for (VirtualFile virtualFile : virtualFiles) {
-            GlslFile simpleFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
-
-            if (simpleFile != null) {
-                GlslProperty[] properties = PsiTreeUtil.getChildrenOfType(simpleFile, GlslProperty.class);
-                if (properties != null) {
-                    for (GlslProperty property : properties) {
-                        if (key.equals(property.getKey())) {
-                            result.add(property);
-                        }
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public static List<GlslProperty> findProperties(Project project) {
-        List<GlslProperty> result = new ArrayList<>();
-        Collection<VirtualFile> virtualFiles =
-                FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
-
-        for (VirtualFile virtualFile : virtualFiles) {
-            GlslFile glslFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (glslFile != null) {
-                GlslProperty[] properties = PsiTreeUtil.getChildrenOfType(glslFile, GlslProperty.class);
-                if (properties != null) {
-//                    for (GlslProperty property : properties) {
-//                        property.getNameIdentifier()
-//                        if (GlslTypes.STRUCT_DEFINITION.equals(property.getKey())) {
-//                            result.add(property);
-//                        }
-//                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
     public static List<GlslDeclaration> findDefinedStruct(Project project) {
         List<GlslDeclaration> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));

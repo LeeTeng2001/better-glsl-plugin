@@ -77,17 +77,6 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(SEMICOLON)
-  static boolean rule_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rule_recover")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !consumeToken(b, SEMICOLON);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
   // declaration | COMMENT | CRLF
   static boolean segment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "segment")) return false;
@@ -139,6 +128,99 @@ public class GlslParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "struct_definition_3", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?
+  public static boolean swizzle_access(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_access")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, IDENTIFIER, DOT);
+    r = r && swizzle_access_2(b, l + 1);
+    r = r && swizzle_access_3(b, l + 1);
+    r = r && swizzle_access_4(b, l + 1);
+    r = r && swizzle_access_5(b, l + 1);
+    exit_section_(b, m, SWIZZLE_ACCESS, r);
+    return r;
+  }
+
+  // swizzle_prop?
+  private static boolean swizzle_access_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_access_2")) return false;
+    swizzle_prop(b, l + 1);
+    return true;
+  }
+
+  // swizzle_prop?
+  private static boolean swizzle_access_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_access_3")) return false;
+    swizzle_prop(b, l + 1);
+    return true;
+  }
+
+  // swizzle_prop?
+  private static boolean swizzle_access_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_access_4")) return false;
+    swizzle_prop(b, l + 1);
+    return true;
+  }
+
+  // swizzle_prop?
+  private static boolean swizzle_access_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_access_5")) return false;
+    swizzle_prop(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // swizzle_property_rgba | swizzle_property_stpq | swizzle_property_xyzw
+  public static boolean swizzle_prop(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_prop")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, SWIZZLE_PROP, "<swizzle prop>");
+    r = swizzle_property_rgba(b, l + 1);
+    if (!r) r = swizzle_property_stpq(b, l + 1);
+    if (!r) r = swizzle_property_xyzw(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // r | g | b | a
+  static boolean swizzle_property_rgba(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_property_rgba")) return false;
+    boolean r;
+    r = consumeToken(b, R);
+    if (!r) r = consumeToken(b, G);
+    if (!r) r = consumeToken(b, B);
+    if (!r) r = consumeToken(b, A);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // s | t | p | q
+  static boolean swizzle_property_stpq(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_property_stpq")) return false;
+    boolean r;
+    r = consumeToken(b, S);
+    if (!r) r = consumeToken(b, T);
+    if (!r) r = consumeToken(b, P);
+    if (!r) r = consumeToken(b, Q);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // x | y | z | w
+  static boolean swizzle_property_xyzw(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "swizzle_property_xyzw")) return false;
+    boolean r;
+    r = consumeToken(b, X);
+    if (!r) r = consumeToken(b, Y);
+    if (!r) r = consumeToken(b, Z);
+    if (!r) r = consumeToken(b, W);
+    return r;
   }
 
   /* ********************************************************** */

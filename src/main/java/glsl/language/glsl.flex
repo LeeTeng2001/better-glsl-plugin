@@ -41,6 +41,7 @@ struct                                { return GlslTypes.STRUCT; }
 ";"                                { return GlslTypes.SEMICOLON; }
 "{"                                { return GlslTypes.BRACKET_L; }
 "}"                                { return GlslTypes.BRACKET_R; }
+"."                                { return GlslTypes.DOT; }
 
 // Storage qualifier ------------------------------------------------
 const                   {return GlslTypes.CONST; }

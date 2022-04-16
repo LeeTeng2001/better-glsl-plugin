@@ -56,12 +56,12 @@ public class GlslCompletionContributor extends CompletionContributor {
                         }
 
                         // Add struct names
-                        var definedStruct = GlslUtil.findDefinedStruct(parameters.getEditor().getProject());
-                        var curPrefix = resultSet.getPrefixMatcher().getPrefix();
-                        for (var struct : definedStruct) {
-                            resultSet.addElement(LookupElementBuilder.create(struct.getName())
-                                    .withTypeText("struct").withIcon(Nodes.Class));
-                        }
+//                        var definedStruct = GlslUtil.findDefinedStruct(parameters.getEditor().getProject());
+//                        var curPrefix = resultSet.getPrefixMatcher().getPrefix();
+//                        for (var struct : definedStruct) {
+//                            resultSet.addElement(LookupElementBuilder.create(struct.getName())
+//                                    .withTypeText("struct").withIcon(Nodes.Class));
+//                        }
 
                         // Add storage qualifier only if we do not have preceding storage qualifier
                         if (lookBack2 == null || !GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBack2.getNode().getElementType())) {

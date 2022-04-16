@@ -23,6 +23,14 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSwizzleAccess(@NotNull GlslSwizzleAccess o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwizzleProp(@NotNull GlslSwizzleProp o) {
+    visitPsiElement(o);
+  }
+
   public void visitVariableDefinition(@NotNull GlslVariableDefinition o) {
     visitPsiElement(o);
   }

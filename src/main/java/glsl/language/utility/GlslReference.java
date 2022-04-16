@@ -2,6 +2,7 @@ package glsl.language.utility;
 
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
@@ -14,46 +15,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
-
-    private final String key;
+    private String myType;
 
     public GlslReference(@NotNull PsiElement element, TextRange textRange) {
         super(element, textRange);
-        key = element.getText().substring(textRange.getStartOffset(), textRange.getEndOffset());
+//        myType = element.getFirstChild()
     }
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
-        Project project = myElement.getProject();
-        final List<GlslProperty> properties = GlslUtil.findProperties(project, key);
+        var project = myElement.getProject();
+        var definedStruct = GlslUtil.findDefinedStruct(project);
         List<ResolveResult> results = new ArrayList<>();
 
-        for (GlslProperty property : properties) {
-            results.add(new PsiElementResolveResult(property));
+        for (var struct : definedStruct) {
+//            if (!incompleteCode && )
+            results.add(new PsiElementResolveResult(struct));
         }
-        return results.toArray(new ResolveResult[results.size()]);
+
+        return results.toArray(new ResolveResult[0]);
     }
 
     @Nullable
     @Override
     public PsiElement resolve() {
         ResolveResult[] resolveResults = multiResolve(false);
+
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
 
     @Override
     public Object @NotNull [] getVariants() {
         Project project = myElement.getProject();
-        List<GlslProperty> properties = GlslUtil.findProperties(project);
+        var definedStruct = GlslUtil.findDefinedStruct(project);
         List<LookupElement> variants = new ArrayList<>();
 
-        for (final GlslProperty property : properties) {
-            if (property.getKey() != null && property.getKey().length() > 0) {
-                variants.add(LookupElementBuilder
-                        .create(property).withIcon(GlslIcons.FILE)
-                        .withTypeText(property.getContainingFile().getName())
-                );
-            }
+        for (var struct : definedStruct) {
+            variants.add(LookupElementBuilder.create(struct)
+                    .withIcon(AllIcons.Nodes.Class)
+                    .withTypeText("struct")
+            );
         }
 
         return variants.toArray();
