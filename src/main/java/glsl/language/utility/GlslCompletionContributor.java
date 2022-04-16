@@ -2,39 +2,49 @@ package glsl.language.utility;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.patterns.PatternCondition;
-import com.intellij.patterns.PlatformPatterns;
-import com.intellij.patterns.PsiElementPattern;
+import com.intellij.icons.AllIcons.Nodes;
 import com.intellij.util.ProcessingContext;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class GlslCompletionContributor extends CompletionContributor {
+    private static LookupElementBuilder[] PRIMITIVE_LOOKUP = new LookupElementBuilder[] {
+            LookupElementBuilder.create("int").withTypeText("primitive").withIcon(Nodes.Type),
+            LookupElementBuilder.create("float").withTypeText("primitive").withIcon(Nodes.Type),
+            LookupElementBuilder.create("bool").withTypeText("primitive").withIcon(Nodes.Type),
+            LookupElementBuilder.create("void").withTypeText("primitive").withIcon(Nodes.Type),
+            LookupElementBuilder.create("struct").withTypeText("primitive").withIcon(Nodes.Type),
+    };
+
     public GlslCompletionContributor() {
+        System.out.println("ONCE!");
+
         extend(CompletionType.BASIC, psiElement(GlslTypes.IDENTIFIER), new CompletionProvider<>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-//                        System.out.println(parameters);
-//                        System.out.println(parameters.getPosition().getOriginalElement());
-//                        System.out.println(parameters.getPosition().getParent().getOriginalElement());
-//                        if (!context.toString().equals("xd")) return;
+                        // Add primitives
+                        for (var elementBuilder : PRIMITIVE_LOOKUP) {
+                            resultSet.addElement(elementBuilder);
+                        }
 
-                        resultSet.addElement(LookupElementBuilder.create("int").withTypeText("pri"));
-                        resultSet.addElement(LookupElementBuilder.create("float").withTypeText("pri"));
-                        resultSet.addElement(LookupElementBuilder.create("bool").withTypeText("pri"));
-                        resultSet.addElement(LookupElementBuilder.create("void").withTypeText("pri"));
-                        resultSet.addElement(LookupElementBuilder.create("struct").withTypeText("pri"));
-
+                        // Add struct type
                         var definedStruct = GlslUtil.findDefinedStruct(parameters.getEditor().getProject());
-//                        System.out.println(definedStruct);
                         var curPrefix = resultSet.getPrefixMatcher().getPrefix();
                         for (var struct : definedStruct) {
                             if (struct.getName().startsWith(curPrefix)) {
-                                resultSet.addElement(LookupElementBuilder.create(struct.getName()).withTypeText("struct"));
+                                resultSet.addElement(LookupElementBuilder.create(struct.getName())
+                                        .withTypeText("struct type").withIcon(Nodes.Class));
                             }
                         }
+
+                        // TODO: Add variable lookup
+
+                        // TODO: Add function lookup
+
+
+                        // TODO: Add built in function
                     }
                 }
         );

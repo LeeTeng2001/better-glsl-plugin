@@ -33,6 +33,9 @@
         <lang.braceMatcher
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslBraceMatcher" />
+        <lang.commenter
+                language="Glsl"
+                implementationClass="glsl.language.utility.GlslCommenter" />
 
     </extensions>
 
