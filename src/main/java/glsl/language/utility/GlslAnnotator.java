@@ -6,6 +6,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import glsl.language.psi.GlslDeclaration;
+import glsl.language.psi.GlslStructDefinition;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +32,8 @@ public class GlslAnnotator implements Annotator {
             boolean isDefined = false;
             GlslDeclaration defined = null;
             for (var struct : definedStruct) {
-                if (struct.getName().equals(selfClassNode.getText())) {
+                var structName = struct.getName();
+                if (structName != null && structName.equals(selfClassNode.getText())) {
                     isDefined = true;
                     defined = struct;
                     break;

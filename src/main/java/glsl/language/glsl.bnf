@@ -23,9 +23,9 @@ glslFile ::= segment*
 private segment ::= declaration | COMMENT | CRLF
 
 declaration ::= struct_definition | variable_definition {
-    mixin="glsl.language.psi.impl.GlslNamedElementImpl"
-    implements="glsl.language.psi.GlslNamedElement"
-    methods=[getName setName getNameIdentifier]
+   mixin="glsl.language.psi.impl.GlslNamedElementImpl"
+   implements="glsl.language.psi.GlslNamedElement"
+   methods=[getName setName getNameIdentifier]
 }
 
 //private rule_recover ::= !(SEMICOLON)

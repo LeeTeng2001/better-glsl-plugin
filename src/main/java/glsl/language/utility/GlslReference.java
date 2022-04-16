@@ -8,6 +8,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import glsl.language.property.GlslIcons;
 import glsl.language.psi.GlslProperty;
+import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,18 +20,29 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
 
     public GlslReference(@NotNull PsiElement element, TextRange textRange) {
         super(element, textRange);
-//        myType = element.getFirstChild()
+        var typeNode = element.getNode().getFirstChildNode().findChildByType(GlslTypes.IDENTIFIER_TYPE);
+        if (typeNode != null) {
+//            System.out.println(typeNode.getText());
+            myType = typeNode.getText();
+        }
     }
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
+        if (myType == null) return new ResolveResult[0];
+
         var project = myElement.getProject();
         var definedStruct = GlslUtil.findDefinedStruct(project);
         List<ResolveResult> results = new ArrayList<>();
 
+        // Find exact match for complete code
         for (var struct : definedStruct) {
-//            if (!incompleteCode && )
-            results.add(new PsiElementResolveResult(struct));
+            if (!incompleteCode) {
+                var name = struct.getName();
+                if (name == null) continue;
+                if (name.equals(myType)) return new ResolveResult[]{new PsiElementResolveResult(struct)};
+            }
+            else results.add(new PsiElementResolveResult(struct));
         }
 
         return results.toArray(new ResolveResult[0]);
@@ -40,7 +52,6 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
     @Override
     public PsiElement resolve() {
         ResolveResult[] resolveResults = multiResolve(false);
-
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
 
@@ -50,8 +61,12 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
         var definedStruct = GlslUtil.findDefinedStruct(project);
         List<LookupElement> variants = new ArrayList<>();
 
+        System.out.println("Variant: " + myType);
         for (var struct : definedStruct) {
-            variants.add(LookupElementBuilder.create(struct)
+            var name = struct.getName();
+            if (name == null) continue;
+
+            variants.add(LookupElementBuilder.create(name)
                     .withIcon(AllIcons.Nodes.Class)
                     .withTypeText("struct")
             );

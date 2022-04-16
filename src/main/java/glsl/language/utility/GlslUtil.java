@@ -33,11 +33,9 @@ public class GlslUtil {
             if (glslFile != null) {
                 GlslDeclaration[] declarations = PsiTreeUtil.getChildrenOfType(glslFile, GlslDeclaration.class);
                 if (declarations != null) {
-                    for (var def: declarations) {
-                        var struct = def.getStructDefinition();
-                        if (struct != null) {
-                            result.add(def);
-                        }
+                    for (var declare: declarations) {
+                        if (declare.getStructDefinition() != null)
+                            result.add(declare);
                     }
                 }
             }
