@@ -30,6 +30,9 @@
         <completion.contributor
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslCompletionContributor"/>
+        <lang.braceMatcher
+                language="Glsl"
+                implementationClass="glsl.language.utility.GlslBraceMatcher" />
 
     </extensions>
 

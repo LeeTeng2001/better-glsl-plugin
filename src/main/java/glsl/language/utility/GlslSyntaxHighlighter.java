@@ -11,6 +11,11 @@ import glsl.language.GlslLexerAdapter;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
@@ -25,6 +30,9 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("GLSL_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
+    private static final Set<IElementType> TOKEN_KEYWORDS = Stream.of(
+            GlslTypes.INT, GlslTypes.STRUCT, GlslTypes.BOOL, GlslTypes.FLOAT
+    ).collect(Collectors.toUnmodifiableSet());
 
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] OPERATOR_KEYS = new TextAttributesKey[]{OPERATOR};
@@ -46,7 +54,7 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(GlslTypes.OPERATOR_ASSIGNMENT)) {
             return OPERATOR_KEYS;
         }
-        if (tokenType.equals(GlslTypes.STRUCT) | tokenType.equals(GlslTypes.INT) | tokenType.equals(GlslTypes.FLOAT)) {
+        if (TOKEN_KEYWORDS.contains(tokenType)) {
             return KEY_KEYS;
         }
         if (tokenType.equals(GlslTypes.IDENTIFIER)) {

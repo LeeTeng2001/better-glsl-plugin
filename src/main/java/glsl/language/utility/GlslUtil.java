@@ -75,8 +75,8 @@ public class GlslUtil {
         return result;
     }
 
-    public static List<String> findDefinedStruct(Project project) {
-        List<String> result = new ArrayList<>();
+    public static List<GlslDeclaration> findDefinedStruct(Project project) {
+        List<GlslDeclaration> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
 
         // Get all defined struct
@@ -87,10 +87,9 @@ public class GlslUtil {
                 GlslDeclaration[] declarations = PsiTreeUtil.getChildrenOfType(glslFile, GlslDeclaration.class);
                 if (declarations != null) {
                     for (var def: declarations) {
-//                        System.out.println("Declaration: " + def);
-                        if (def.getStructDefinition() != null) {
-//                            System.out.println("Is Struct: " + def.getName());
-                            result.add(def.getName());
+                        var struct = def.getStructDefinition();
+                        if (struct != null) {
+                            result.add(def);
                         }
                     }
                 }
@@ -115,4 +114,6 @@ public class GlslUtil {
         }
         return StringUtil.join(Lists.reverse(result),"\n ");
     }
+
+
 }

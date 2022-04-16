@@ -88,7 +88,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R
+  // struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R SEMICOLON
   public static boolean struct_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_definition")) return false;
     if (!nextTokenIs(b, STRUCT)) return false;
@@ -96,7 +96,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, STRUCT, IDENTIFIER, BRACKET_L);
     r = r && struct_definition_3(b, l + 1);
-    r = r && consumeToken(b, BRACKET_R);
+    r = r && consumeTokens(b, 0, BRACKET_R, SEMICOLON);
     exit_section_(b, m, STRUCT_DEFINITION, r);
     return r;
   }
