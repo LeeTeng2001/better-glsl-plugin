@@ -12,6 +12,7 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import glsl.language.parser.GlslParser;
+import glsl.language.property.GlslLanguage;
 import glsl.language.psi.GlslFile;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package glsl.language;
+package glsl.language.property;
 
 import com.intellij.lang.Language;
 

@@ -1,7 +1,7 @@
 package glsl.language.psi;
 
 import com.intellij.psi.tree.IElementType;
-import glsl.language.GlslLanguage;
+import glsl.language.property.GlslLanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 

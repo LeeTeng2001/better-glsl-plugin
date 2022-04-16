@@ -3,7 +3,7 @@ package glsl.language.psi;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
-import glsl.language.GlslLanguage;
+import glsl.language.property.GlslLanguage;
 import glsl.language.property.GlslFileType;
 import org.jetbrains.annotations.NotNull;
 

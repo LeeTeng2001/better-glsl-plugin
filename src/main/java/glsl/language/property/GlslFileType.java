@@ -1,7 +1,6 @@
 package glsl.language.property;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import glsl.language.GlslLanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
