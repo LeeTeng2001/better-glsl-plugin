@@ -11,14 +11,12 @@ import glsl.language.GlslLexerAdapter;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
+import static glsl.language.utility.GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS;
+import static glsl.language.utility.GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS;
 
 public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
+    // Define the color attribute for token group, second arg is fallback
     public static final TextAttributesKey OPERATOR =
             createTextAttributesKey("GLSL_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey KEY =
@@ -30,17 +28,13 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("GLSL_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
-    private static final Set<IElementType> TOKEN_KEYWORDS = Stream.of(
-            GlslTypes.INT, GlslTypes.STRUCT, GlslTypes.BOOL, GlslTypes.FLOAT
-    ).collect(Collectors.toUnmodifiableSet());
-
+    // color group?
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] OPERATOR_KEYS = new TextAttributesKey[]{OPERATOR};
     private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
     private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
-
 
     @Override
     public @NotNull Lexer getHighlightingLexer() {
@@ -49,12 +43,11 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
 
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
-//        System.out.println(tokenType);
-
+        // Use token group utility to determine which token belongs to which group
         if (tokenType.equals(GlslTypes.OPERATOR_ASSIGNMENT)) {
             return OPERATOR_KEYS;
         }
-        if (TOKEN_KEYWORDS.contains(tokenType)) {
+        if (PRIMITIVE_TYPES_KEYWORDS.contains(tokenType) | STORAGE_QUALIFIER_KEYWORDS.contains(tokenType)) {
             return KEY_KEYS;
         }
         if (tokenType.equals(GlslTypes.IDENTIFIER)) {

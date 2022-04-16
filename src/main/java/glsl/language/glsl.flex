@@ -35,7 +35,6 @@ uint                                { return GlslTypes.UINT; }
 float                                { return GlslTypes.FLOAT; }
 double                                { return GlslTypes.DOUBLE; }
 bool                                { return GlslTypes.BOOL; }
-
 struct                                { return GlslTypes.STRUCT; }
 
 // Symbols ------------------------------------------------d
@@ -43,16 +42,16 @@ struct                                { return GlslTypes.STRUCT; }
 "{"                                { return GlslTypes.BRACKET_L; }
 "}"                                { return GlslTypes.BRACKET_R; }
 
-/* GLSL STORAGE QUALIFIERS */
-//const                   {return CONST_KEYWORD; }
-//in                   {return CONST_KEYWORD; }
-//out                   {return CONST_KEYWORD; }
-//attribute               {return ATTRIBUTE_KEYWORD; }
-//uniform                 {return UNIFORM_KEYWORD; }
-//varying                 {return VARYING_KEYWORD; }
-//buffer                  {return BUFFER_KEYWORD; }
-//shared                  {return SHARED_KEYWORD; }
-//
+// Storage qualifier ------------------------------------------------
+const                   {return GlslTypes.CONST; }
+in                   {return GlslTypes.IN; }
+out                   {return GlslTypes.OUT; }
+attribute               {return GlslTypes.ATTRIBUTE; }
+uniform                 {return GlslTypes.UNIFORM; }
+varying                 {return GlslTypes.VARYING; }
+buffer                  {return GlslTypes.BUFFER; }
+shared                  {return GlslTypes.SHARED; }
+
 //centroid                {return CENTROID_KEYWORD; }
 //patch                   {return PATCH_KEYWORD; }
 //sample                  {return SAMPLE_KEYWORD; }

@@ -77,6 +77,17 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // !(SEMICOLON)
+  static boolean rule_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "rule_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !consumeToken(b, SEMICOLON);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // declaration | COMMENT | CRLF
   static boolean segment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "segment")) return false;
@@ -84,6 +95,24 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = declaration(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // const | in | out | attribute | uniform | varying | buffer | shared
+  public static boolean storage_qualifier(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "storage_qualifier")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, STORAGE_QUALIFIER, "<storage qualifier>");
+    r = consumeToken(b, CONST);
+    if (!r) r = consumeToken(b, IN);
+    if (!r) r = consumeToken(b, OUT);
+    if (!r) r = consumeToken(b, ATTRIBUTE);
+    if (!r) r = consumeToken(b, UNIFORM);
+    if (!r) r = consumeToken(b, VARYING);
+    if (!r) r = consumeToken(b, BUFFER);
+    if (!r) r = consumeToken(b, SHARED);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -113,29 +142,37 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
+  // storage_qualifier? identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
   public static boolean variable_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, VARIABLE_DEFINITION, "<variable definition>");
-    r = identifier_type(b, l + 1);
+    r = variable_definition_0(b, l + 1);
+    r = r && identifier_type(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
-    r = r && variable_definition_2(b, l + 1);
+    r = r && variable_definition_3(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // storage_qualifier?
+  private static boolean variable_definition_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_0")) return false;
+    storage_qualifier(b, l + 1);
+    return true;
+  }
+
   // (OPERATOR_ASSIGNMENT variable_val)?
-  private static boolean variable_definition_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_definition_2")) return false;
-    variable_definition_2_0(b, l + 1);
+  private static boolean variable_definition_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_3")) return false;
+    variable_definition_3_0(b, l + 1);
     return true;
   }
 
   // OPERATOR_ASSIGNMENT variable_val
-  private static boolean variable_definition_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_definition_2_0")) return false;
+  private static boolean variable_definition_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, OPERATOR_ASSIGNMENT);

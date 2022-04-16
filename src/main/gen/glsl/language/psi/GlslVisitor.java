@@ -15,6 +15,10 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStorageQualifier(@NotNull GlslStorageQualifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitStructDefinition(@NotNull GlslStructDefinition o) {
     visitPsiElement(o);
   }

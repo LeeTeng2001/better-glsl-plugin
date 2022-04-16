@@ -11,38 +11,20 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslVariableDefinitionImpl extends ASTWrapperPsiElement implements GlslVariableDefinition {
+public class GlslStorageQualifierImpl extends ASTWrapperPsiElement implements GlslStorageQualifier {
 
-  public GlslVariableDefinitionImpl(@NotNull ASTNode node) {
+  public GlslStorageQualifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitVariableDefinition(this);
+    visitor.visitStorageQualifier(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public GlslIdentifierType getIdentifierType() {
-    return findNotNullChildByClass(GlslIdentifierType.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslStorageQualifier getStorageQualifier() {
-    return findChildByClass(GlslStorageQualifier.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslVariableVal getVariableVal() {
-    return findChildByClass(GlslVariableVal.class);
   }
 
 }

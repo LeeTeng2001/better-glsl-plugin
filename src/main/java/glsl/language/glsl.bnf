@@ -28,12 +28,13 @@ declaration ::= struct_definition | variable_definition {
     methods=[getName setName getNameIdentifier]
 }
 
-//private rule_recover ::= !(SEMICOLON)
+private rule_recover ::= !(SEMICOLON)
 
+storage_qualifier ::= const | in | out | attribute | uniform | varying | buffer | shared
 identifier_type ::= void | int | uint | float | double | bool | IDENTIFIER
 
 struct_definition ::= struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R SEMICOLON
-variable_definition ::= identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
+variable_definition ::= storage_qualifier? identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
 
 variable_val ::= IDENTIFIER | FLOAT_CONSTANT | INTEGER_CONSTANT
 
