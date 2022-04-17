@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
@@ -22,7 +23,6 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
         super(element, textRange);
         var typeNode = element.getNode().getFirstChildNode().findChildByType(GlslTypes.IDENTIFIER_TYPE);
         if (typeNode != null) {
-//            System.out.println(typeNode.getText());
             myType = typeNode.getText();
         }
     }
@@ -30,22 +30,8 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         if (myType == null) return new ResolveResult[0];
-
-        var project = myElement.getProject();
-        var definedStruct = GlslUtil.findDefinedStruct(project);
-        List<ResolveResult> results = new ArrayList<>();
-
-        // Find exact match for complete code
-        for (var struct : definedStruct) {
-            if (!incompleteCode) {
-                var name = struct.getName();
-                if (name == null) continue;
-                if (name.equals(myType)) return new ResolveResult[]{new PsiElementResolveResult(struct)};
-            }
-            else results.add(new PsiElementResolveResult(struct));
-        }
-
-        return results.toArray(new ResolveResult[0]);
+//        var project = myElement.getProject();
+        return new ResolveResult[]{new PsiElementResolveResult(myElement.getReference().getElement())};
     }
 
     @Nullable
@@ -55,24 +41,26 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
 
-    @Override
-    public Object @NotNull [] getVariants() {
-        Project project = myElement.getProject();
-        var definedStruct = GlslUtil.findDefinedStruct(project);
-        List<LookupElement> variants = new ArrayList<>();
 
-        System.out.println("Variant: " + myType);
-        for (var struct : definedStruct) {
-            var name = struct.getName();
-            if (name == null) continue;
-
-            variants.add(LookupElementBuilder.create(name)
-                    .withIcon(AllIcons.Nodes.Class)
-                    .withTypeText("struct")
-            );
-        }
-
-        return variants.toArray();
-    }
+//
+//    @Override
+//    public Object @NotNull [] getVariants() {
+//        Project project = myElement.getProject();
+//        var definedStruct = GlslUtil.findDefinedStruct(project);
+//        List<LookupElement> variants = new ArrayList<>();
+//
+//        System.out.println("Variant: " + myType);
+//        for (var struct : definedStruct) {
+//            var name = struct.getName();
+//            if (name == null) continue;
+//
+//            variants.add(LookupElementBuilder.create(name)
+//                    .withIcon(AllIcons.Nodes.Class)
+//                    .withTypeText("struct")
+//            );
+//        }
+//
+//        return variants.toArray();
+//    }
 
 }
