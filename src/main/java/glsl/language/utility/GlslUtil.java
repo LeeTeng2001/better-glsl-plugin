@@ -1,7 +1,6 @@
 package glsl.language.utility;
 
 import com.google.common.collect.Lists;
-import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -16,10 +15,12 @@ import glsl.language.property.GlslFileType;
 import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslFile;
 import glsl.language.psi.GlslProperty;
-import glsl.language.psi.GlslStructDefinition;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GlslUtil {
     public static List<GlslDeclaration> findDefinedStruct(Project project) {

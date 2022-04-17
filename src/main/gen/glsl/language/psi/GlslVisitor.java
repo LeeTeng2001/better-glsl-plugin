@@ -12,7 +12,7 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitIdentifierType(@NotNull GlslIdentifierType o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitStorageQualifier(@NotNull GlslStorageQualifier o) {

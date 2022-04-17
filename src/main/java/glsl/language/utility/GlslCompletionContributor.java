@@ -6,6 +6,7 @@ import com.intellij.icons.AllIcons.Nodes;
 import com.intellij.util.ProcessingContext;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
+
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class GlslCompletionContributor extends CompletionContributor {

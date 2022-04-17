@@ -32,7 +32,7 @@
                 implementationClass="glsl.language.utility.GlslCompletionContributor"/>
         <psi.referenceContributor
                 language="Glsl"
-                implementation="glsl.language.utility.GlslReferenceContributor"/>
+                implementation="glsl.language.references.GlslReferenceContributor"/>
         <lang.braceMatcher
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslBraceMatcher" />

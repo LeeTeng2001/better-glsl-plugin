@@ -23,7 +23,7 @@ glslFile ::= segment*
 private segment ::= declaration | COMMENT | CRLF
 
 declaration ::= struct_definition | variable_definition {
-   mixin="glsl.language.psi.impl.GlslNamedElementImpl"
+   mixin="glsl.language.psi.impl.GlslNamedDeclarationImpl"
    implements="glsl.language.psi.GlslNamedElement"
    methods=[getName setName getNameIdentifier]
 }
@@ -32,7 +32,11 @@ declaration ::= struct_definition | variable_definition {
 
 // Terminal token
 storage_qualifier ::= const | in | out | attribute | uniform | varying | buffer | shared
-identifier_type ::= void | int | uint | float | double | bool | IDENTIFIER
+identifier_type ::= void | int | uint | float | double | bool | IDENTIFIER {
+  mixin="glsl.language.psi.impl.GlslNamedIdentifierTypeImpl"
+  implements="glsl.language.psi.GlslNamedElement"
+  methods=[getName setName getNameIdentifier]
+}
 
 // Definition
 struct_definition ::= struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R SEMICOLON

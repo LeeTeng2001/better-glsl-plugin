@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
 import glsl.language.psi.*;
 
-public class GlslDeclarationImpl extends GlslNamedElementImpl implements GlslDeclaration {
+public class GlslDeclarationImpl extends GlslNamedDeclarationImpl implements GlslDeclaration {
 
   public GlslDeclarationImpl(@NotNull ASTNode node) {
     super(node);
