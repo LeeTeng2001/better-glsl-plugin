@@ -22,7 +22,6 @@ END_OF_LINE_COMMENT="//"[^\r\n]*
 INTEGER_CONSTANT=\d+
 FLOAT_CONSTANT=\d+\.\d+
 IDENTIFIER=[:jletter:][:jletterdigit:]*
-ASSIGNMENT_OP=("=")|("+=")|("-=")
 
 %state WAITING_VALUE
 
@@ -37,7 +36,7 @@ double                                { return GlslTypes.DOUBLE; }
 bool                                { return GlslTypes.BOOL; }
 struct                                { return GlslTypes.STRUCT; }
 
-// Symbols ------------------------------------------------d
+// Other symbols ------------------------------------------------
 ";"                                { return GlslTypes.SEMICOLON; }
 "{"                                { return GlslTypes.C_BRACKET_L; }
 "}"                                { return GlslTypes.C_BRACKET_R; }
@@ -45,6 +44,42 @@ struct                                { return GlslTypes.STRUCT; }
 ")"                                { return GlslTypes.PAREN_R; }
 ","                                { return GlslTypes.COMMA; }
 // "."                                { return GlslTypes.DOT; }
+
+// Assignment symbols --------------------------------------------
+"="                     {return GlslTypes.EQUAL; }
+"*="                    {return GlslTypes.MUL_ASSIGN; }
+"/="                    {return GlslTypes.DIV_ASSIGN; }
+"+="                    {return GlslTypes.ADD_ASSIGN; }
+"-="                    {return GlslTypes.SUB_ASSIGN; }
+"%="                    {return GlslTypes.MOD_ASSIGN; }
+"<<="                   {return GlslTypes.LEFT_ASSIGN; }
+">>="                   {return GlslTypes.RIGHT_ASSIGN; }
+"&="                    {return GlslTypes.AND_ASSIGN; }
+"^="                    {return GlslTypes.XOR_ASSIGN; }
+"|="                    {return GlslTypes.OR_ASSIGN; }
+
+// Non-assignment symbols --------------------------------------------
+"+"                     {return GlslTypes.PLUS; }
+"-"                     {return GlslTypes.DASH; }
+"*"                     {return GlslTypes.STAR; }
+"/"                     {return GlslTypes.SLASH; }
+"%"                     {return GlslTypes.PERCENT; }
+"<<"                    {return GlslTypes.LEFT_OP; }
+">>"                    {return GlslTypes.RIGHT_OP; }
+"&"                     {return GlslTypes.AMPERSAND; }
+"^"                     {return GlslTypes.CARET; }
+"|"                     {return GlslTypes.VERTICAL_BAR; }
+
+// Relational symbols ------------------------------------------------
+"=="                    {return GlslTypes.EQ_OP; }
+"<"                     {return GlslTypes.ANGLE_L; }
+">"                     {return GlslTypes.ANGLE_R; }
+">="                    {return GlslTypes.GE_OP; }
+"<="                    {return GlslTypes.LE_OP; }
+"!="                    {return GlslTypes.NE_OP; }
+"&&"                    {return GlslTypes.AND_OP; }
+"||"                    {return GlslTypes.OR_OP; }
+"^^"                    {return GlslTypes.XOR_OP; }
 
 // Storage qualifier ------------------------------------------------
 const                   {return GlslTypes.CONST; }
@@ -60,7 +95,6 @@ shared                  {return GlslTypes.SHARED; }
 //patch                   {return PATCH_KEYWORD; }
 //sample                  {return SAMPLE_KEYWORD; }
 
-<YYINITIAL> {ASSIGNMENT_OP}                                { return GlslTypes.OPERATOR_ASSIGNMENT; }
 <YYINITIAL> {END_OF_LINE_COMMENT}                           { return GlslTypes.COMMENT; }
 <YYINITIAL> {INTEGER_CONSTANT}                                { return GlslTypes.INTEGER_CONSTANT; }
 <YYINITIAL> {FLOAT_CONSTANT}                                { return GlslTypes.FLOAT_CONSTANT; }
