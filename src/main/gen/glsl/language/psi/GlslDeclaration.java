@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface GlslDeclaration extends GlslNamedElement {
 
   @Nullable
+  GlslFunctionDefinition getFunctionDefinition();
+
+  @Nullable
   GlslStructDefinition getStructDefinition();
 
   @Nullable

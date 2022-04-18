@@ -39,9 +39,12 @@ struct                                { return GlslTypes.STRUCT; }
 
 // Symbols ------------------------------------------------d
 ";"                                { return GlslTypes.SEMICOLON; }
-"{"                                { return GlslTypes.BRACKET_L; }
-"}"                                { return GlslTypes.BRACKET_R; }
-"."                                { return GlslTypes.DOT; }
+"{"                                { return GlslTypes.C_BRACKET_L; }
+"}"                                { return GlslTypes.C_BRACKET_R; }
+"("                                { return GlslTypes.PAREN_L; }
+")"                                { return GlslTypes.PAREN_R; }
+","                                { return GlslTypes.COMMA; }
+// "."                                { return GlslTypes.DOT; }
 
 // Storage qualifier ------------------------------------------------
 const                   {return GlslTypes.CONST; }

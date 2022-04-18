@@ -9,6 +9,8 @@ import glsl.language.psi.impl.*;
 public interface GlslTypes {
 
   IElementType DECLARATION = new GlslElementType("DECLARATION");
+  IElementType FUNCTION_ARGS = new GlslElementType("FUNCTION_ARGS");
+  IElementType FUNCTION_DEFINITION = new GlslElementType("FUNCTION_DEFINITION");
   IElementType IDENTIFIER_TYPE = new GlslElementType("IDENTIFIER_TYPE");
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
@@ -21,12 +23,13 @@ public interface GlslTypes {
   IElementType ATTRIBUTE = new GlslTokenType("attribute");
   IElementType B = new GlslTokenType("b");
   IElementType BOOL = new GlslTokenType("bool");
-  IElementType BRACKET_L = new GlslTokenType("BRACKET_L");
-  IElementType BRACKET_R = new GlslTokenType("BRACKET_R");
   IElementType BUFFER = new GlslTokenType("buffer");
+  IElementType COMMA = new GlslTokenType("COMMA");
   IElementType COMMENT = new GlslTokenType("COMMENT");
   IElementType CONST = new GlslTokenType("const");
   IElementType CRLF = new GlslTokenType("CRLF");
+  IElementType C_BRACKET_L = new GlslTokenType("C_BRACKET_L");
+  IElementType C_BRACKET_R = new GlslTokenType("C_BRACKET_R");
   IElementType DOT = new GlslTokenType("DOT");
   IElementType DOUBLE = new GlslTokenType("double");
   IElementType FLOAT = new GlslTokenType("float");
@@ -39,6 +42,8 @@ public interface GlslTypes {
   IElementType OPERATOR_ASSIGNMENT = new GlslTokenType("OPERATOR_ASSIGNMENT");
   IElementType OUT = new GlslTokenType("out");
   IElementType P = new GlslTokenType("p");
+  IElementType PAREN_L = new GlslTokenType("PAREN_L");
+  IElementType PAREN_R = new GlslTokenType("PAREN_R");
   IElementType Q = new GlslTokenType("q");
   IElementType R = new GlslTokenType("r");
   IElementType S = new GlslTokenType("s");
@@ -60,6 +65,12 @@ public interface GlslTypes {
       IElementType type = node.getElementType();
       if (type == DECLARATION) {
         return new GlslDeclarationImpl(node);
+      }
+      else if (type == FUNCTION_ARGS) {
+        return new GlslFunctionArgsImpl(node);
+      }
+      else if (type == FUNCTION_DEFINITION) {
+        return new GlslFunctionDefinitionImpl(node);
       }
       else if (type == IDENTIFIER_TYPE) {
         return new GlslIdentifierTypeImpl(node);

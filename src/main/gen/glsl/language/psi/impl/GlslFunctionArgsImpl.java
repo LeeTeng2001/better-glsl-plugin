@@ -11,20 +11,32 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslOperatorAssignmentImpl extends ASTWrapperPsiElement implements GlslOperatorAssignment {
+public class GlslFunctionArgsImpl extends ASTWrapperPsiElement implements GlslFunctionArgs {
 
-  public GlslOperatorAssignmentImpl(@NotNull ASTNode node) {
+  public GlslFunctionArgsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitPsiElement(this);
+    visitor.visitFunctionArgs(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public GlslFunctionArgs getFunctionArgs() {
+    return findChildByClass(GlslFunctionArgs.class);
+  }
+
+  @Override
+  @NotNull
+  public GlslIdentifierType getIdentifierType() {
+    return findNotNullChildByClass(GlslIdentifierType.class);
   }
 
 }

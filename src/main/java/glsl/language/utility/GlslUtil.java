@@ -14,7 +14,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import glsl.language.property.GlslFileType;
 import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslFile;
-import glsl.language.psi.GlslProperty;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -48,18 +47,18 @@ public class GlslUtil {
     /**
      * Attempts to collect any comment elements above the Simple key/value pair.
      */
-    public static @NotNull String findDocumentationComment(GlslProperty property) {
-        List<String> result = new LinkedList<>();
-        PsiElement element = property.getPrevSibling();
-        while (element instanceof PsiComment || element instanceof PsiWhiteSpace) {
-            if (element instanceof PsiComment) {
-                String commentText = element.getText().replaceFirst("//+", "");
-                result.add(commentText);
-            }
-            element = element.getPrevSibling();
-        }
-        return StringUtil.join(Lists.reverse(result),"\n ");
-    }
+//    public static @NotNull String findDocumentationComment(GlslProperty property) {
+//        List<String> result = new LinkedList<>();
+//        PsiElement element = property.getPrevSibling();
+//        while (element instanceof PsiComment || element instanceof PsiWhiteSpace) {
+//            if (element instanceof PsiComment) {
+//                String commentText = element.getText().replaceFirst("//+", "");
+//                result.add(commentText);
+//            }
+//            element = element.getPrevSibling();
+//        }
+//        return StringUtil.join(Lists.reverse(result),"\n ");
+//    }
 
 
 }

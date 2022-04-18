@@ -36,14 +36,86 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // struct_definition | variable_definition
+  // struct_definition | variable_definition | function_definition
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DECLARATION, "<declaration>");
     r = struct_definition(b, l + 1);
     if (!r) r = variable_definition(b, l + 1);
+    if (!r) r = function_definition(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier_type IDENTIFIER (COMMA function_args)?
+  public static boolean function_args(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FUNCTION_ARGS, "<function args>");
+    r = identifier_type(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && function_args_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (COMMA function_args)?
+  private static boolean function_args_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args_2")) return false;
+    function_args_2_0(b, l + 1);
+    return true;
+  }
+
+  // COMMA function_args
+  private static boolean function_args_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && function_args(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier_type IDENTIFIER PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
+  public static boolean function_definition(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FUNCTION_DEFINITION, "<function definition>");
+    r = identifier_type(b, l + 1);
+    r = r && consumeTokens(b, 0, IDENTIFIER, PAREN_L);
+    r = r && function_definition_3(b, l + 1);
+    r = r && consumeToken(b, PAREN_R);
+    r = r && function_definition_5(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // function_args?
+  private static boolean function_definition_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_3")) return false;
+    function_args(b, l + 1);
+    return true;
+  }
+
+  // (C_BRACKET_L C_BRACKET_R)?
+  private static boolean function_definition_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_5")) return false;
+    function_definition_5_0(b, l + 1);
+    return true;
+  }
+
+  // C_BRACKET_L C_BRACKET_R
+  private static boolean function_definition_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, C_BRACKET_L, C_BRACKET_R);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -106,15 +178,15 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R SEMICOLON
+  // struct IDENTIFIER C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
   public static boolean struct_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_definition")) return false;
     if (!nextTokenIs(b, STRUCT)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, STRUCT, IDENTIFIER, BRACKET_L);
+    r = consumeTokens(b, 0, STRUCT, IDENTIFIER, C_BRACKET_L);
     r = r && struct_definition_3(b, l + 1);
-    r = r && consumeTokens(b, 0, BRACKET_R, SEMICOLON);
+    r = r && consumeTokens(b, 0, C_BRACKET_R, SEMICOLON);
     exit_section_(b, m, STRUCT_DEFINITION, r);
     return r;
   }

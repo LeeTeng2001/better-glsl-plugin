@@ -28,6 +28,12 @@ public class GlslDeclarationImpl extends GlslNamedDeclarationImpl implements Gls
 
   @Override
   @Nullable
+  public GlslFunctionDefinition getFunctionDefinition() {
+    return findChildByClass(GlslFunctionDefinition.class);
+  }
+
+  @Override
+  @Nullable
   public GlslStructDefinition getStructDefinition() {
     return findChildByClass(GlslStructDefinition.class);
   }

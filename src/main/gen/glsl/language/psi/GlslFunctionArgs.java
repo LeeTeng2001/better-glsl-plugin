@@ -5,6 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslOperatorAssignment extends PsiElement {
+public interface GlslFunctionArgs extends PsiElement {
+
+  @Nullable
+  GlslFunctionArgs getFunctionArgs();
+
+  @NotNull
+  GlslIdentifierType getIdentifierType();
 
 }

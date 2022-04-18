@@ -22,7 +22,7 @@ glslFile ::= segment*
 //private header ::= '#version' 440
 private segment ::= declaration | COMMENT | CRLF
 
-declaration ::= struct_definition | variable_definition {
+declaration ::= struct_definition | variable_definition | function_definition {
    mixin="glsl.language.psi.impl.GlslNamedDeclarationImpl"
    implements="glsl.language.psi.GlslNamedElement"
    methods=[getName setName getNameIdentifier]
@@ -39,8 +39,13 @@ identifier_type ::= void | int | uint | float | double | bool | IDENTIFIER {
 }
 
 // Definition
-struct_definition ::= struct IDENTIFIER BRACKET_L variable_definition* BRACKET_R SEMICOLON
+struct_definition ::= struct IDENTIFIER C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
 variable_definition ::= storage_qualifier? identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
+
+// Function definition
+function_definition ::= identifier_type IDENTIFIER PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
+function_args ::= identifier_type IDENTIFIER (COMMA function_args)?
+
 
 // Swizzle built in type
 swizzle_access ::= IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?
