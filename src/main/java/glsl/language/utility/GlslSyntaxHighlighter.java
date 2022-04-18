@@ -12,7 +12,7 @@ import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
-import static glsl.language.utility.GlslGroupTypes.*;
+import static glsl.language.references.GlslGroupTypes.*;
 
 public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
     // Define the color attribute for token group, second arg is fallback

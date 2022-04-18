@@ -35,21 +35,21 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
     }
 
 
-    @Override
-    public Object @NotNull [] getVariants() {
-        Project project = myElement.getProject();
-        var definedStruct = GlslUtil.findDefinedStruct(project);
-        List<LookupElement> variants = new ArrayList<>();
-
-//        System.out.println("Variant calling ");
-        for (var struct : definedStruct) {
-            variants.add(LookupElementBuilder.create(struct)
-                    .withIcon(AllIcons.Nodes.Class)
-                    .withTypeText("struct")
-            );
-        }
-
-        return variants.toArray();
-    }
+    // TODO: Feel like getVariants doesn't work that well, might try again in the future
+//    @Override
+//    public Object @NotNull [] getVariants() {
+//        var definedStruct = GlslUtil.findDefinedStruct(myElement.getContainingFile());
+//        List<LookupElement> variants = new ArrayList<>();
+//
+////        System.out.println("Variant calling ");
+//        for (var struct : definedStruct) {
+//            variants.add(LookupElementBuilder.create(struct)
+//                    .withIcon(AllIcons.Nodes.Class)
+//                    .withTypeText("struct")
+//            );
+//        }
+//
+//        return variants.toArray();
+//    }
 
 }

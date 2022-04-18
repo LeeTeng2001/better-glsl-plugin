@@ -26,10 +26,10 @@
                 implementationClass="glsl.language.utility.GlslSyntaxHighlighterFactory"/>
         <annotator
                 language="Glsl"
-                implementationClass="glsl.language.utility.GlslAnnotator"/>
+                implementationClass="glsl.language.references.GlslAnnotator"/>
         <completion.contributor
                 language="Glsl"
-                implementationClass="glsl.language.utility.GlslCompletionContributor"/>
+                implementationClass="glsl.language.references.GlslCompletionContributor"/>
         <psi.referenceContributor
                 language="Glsl"
                 implementation="glsl.language.references.GlslReferenceContributor"/>

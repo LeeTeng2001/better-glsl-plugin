@@ -1,4 +1,4 @@
-package glsl.language.utility;
+package glsl.language.references;
 
 import com.intellij.psi.tree.IElementType;
 import glsl.language.psi.GlslTypes;
@@ -40,5 +40,11 @@ public class GlslGroupTypes {
             GlslTypes.AND_OP,
             GlslTypes.OR_OP,
             GlslTypes.XOR_OP
+    ).collect(Collectors.toUnmodifiableSet());
+
+    public static final Set<IElementType> IDENTIFIER_ORIGIN = Stream.of(
+            GlslTypes.VAR_NAME_ORIGIN_STRUCT,
+            GlslTypes.VAR_NAME_ORIGIN_FUNC,
+            GlslTypes.VAR_NAME_ORIGIN_VARIABLE
     ).collect(Collectors.toUnmodifiableSet());
 }

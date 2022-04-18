@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.*;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -22,23 +19,26 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GlslUtil {
-    public static List<GlslVarNameOriginStruct> findDefinedStruct(Project project) {
+    public static List<GlslVarNameOriginStruct> findDefinedStruct(PsiFile glslFile) {
         List<GlslVarNameOriginStruct> result = new ArrayList<>();
-        Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
-
-        // Get all defined struct
-        for (VirtualFile virtualFile : virtualFiles) {
-            GlslFile glslFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
-
-            if (glslFile != null) {
-                // Not sure findChildren vs getChildren
-                var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginStruct.class);
-                result.addAll(declarations);
-            }
+        // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
+        if (glslFile != null) {
+            var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginStruct.class);
+            result.addAll(declarations);
         }
-
         return result;
     }
+
+    public static List<GlslVarNameOriginFunc> findDefinedFunctions(PsiFile glslFile) {
+        List<GlslVarNameOriginFunc> result = new ArrayList<>();
+        // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
+        if (glslFile != null) {
+            var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
+            result.addAll(declarations);
+        }
+        return result;
+    }
+
 
     /**
      * Attempts to collect any comment elements above the Simple key/value pair.

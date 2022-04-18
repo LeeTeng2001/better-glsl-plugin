@@ -1,10 +1,11 @@
-package glsl.language.utility;
+package glsl.language.references;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.icons.AllIcons.Nodes;
 import com.intellij.util.ProcessingContext;
 import glsl.language.psi.GlslTypes;
+import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
@@ -39,16 +40,20 @@ public class GlslCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-                        // Look 2 step behind
-                        var lookBack2 = parameters.getOriginalPosition();
+                        var node = parameters.getPosition();
+                        var nodeParentType = node.getParent().getNode().getElementType();
+                        var lookBack = node;
+                        // Look 2 step behind (skip whitespace token)
                         for (int i = 0; i < 2; i++) {
-                            if (lookBack2 != null)
-                                lookBack2 = lookBack2.getPrevSibling();
+                            if (lookBack != null)
+                                lookBack = lookBack.getPrevSibling();
                         }
 
-                        // No completion if we already have type
-                        if (lookBack2 != null && (GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS.contains(lookBack2.getNode().getElementType()) ||
-                                lookBack2.getNode().getElementType().equals(GlslTypes.IDENTIFIER)))
+                        // No completion if we already have primitive/identifier types before us, or we're
+                        // a implementation origin identifier
+                        if ((lookBack != null && (GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS.contains(lookBack.getNode().getElementType()) ||
+                                lookBack.getNode().getElementType().equals(GlslTypes.IDENTIFIER))) ||
+                            GlslGroupTypes.IDENTIFIER_ORIGIN.contains(nodeParentType))
                             return;
 
                         // Add primitive types
@@ -57,15 +62,14 @@ public class GlslCompletionContributor extends CompletionContributor {
                         }
 
                         // Add struct names
-//                        var definedStruct = GlslUtil.findDefinedStruct(parameters.getEditor().getProject());
-//                        var curPrefix = resultSet.getPrefixMatcher().getPrefix();
-//                        for (var struct : definedStruct) {
-//                            resultSet.addElement(LookupElementBuilder.create(struct.getName())
-//                                    .withTypeText("struct").withIcon(Nodes.Class));
-//                        }
+                        var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile());
+                        for (var struct : definedStruct) {
+                            resultSet.addElement(LookupElementBuilder.create(struct.getText())
+                                    .withTypeText("struct").withIcon(Nodes.Class));
+                        }
 
                         // Add storage qualifier only if we do not have preceding storage qualifier
-                        if (lookBack2 == null || !GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBack2.getNode().getElementType())) {
+                        if (lookBack == null || !GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBack.getNode().getElementType())) {
                             for (var elementBuilder : STORAGE_QUALIFIER_LOOKUP) {
                                 resultSet.addElement(elementBuilder);
                             }
@@ -74,7 +78,6 @@ public class GlslCompletionContributor extends CompletionContributor {
                         // TODO: Add variable lookup
 
                         // TODO: Add function lookup
-
 
                         // TODO: Add built in function
                     }

@@ -26,7 +26,7 @@ public abstract class GlslNamedVariableImpl extends ASTWrapperPsiElement impleme
 
         // Find reference to either function or struct
         var myText = getText();
-        var definedStruct = GlslUtil.findDefinedStruct(getProject());
+        var definedStruct = GlslUtil.findDefinedStruct(getContainingFile());
 
         for (var struct : definedStruct) {
             var structName = struct.getText();

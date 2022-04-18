@@ -1,4 +1,4 @@
-package glsl.language.utility;
+package glsl.language.references;
 
 //import com.intellij.psi.PsiLiteralExpression;
 
@@ -10,6 +10,8 @@ import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslTypes;
 import glsl.language.psi.GlslVarName;
 import glsl.language.psi.GlslVarNameOriginStruct;
+import glsl.language.utility.GlslSyntaxHighlighter;
+import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class GlslAnnotator implements Annotator {
@@ -17,25 +19,19 @@ public class GlslAnnotator implements Annotator {
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
         var node = element.getNode();
 
-
-        // Custom class
-        if (node.getElementType().equals(GlslTypes.VARIABLE_DEFINITION)) {
-            var declarationType = node.findChildByType(GlslTypes.IDENTIFIER_TYPE);
-            if (declarationType == null) return;
-            var selfClassNode = declarationType.findChildByType(GlslTypes.VAR_NAME);
-            if (selfClassNode == null) return;
-
+        // Get identifier that's being use as a type node
+        if (node.getElementType().equals(GlslTypes.VAR_NAME) && element.getParent().getNode().getElementType().equals(GlslTypes.IDENTIFIER_TYPE)) {
             // It has an identifier class type, highlight it
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(selfClassNode)
+                    .range(element)
                     .textAttributes(GlslSyntaxHighlighter.KEY)
                     .create();
 
-            var definedStruct = GlslUtil.findDefinedStruct(element.getProject());
+            var definedStruct = GlslUtil.findDefinedStruct(element.getContainingFile());
             boolean isDefined = false;
             GlslVarNameOriginStruct defined = null;
 
-            var myText = selfClassNode.getText();
+            var myText = element.getText();
             for (var struct : definedStruct) {
                 var structName = struct.getText();
                 if (structName != null && structName.equals(myText)) {
@@ -48,7 +44,7 @@ public class GlslAnnotator implements Annotator {
             // Usage of undefined type
             if (!isDefined) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Undefined type")
-                        .range(selfClassNode)
+                        .range(element)
                         .create();
                 return;
             }
@@ -56,7 +52,7 @@ public class GlslAnnotator implements Annotator {
             // Use before defining struct
             if (defined.getTextOffset() > element.getTextOffset()) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Use before declaration")
-                        .range(selfClassNode)
+                        .range(element)
                         .create();
                 return;
             }
