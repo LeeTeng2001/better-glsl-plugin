@@ -11,24 +11,14 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 public class GlslReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
-        registrar.registerReferenceProvider(psiElement(GlslTypes.IDENTIFIER_TYPE),
+        registrar.registerReferenceProvider(psiElement(GlslTypes.VAR_NAME),
                 new PsiReferenceProvider() {
                     @Override
                     public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                         return new GlslReference[]{new GlslReference(element, new TextRange(0, element.getText().length()))};
                     }
+//                PsiReferenceRegistrar.HIGHER_PRIORITY  // specify priority
                 }
-//                PsiReferenceRegistrar.HIGHER_PRIORITY
-        );
-
-        registrar.registerReferenceProvider(psiElement(GlslTypes.DECLARATION),
-                new PsiReferenceProvider() {
-                    @Override
-                    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                        return new GlslReference[]{new GlslReference(element, new TextRange(0, element.getText().length()))};
-                    }
-                }
-//                PsiReferenceRegistrar.HIGHER_PRIORITY
         );
     }
 }

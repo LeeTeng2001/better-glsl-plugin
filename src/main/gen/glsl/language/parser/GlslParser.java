@@ -49,13 +49,13 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier_type IDENTIFIER (COMMA function_args)?
+  // identifier_type var_name (COMMA function_args)?
   public static boolean function_args(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_args")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNCTION_ARGS, "<function args>");
     r = identifier_type(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
+    r = r && var_name(b, l + 1);
     r = r && function_args_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -80,13 +80,14 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier_type IDENTIFIER PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
+  // identifier_type var_name PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
   public static boolean function_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_definition")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNCTION_DEFINITION, "<function definition>");
     r = identifier_type(b, l + 1);
-    r = r && consumeTokens(b, 0, IDENTIFIER, PAREN_L);
+    r = r && var_name(b, l + 1);
+    r = r && consumeToken(b, PAREN_L);
     r = r && function_definition_3(b, l + 1);
     r = r && consumeToken(b, PAREN_R);
     r = r && function_definition_5(b, l + 1);
@@ -132,7 +133,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // void | int | uint | float | double | bool | IDENTIFIER
+  // void | int | uint | float | double | bool | var_name
   public static boolean identifier_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_type")) return false;
     boolean r;
@@ -143,7 +144,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FLOAT);
     if (!r) r = consumeToken(b, DOUBLE);
     if (!r) r = consumeToken(b, BOOL);
-    if (!r) r = consumeToken(b, IDENTIFIER);
+    if (!r) r = var_name(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -178,13 +179,15 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // struct IDENTIFIER C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
+  // struct var_name C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
   public static boolean struct_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_definition")) return false;
     if (!nextTokenIs(b, STRUCT)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, STRUCT, IDENTIFIER, C_BRACKET_L);
+    r = consumeToken(b, STRUCT);
+    r = r && var_name(b, l + 1);
+    r = r && consumeToken(b, C_BRACKET_L);
     r = r && struct_definition_3(b, l + 1);
     r = r && consumeTokens(b, 0, C_BRACKET_R, SEMICOLON);
     exit_section_(b, m, STRUCT_DEFINITION, r);
@@ -203,107 +206,26 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?
-  public static boolean swizzle_access(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_access")) return false;
+  // IDENTIFIER
+  public static boolean var_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "var_name")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, DOT);
-    r = r && swizzle_access_2(b, l + 1);
-    r = r && swizzle_access_3(b, l + 1);
-    r = r && swizzle_access_4(b, l + 1);
-    r = r && swizzle_access_5(b, l + 1);
-    exit_section_(b, m, SWIZZLE_ACCESS, r);
-    return r;
-  }
-
-  // swizzle_prop?
-  private static boolean swizzle_access_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_access_2")) return false;
-    swizzle_prop(b, l + 1);
-    return true;
-  }
-
-  // swizzle_prop?
-  private static boolean swizzle_access_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_access_3")) return false;
-    swizzle_prop(b, l + 1);
-    return true;
-  }
-
-  // swizzle_prop?
-  private static boolean swizzle_access_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_access_4")) return false;
-    swizzle_prop(b, l + 1);
-    return true;
-  }
-
-  // swizzle_prop?
-  private static boolean swizzle_access_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_access_5")) return false;
-    swizzle_prop(b, l + 1);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // swizzle_property_rgba | swizzle_property_stpq | swizzle_property_xyzw
-  public static boolean swizzle_prop(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_prop")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, SWIZZLE_PROP, "<swizzle prop>");
-    r = swizzle_property_rgba(b, l + 1);
-    if (!r) r = swizzle_property_stpq(b, l + 1);
-    if (!r) r = swizzle_property_xyzw(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, VAR_NAME, r);
     return r;
   }
 
   /* ********************************************************** */
-  // r | g | b | a
-  static boolean swizzle_property_rgba(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_property_rgba")) return false;
-    boolean r;
-    r = consumeToken(b, R);
-    if (!r) r = consumeToken(b, G);
-    if (!r) r = consumeToken(b, B);
-    if (!r) r = consumeToken(b, A);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // s | t | p | q
-  static boolean swizzle_property_stpq(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_property_stpq")) return false;
-    boolean r;
-    r = consumeToken(b, S);
-    if (!r) r = consumeToken(b, T);
-    if (!r) r = consumeToken(b, P);
-    if (!r) r = consumeToken(b, Q);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // x | y | z | w
-  static boolean swizzle_property_xyzw(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "swizzle_property_xyzw")) return false;
-    boolean r;
-    r = consumeToken(b, X);
-    if (!r) r = consumeToken(b, Y);
-    if (!r) r = consumeToken(b, Z);
-    if (!r) r = consumeToken(b, W);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // storage_qualifier? identifier_type IDENTIFIER (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
+  // storage_qualifier? identifier_type var_name (OPERATOR_ASSIGNMENT variable_val)? SEMICOLON
   public static boolean variable_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, VARIABLE_DEFINITION, "<variable definition>");
     r = variable_definition_0(b, l + 1);
     r = r && identifier_type(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
+    r = r && var_name(b, l + 1);
     r = r && variable_definition_3(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);

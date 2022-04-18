@@ -8,6 +8,7 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslTypes;
+import glsl.language.psi.GlslVarName;
 import org.jetbrains.annotations.NotNull;
 
 public class GlslAnnotator implements Annotator {
@@ -15,11 +16,12 @@ public class GlslAnnotator implements Annotator {
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
         var node = element.getNode();
 
+
         // Custom class
         if (node.getElementType().equals(GlslTypes.VARIABLE_DEFINITION)) {
             var declarationType = node.findChildByType(GlslTypes.IDENTIFIER_TYPE);
             if (declarationType == null) return;
-            var selfClassNode = declarationType.findChildByType(GlslTypes.IDENTIFIER);
+            var selfClassNode = declarationType.findChildByType(GlslTypes.VAR_NAME);
             if (selfClassNode == null) return;
 
             // It has an identifier class type, highlight it
@@ -30,7 +32,8 @@ public class GlslAnnotator implements Annotator {
 
             var definedStruct = GlslUtil.findDefinedStruct(element.getProject());
             boolean isDefined = false;
-            GlslDeclaration defined = null;
+            GlslVarName defined = null;
+
             for (var struct : definedStruct) {
                 var structName = struct.getName();
                 if (structName != null && structName.equals(selfClassNode.getText())) {
@@ -40,7 +43,7 @@ public class GlslAnnotator implements Annotator {
                 }
             }
 
-            // Not defined struct
+            // Usage of undefined type
             if (!isDefined) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Undefined type")
                         .range(selfClassNode)
@@ -48,7 +51,7 @@ public class GlslAnnotator implements Annotator {
                 return;
             }
 
-            // Use before define struct
+            // Use before defining struct
             if (defined.getTextOffset() > element.getTextOffset()) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Use before declaration")
                         .range(selfClassNode)

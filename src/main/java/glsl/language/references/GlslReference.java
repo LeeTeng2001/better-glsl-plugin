@@ -41,12 +41,9 @@ public class GlslReference extends PsiReferenceBase<PsiElement> implements PsiPo
         var definedStruct = GlslUtil.findDefinedStruct(project);
         List<LookupElement> variants = new ArrayList<>();
 
-        System.out.println("Variant calling ");
+//        System.out.println("Variant calling ");
         for (var struct : definedStruct) {
-            var name = struct.getName();
-            if (name == null) continue;
-
-            variants.add(LookupElementBuilder.create(name)
+            variants.add(LookupElementBuilder.create(struct)
                     .withIcon(AllIcons.Nodes.Class)
                     .withTypeText("struct")
             );

@@ -21,27 +21,27 @@ public abstract class GlslNamedIdentifierTypeImpl extends ASTWrapperPsiElement i
 
     @Override
     public PsiReference getReference() {
-        final PsiReference[] references = getReferences();
-        if (references.length == 0) {
-            System.out.println("No reference");
-            return null;
-        }
-        var idNode = references[0].getElement().getNode().getFirstChildNode();
-
-        // If we're identifier type, out type can point to a struct declaration
-        if (idNode.getElementType().equals(GlslTypes.IDENTIFIER)) {
-            var idText = idNode.getText();
-            var definedStruct = GlslUtil.findDefinedStruct(idNode.getPsi().getProject());
-
-            for (var struct : definedStruct) {
-                var name = struct.getName();
-                if (name == null) return null;
-                if (name.equals(idText)) {
-//                    System.out.println(name + " " + struct.getReference());
-                    return struct.getReference();
-                }
-            }
-        }
+//        final PsiReference[] references = getReferences();
+//        if (references.length == 0) {
+//            System.out.println("No reference");
+//            return null;
+//        }
+//        var idNode = references[0].getElement().getNode().getFirstChildNode();
+//
+//        // If we're identifier type, out type can point to a struct declaration
+//        if (idNode.getElementType().equals(GlslTypes.IDENTIFIER)) {
+//            var idText = idNode.getText();
+//            var definedStruct = GlslUtil.findDefinedStruct(idNode.getPsi().getProject());
+//
+//            for (var struct : definedStruct) {
+//                var name = struct.getName();
+//                if (name == null) return null;
+//                if (name.equals(idText)) {
+////                    System.out.println(name + " " + struct.getReference());
+//                    return struct.getReference();
+//                }
+//            }
+//        }
 
         return null;
     }

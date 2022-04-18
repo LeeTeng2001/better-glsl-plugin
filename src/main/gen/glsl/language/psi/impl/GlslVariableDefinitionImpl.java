@@ -40,6 +40,12 @@ public class GlslVariableDefinitionImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
+  @NotNull
+  public GlslVarName getVarName() {
+    return findNotNullChildByClass(GlslVarName.class);
+  }
+
+  @Override
   @Nullable
   public GlslVariableVal getVariableVal() {
     return findChildByClass(GlslVariableVal.class);

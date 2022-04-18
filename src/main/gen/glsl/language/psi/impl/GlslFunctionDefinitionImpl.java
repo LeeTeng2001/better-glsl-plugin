@@ -39,4 +39,10 @@ public class GlslFunctionDefinitionImpl extends ASTWrapperPsiElement implements 
     return findNotNullChildByClass(GlslIdentifierType.class);
   }
 
+  @Override
+  @NotNull
+  public GlslVarName getVarName() {
+    return findNotNullChildByClass(GlslVarName.class);
+  }
+
 }

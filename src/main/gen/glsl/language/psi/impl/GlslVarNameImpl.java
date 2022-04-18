@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslSwizzleAccessImpl extends ASTWrapperPsiElement implements GlslSwizzleAccess {
+public class GlslVarNameImpl extends GlslNamedVariableImpl implements GlslVarName {
 
-  public GlslSwizzleAccessImpl(@NotNull ASTNode node) {
+  public GlslVarNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitSwizzleAccess(this);
+    visitor.visitVarName(this);
   }
 
   @Override
@@ -28,9 +27,18 @@ public class GlslSwizzleAccessImpl extends ASTWrapperPsiElement implements GlslS
   }
 
   @Override
-  @NotNull
-  public List<GlslSwizzleProp> getSwizzlePropList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslSwizzleProp.class);
+  public String getName() {
+    return GlslPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return GlslPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return GlslPsiImplUtil.getNameIdentifier(this);
   }
 
 }

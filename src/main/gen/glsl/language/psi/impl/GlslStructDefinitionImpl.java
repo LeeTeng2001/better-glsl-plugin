@@ -29,6 +29,12 @@ public class GlslStructDefinitionImpl extends ASTWrapperPsiElement implements Gl
 
   @Override
   @NotNull
+  public GlslVarName getVarName() {
+    return findNotNullChildByClass(GlslVarName.class);
+  }
+
+  @Override
+  @NotNull
   public List<GlslVariableDefinition> getVariableDefinitionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVariableDefinition.class);
   }

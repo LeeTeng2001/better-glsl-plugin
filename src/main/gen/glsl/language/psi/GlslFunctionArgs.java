@@ -13,4 +13,7 @@ public interface GlslFunctionArgs extends PsiElement {
   @NotNull
   GlslIdentifierType getIdentifierType();
 
+  @NotNull
+  GlslVarName getVarName();
+
 }

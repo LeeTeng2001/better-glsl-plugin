@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface GlslStructDefinition extends PsiElement {
 
   @NotNull
+  GlslVarName getVarName();
+
+  @NotNull
   List<GlslVariableDefinition> getVariableDefinitionList();
 
 }

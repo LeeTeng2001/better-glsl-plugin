@@ -7,15 +7,13 @@ import glsl.language.psi.GlslTypes;
 public class GlslPsiImplUtil {
     public static PsiElement getNameIdentifier(GlslNamedElement element) {
         // A declaration must have a name node.
-        var nameNode = element.getNode().getFirstChildNode();
+        var nameNode = element.getNode();
         return nameNode != null ? nameNode.getPsi() : null;
     }
 
     public static String getName(GlslNamedElement element) {
         var idNode = getNameIdentifier(element);
-        if (idNode == null) return null;
-        var name = idNode.getNode().findChildByType(GlslTypes.IDENTIFIER);
-        return name != null ? name.getText() : null;
+        return idNode != null ? idNode.getText() : null;
     }
 
     public static PsiElement setName(GlslNamedElement element, String newName) {

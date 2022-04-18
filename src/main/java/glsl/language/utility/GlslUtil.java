@@ -12,8 +12,8 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import glsl.language.property.GlslFileType;
-import glsl.language.psi.GlslDeclaration;
-import glsl.language.psi.GlslFile;
+import glsl.language.psi.*;
+import glsl.language.psi.impl.GlslVarNameImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GlslUtil {
-    public static List<GlslDeclaration> findDefinedStruct(Project project) {
-        List<GlslDeclaration> result = new ArrayList<>();
+    public static List<GlslVarName> findDefinedStruct(Project project) {
+        List<GlslVarName> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
 
         // Get all defined struct
@@ -31,12 +31,12 @@ public class GlslUtil {
             GlslFile glslFile = (GlslFile) PsiManager.getInstance(project).findFile(virtualFile);
 
             if (glslFile != null) {
-                GlslDeclaration[] declarations = PsiTreeUtil.getChildrenOfType(glslFile, GlslDeclaration.class);
-                if (declarations != null) {
-                    for (var declare: declarations) {
-                        if (declare.getStructDefinition() != null)
-                            result.add(declare);
-                    }
+                // Not sure findChildren vs getChildren
+                var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarName.class);
+                for (var declare: declarations) {
+                    var parentNode = declare.getParent().getNode();
+                    if (parentNode.getElementType().equals(GlslTypes.STRUCT_DEFINITION))
+                        result.add(declare);
                 }
             }
         }

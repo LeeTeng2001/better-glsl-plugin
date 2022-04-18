@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public class GlslVisitor extends PsiElementVisitor {
 
   public void visitDeclaration(@NotNull GlslDeclaration o) {
-    visitNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitFunctionArgs(@NotNull GlslFunctionArgs o) {
@@ -20,7 +20,7 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitIdentifierType(@NotNull GlslIdentifierType o) {
-    visitNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitStorageQualifier(@NotNull GlslStorageQualifier o) {
@@ -31,12 +31,8 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitSwizzleAccess(@NotNull GlslSwizzleAccess o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSwizzleProp(@NotNull GlslSwizzleProp o) {
-    visitPsiElement(o);
+  public void visitVarName(@NotNull GlslVarName o) {
+    visitNamedElement(o);
   }
 
   public void visitVariableDefinition(@NotNull GlslVariableDefinition o) {
