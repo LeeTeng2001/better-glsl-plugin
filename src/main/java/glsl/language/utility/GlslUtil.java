@@ -22,8 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GlslUtil {
-    public static List<GlslVarName> findDefinedStruct(Project project) {
-        List<GlslVarName> result = new ArrayList<>();
+    public static List<GlslVarNameOriginStruct> findDefinedStruct(Project project) {
+        List<GlslVarNameOriginStruct> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(GlslFileType.INSTANCE, GlobalSearchScope.allScope(project));
 
         // Get all defined struct
@@ -32,12 +32,8 @@ public class GlslUtil {
 
             if (glslFile != null) {
                 // Not sure findChildren vs getChildren
-                var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarName.class);
-                for (var declare: declarations) {
-                    var parentNode = declare.getParent().getNode();
-                    if (parentNode.getElementType().equals(GlslTypes.STRUCT_DEFINITION))
-                        result.add(declare);
-                }
+                var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginStruct.class);
+                result.addAll(declarations);
             }
         }
 

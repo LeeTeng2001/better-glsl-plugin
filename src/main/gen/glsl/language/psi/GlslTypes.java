@@ -8,49 +8,106 @@ import glsl.language.psi.impl.*;
 
 public interface GlslTypes {
 
+  IElementType ARITHMETIC_OP = new GlslElementType("ARITHMETIC_OP");
+  IElementType ASSIGN_OP = new GlslElementType("ASSIGN_OP");
   IElementType DECLARATION = new GlslElementType("DECLARATION");
+  IElementType EXPRESSION = new GlslElementType("EXPRESSION");
+  IElementType EXPRESSION_ASSIGN = new GlslElementType("EXPRESSION_ASSIGN");
+  IElementType EXPRESSION_NO_ASSIGN = new GlslElementType("EXPRESSION_NO_ASSIGN");
+  IElementType EXPRESSION_UNIT = new GlslElementType("EXPRESSION_UNIT");
   IElementType FUNCTION_ARGS = new GlslElementType("FUNCTION_ARGS");
   IElementType FUNCTION_DEFINITION = new GlslElementType("FUNCTION_DEFINITION");
   IElementType IDENTIFIER_TYPE = new GlslElementType("IDENTIFIER_TYPE");
+  IElementType INIT_VAL = new GlslElementType("INIT_VAL");
+  IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
-  IElementType VARIABLE_VAL = new GlslElementType("VARIABLE_VAL");
   IElementType VAR_NAME = new GlslElementType("VAR_NAME");
+  IElementType VAR_NAME_ORIGIN_FUNC = new GlslElementType("VAR_NAME_ORIGIN_FUNC");
+  IElementType VAR_NAME_ORIGIN_STRUCT = new GlslElementType("VAR_NAME_ORIGIN_STRUCT");
+  IElementType VAR_NAME_ORIGIN_VARIABLE = new GlslElementType("VAR_NAME_ORIGIN_VARIABLE");
 
+  IElementType ADD_ASSIGN = new GlslTokenType("ADD_ASSIGN");
+  IElementType AMPERSAND = new GlslTokenType("AMPERSAND");
+  IElementType AND_ASSIGN = new GlslTokenType("AND_ASSIGN");
+  IElementType AND_OP = new GlslTokenType("AND_OP");
+  IElementType ANGLE_L = new GlslTokenType("ANGLE_L");
+  IElementType ANGLE_R = new GlslTokenType("ANGLE_R");
   IElementType ATTRIBUTE = new GlslTokenType("attribute");
   IElementType BOOL = new GlslTokenType("bool");
   IElementType BUFFER = new GlslTokenType("buffer");
+  IElementType CARET = new GlslTokenType("CARET");
   IElementType COMMA = new GlslTokenType("COMMA");
   IElementType COMMENT = new GlslTokenType("COMMENT");
   IElementType CONST = new GlslTokenType("const");
   IElementType CRLF = new GlslTokenType("CRLF");
   IElementType C_BRACKET_L = new GlslTokenType("C_BRACKET_L");
   IElementType C_BRACKET_R = new GlslTokenType("C_BRACKET_R");
+  IElementType DASH = new GlslTokenType("DASH");
+  IElementType DIV_ASSIGN = new GlslTokenType("DIV_ASSIGN");
   IElementType DOUBLE = new GlslTokenType("double");
+  IElementType EQUAL = new GlslTokenType("EQUAL");
+  IElementType EQ_OP = new GlslTokenType("EQ_OP");
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
+  IElementType GE_OP = new GlslTokenType("GE_OP");
   IElementType IDENTIFIER = new GlslTokenType("IDENTIFIER");
   IElementType IN = new GlslTokenType("in");
   IElementType INT = new GlslTokenType("int");
   IElementType INTEGER_CONSTANT = new GlslTokenType("INTEGER_CONSTANT");
-  IElementType OPERATOR_ASSIGNMENT = new GlslTokenType("OPERATOR_ASSIGNMENT");
+  IElementType LEFT_ASSIGN = new GlslTokenType("LEFT_ASSIGN");
+  IElementType LEFT_OP = new GlslTokenType("LEFT_OP");
+  IElementType LE_OP = new GlslTokenType("LE_OP");
+  IElementType MOD_ASSIGN = new GlslTokenType("MOD_ASSIGN");
+  IElementType MUL_ASSIGN = new GlslTokenType("MUL_ASSIGN");
+  IElementType NE_OP = new GlslTokenType("NE_OP");
+  IElementType OR_ASSIGN = new GlslTokenType("OR_ASSIGN");
+  IElementType OR_OP = new GlslTokenType("OR_OP");
   IElementType OUT = new GlslTokenType("out");
   IElementType PAREN_L = new GlslTokenType("PAREN_L");
   IElementType PAREN_R = new GlslTokenType("PAREN_R");
+  IElementType PERCENT = new GlslTokenType("PERCENT");
+  IElementType PLUS = new GlslTokenType("PLUS");
+  IElementType RIGHT_ASSIGN = new GlslTokenType("RIGHT_ASSIGN");
+  IElementType RIGHT_OP = new GlslTokenType("RIGHT_OP");
   IElementType SEMICOLON = new GlslTokenType("SEMICOLON");
   IElementType SHARED = new GlslTokenType("shared");
+  IElementType SLASH = new GlslTokenType("SLASH");
+  IElementType STAR = new GlslTokenType("STAR");
   IElementType STRUCT = new GlslTokenType("struct");
+  IElementType SUB_ASSIGN = new GlslTokenType("SUB_ASSIGN");
   IElementType UINT = new GlslTokenType("uint");
   IElementType UNIFORM = new GlslTokenType("uniform");
   IElementType VARYING = new GlslTokenType("varying");
+  IElementType VERTICAL_BAR = new GlslTokenType("VERTICAL_BAR");
   IElementType VOID = new GlslTokenType("void");
+  IElementType XOR_ASSIGN = new GlslTokenType("XOR_ASSIGN");
+  IElementType XOR_OP = new GlslTokenType("XOR_OP");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == DECLARATION) {
+      if (type == ARITHMETIC_OP) {
+        return new GlslArithmeticOpImpl(node);
+      }
+      else if (type == ASSIGN_OP) {
+        return new GlslAssignOpImpl(node);
+      }
+      else if (type == DECLARATION) {
         return new GlslDeclarationImpl(node);
+      }
+      else if (type == EXPRESSION) {
+        return new GlslExpressionImpl(node);
+      }
+      else if (type == EXPRESSION_ASSIGN) {
+        return new GlslExpressionAssignImpl(node);
+      }
+      else if (type == EXPRESSION_NO_ASSIGN) {
+        return new GlslExpressionNoAssignImpl(node);
+      }
+      else if (type == EXPRESSION_UNIT) {
+        return new GlslExpressionUnitImpl(node);
       }
       else if (type == FUNCTION_ARGS) {
         return new GlslFunctionArgsImpl(node);
@@ -61,6 +118,12 @@ public interface GlslTypes {
       else if (type == IDENTIFIER_TYPE) {
         return new GlslIdentifierTypeImpl(node);
       }
+      else if (type == INIT_VAL) {
+        return new GlslInitValImpl(node);
+      }
+      else if (type == RELATIONAL_OP) {
+        return new GlslRelationalOpImpl(node);
+      }
       else if (type == STORAGE_QUALIFIER) {
         return new GlslStorageQualifierImpl(node);
       }
@@ -70,11 +133,17 @@ public interface GlslTypes {
       else if (type == VARIABLE_DEFINITION) {
         return new GlslVariableDefinitionImpl(node);
       }
-      else if (type == VARIABLE_VAL) {
-        return new GlslVariableValImpl(node);
-      }
       else if (type == VAR_NAME) {
         return new GlslVarNameImpl(node);
+      }
+      else if (type == VAR_NAME_ORIGIN_FUNC) {
+        return new GlslVarNameOriginFuncImpl(node);
+      }
+      else if (type == VAR_NAME_ORIGIN_STRUCT) {
+        return new GlslVarNameOriginStructImpl(node);
+      }
+      else if (type == VAR_NAME_ORIGIN_VARIABLE) {
+        return new GlslVarNameOriginVariableImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

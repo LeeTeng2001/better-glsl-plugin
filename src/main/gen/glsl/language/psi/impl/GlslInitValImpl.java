@@ -11,38 +11,20 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslFunctionArgsImpl extends ASTWrapperPsiElement implements GlslFunctionArgs {
+public class GlslInitValImpl extends ASTWrapperPsiElement implements GlslInitVal {
 
-  public GlslFunctionArgsImpl(@NotNull ASTNode node) {
+  public GlslInitValImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitFunctionArgs(this);
+    visitor.visitInitVal(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public GlslFunctionArgs getFunctionArgs() {
-    return findChildByClass(GlslFunctionArgs.class);
-  }
-
-  @Override
-  @NotNull
-  public GlslIdentifierType getIdentifierType() {
-    return findNotNullChildByClass(GlslIdentifierType.class);
-  }
-
-  @Override
-  @NotNull
-  public GlslVarNameOriginVariable getVarNameOriginVariable() {
-    return findNotNullChildByClass(GlslVarNameOriginVariable.class);
   }
 
 }

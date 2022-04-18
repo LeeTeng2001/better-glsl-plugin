@@ -24,12 +24,6 @@ public abstract class GlslNamedVariableImpl extends ASTWrapperPsiElement impleme
     public PsiReference getReference() {
         final PsiReference[] references = getReferences();
 
-        // Return self for definition that doesn't reference to other
-        var parentType = getParent().getNode().getElementType();
-        if (!parentType.equals(GlslTypes.IDENTIFIER_TYPE)) {
-            return references.length > 0 ? references[0] : null;
-        }
-
         // Find reference to either function or struct
         var myText = getText();
         var definedStruct = GlslUtil.findDefinedStruct(getProject());

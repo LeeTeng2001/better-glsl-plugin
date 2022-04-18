@@ -11,14 +11,14 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslVariableValImpl extends ASTWrapperPsiElement implements GlslVariableVal {
+public class GlslArithmeticOpImpl extends ASTWrapperPsiElement implements GlslArithmeticOp {
 
-  public GlslVariableValImpl(@NotNull ASTNode node) {
+  public GlslArithmeticOpImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitVariableVal(this);
+    visitor.visitArithmeticOp(this);
   }
 
   @Override

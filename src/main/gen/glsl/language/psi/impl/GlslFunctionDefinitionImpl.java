@@ -41,8 +41,8 @@ public class GlslFunctionDefinitionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public GlslVarName getVarName() {
-    return findNotNullChildByClass(GlslVarName.class);
+  public GlslVarNameOriginFunc getVarNameOriginFunc() {
+    return findNotNullChildByClass(GlslVarNameOriginFunc.class);
   }
 
 }

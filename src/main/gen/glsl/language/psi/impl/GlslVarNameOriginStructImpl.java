@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslFunctionArgsImpl extends ASTWrapperPsiElement implements GlslFunctionArgs {
+public class GlslVarNameOriginStructImpl extends GlslNamedStructDeclareImpl implements GlslVarNameOriginStruct {
 
-  public GlslFunctionArgsImpl(@NotNull ASTNode node) {
+  public GlslVarNameOriginStructImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitFunctionArgs(this);
+    visitor.visitVarNameOriginStruct(this);
   }
 
   @Override
@@ -28,21 +27,18 @@ public class GlslFunctionArgsImpl extends ASTWrapperPsiElement implements GlslFu
   }
 
   @Override
-  @Nullable
-  public GlslFunctionArgs getFunctionArgs() {
-    return findChildByClass(GlslFunctionArgs.class);
+  public String getName() {
+    return GlslPsiImplUtil.getName(this);
   }
 
   @Override
-  @NotNull
-  public GlslIdentifierType getIdentifierType() {
-    return findNotNullChildByClass(GlslIdentifierType.class);
+  public PsiElement setName(String newName) {
+    return GlslPsiImplUtil.setName(this, newName);
   }
 
   @Override
-  @NotNull
-  public GlslVarNameOriginVariable getVarNameOriginVariable() {
-    return findNotNullChildByClass(GlslVarNameOriginVariable.class);
+  public PsiElement getNameIdentifier() {
+    return GlslPsiImplUtil.getNameIdentifier(this);
   }
 
 }

@@ -9,6 +9,7 @@ import com.intellij.psi.PsiElement;
 import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslTypes;
 import glsl.language.psi.GlslVarName;
+import glsl.language.psi.GlslVarNameOriginStruct;
 import org.jetbrains.annotations.NotNull;
 
 public class GlslAnnotator implements Annotator {
@@ -32,11 +33,12 @@ public class GlslAnnotator implements Annotator {
 
             var definedStruct = GlslUtil.findDefinedStruct(element.getProject());
             boolean isDefined = false;
-            GlslVarName defined = null;
+            GlslVarNameOriginStruct defined = null;
 
+            var myText = selfClassNode.getText();
             for (var struct : definedStruct) {
-                var structName = struct.getName();
-                if (structName != null && structName.equals(selfClassNode.getText())) {
+                var structName = struct.getText();
+                if (structName != null && structName.equals(myText)) {
                     isDefined = true;
                     defined = struct;
                     break;

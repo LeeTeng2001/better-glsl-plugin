@@ -29,8 +29,8 @@ public class GlslStructDefinitionImpl extends ASTWrapperPsiElement implements Gl
 
   @Override
   @NotNull
-  public GlslVarName getVarName() {
-    return findNotNullChildByClass(GlslVarName.class);
+  public GlslVarNameOriginStruct getVarNameOriginStruct() {
+    return findNotNullChildByClass(GlslVarNameOriginStruct.class);
   }
 
   @Override

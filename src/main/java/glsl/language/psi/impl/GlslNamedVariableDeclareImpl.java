@@ -7,8 +7,8 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import glsl.language.psi.GlslNamedElement;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class GlslNamedDeclarationImpl extends ASTWrapperPsiElement implements GlslNamedElement {
-    public GlslNamedDeclarationImpl(@NotNull ASTNode node) {
+public abstract class GlslNamedVariableDeclareImpl extends ASTWrapperPsiElement implements GlslNamedElement {
+    public GlslNamedVariableDeclareImpl(@NotNull ASTNode node) {
         super(node);
     }
 

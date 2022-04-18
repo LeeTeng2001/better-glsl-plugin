@@ -11,14 +11,14 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslVariableDefinitionImpl extends ASTWrapperPsiElement implements GlslVariableDefinition {
+public class GlslExpressionAssignImpl extends ASTWrapperPsiElement implements GlslExpressionAssign {
 
-  public GlslVariableDefinitionImpl(@NotNull ASTNode node) {
+  public GlslExpressionAssignImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitVariableDefinition(this);
+    visitor.visitExpressionAssign(this);
   }
 
   @Override
@@ -28,27 +28,21 @@ public class GlslVariableDefinitionImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @NotNull
-  public GlslIdentifierType getIdentifierType() {
-    return findNotNullChildByClass(GlslIdentifierType.class);
+  @Nullable
+  public GlslAssignOp getAssignOp() {
+    return findChildByClass(GlslAssignOp.class);
   }
 
   @Override
   @Nullable
-  public GlslInitVal getInitVal() {
-    return findChildByClass(GlslInitVal.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslStorageQualifier getStorageQualifier() {
-    return findChildByClass(GlslStorageQualifier.class);
+  public GlslExpressionAssign getExpressionAssign() {
+    return findChildByClass(GlslExpressionAssign.class);
   }
 
   @Override
   @NotNull
-  public GlslVarNameOriginVariable getVarNameOriginVariable() {
-    return findNotNullChildByClass(GlslVarNameOriginVariable.class);
+  public GlslExpressionNoAssign getExpressionNoAssign() {
+    return findNotNullChildByClass(GlslExpressionNoAssign.class);
   }
 
 }

@@ -34,12 +34,12 @@ arithmetic_op ::= PLUS | DASH | STAR | SLASH | PERCENT | LEFT_OP | RIGHT_OP | AM
 relational_op ::= EQ_OP | ANGLE_L | ANGLE_R | GE_OP | LE_OP | NE_OP | AND_OP | OR_OP | XOR_OP
 
 // Definition
-struct_definition ::= struct var_name C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
-variable_definition ::= storage_qualifier? identifier_type var_name (EQUAL init_val)? SEMICOLON
+struct_definition ::= struct var_name_origin_struct C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
+variable_definition ::= storage_qualifier? identifier_type var_name_origin_variable (EQUAL init_val)? SEMICOLON
 
 // Function definition
-function_definition ::= identifier_type var_name PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
-function_args ::= identifier_type var_name (COMMA function_args)?
+function_definition ::= identifier_type var_name_origin_func PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
+function_args ::= identifier_type var_name_origin_variable (COMMA function_args)?
 
 // expression
 expression_assign ::= expression_no_assign (assign_op expression_assign)?
@@ -53,7 +53,23 @@ expression_no_assign ::= expression_unit ((arithmetic_op | relational_op) expres
 //private swizzle_property_stpq ::= s | t | p | q
 
 // variable with special purpose or reference ------------------------
-var_name_origin ::= IDENTIFIER
+var_name_origin_func ::= IDENTIFIER {
+  mixin="glsl.language.psi.impl.GlslNamedFunctionDeclareImpl"
+  implements="glsl.language.psi.GlslNamedElement"
+  methods=[getName setName getNameIdentifier]
+}
+
+var_name_origin_struct ::= IDENTIFIER {
+    mixin="glsl.language.psi.impl.GlslNamedStructDeclareImpl"
+    implements="glsl.language.psi.GlslNamedElement"
+    methods=[getName setName getNameIdentifier]
+}
+
+var_name_origin_variable ::= IDENTIFIER {
+    mixin="glsl.language.psi.impl.GlslNamedVariableDeclareImpl"
+    implements="glsl.language.psi.GlslNamedElement"
+    methods=[getName setName getNameIdentifier]
+}
 
 var_name ::= IDENTIFIER {
   mixin="glsl.language.psi.impl.GlslNamedVariableImpl"
@@ -61,6 +77,6 @@ var_name ::= IDENTIFIER {
   methods=[getName setName getNameIdentifier]
 }
 
-expression_unit ::= var_name | FLOAT_CONSTANT | INTEGER_CONSTANT
+expression_unit ::= FLOAT_CONSTANT | INTEGER_CONSTANT
 init_val ::= IDENTIFIER | FLOAT_CONSTANT | INTEGER_CONSTANT
 

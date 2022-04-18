@@ -29,4 +29,16 @@ public class GlslGroupTypes {
             GlslTypes.BUFFER,
             GlslTypes.SHARED
     ).collect(Collectors.toUnmodifiableSet());
+
+    public static final Set<IElementType> ASSIGNMENT_OP_KEYWORDS = Stream.of(
+            GlslTypes.EQ_OP,
+            GlslTypes.ANGLE_L,
+            GlslTypes.ANGLE_R,
+            GlslTypes.GE_OP,
+            GlslTypes.LE_OP,
+            GlslTypes.NE_OP,
+            GlslTypes.AND_OP,
+            GlslTypes.OR_OP,
+            GlslTypes.XOR_OP
+    ).collect(Collectors.toUnmodifiableSet());
 }

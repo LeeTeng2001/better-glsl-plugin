@@ -11,12 +11,12 @@ public interface GlslVariableDefinition extends PsiElement {
   GlslIdentifierType getIdentifierType();
 
   @Nullable
+  GlslInitVal getInitVal();
+
+  @Nullable
   GlslStorageQualifier getStorageQualifier();
 
   @NotNull
-  GlslVarName getVarName();
-
-  @Nullable
-  GlslVariableVal getVariableVal();
+  GlslVarNameOriginVariable getVarNameOriginVariable();
 
 }

@@ -12,8 +12,7 @@ import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
-import static glsl.language.utility.GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS;
-import static glsl.language.utility.GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS;
+import static glsl.language.utility.GlslGroupTypes.*;
 
 public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
     // Define the color attribute for token group, second arg is fallback
@@ -44,7 +43,7 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
         // Use token group utility to determine which token belongs to which group
-        if (tokenType.equals(GlslTypes.OPERATOR_ASSIGNMENT)) {
+        if (ASSIGNMENT_OP_KEYWORDS.contains(tokenType)) {
             return OPERATOR_KEYS;
         }
         if (PRIMITIVE_TYPES_KEYWORDS.contains(tokenType) | STORAGE_QUALIFIER_KEYWORDS.contains(tokenType)) {

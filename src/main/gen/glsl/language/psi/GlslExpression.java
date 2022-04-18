@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslStructDefinition extends PsiElement {
+public interface GlslExpression extends PsiElement {
 
   @NotNull
-  GlslVarNameOriginStruct getVarNameOriginStruct();
-
-  @NotNull
-  List<GlslVariableDefinition> getVariableDefinitionList();
+  GlslExpressionAssign getExpressionAssign();
 
 }
