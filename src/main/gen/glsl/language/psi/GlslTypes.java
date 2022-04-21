@@ -13,7 +13,9 @@ public interface GlslTypes {
   IElementType DECLARATION = new GlslElementType("DECLARATION");
   IElementType EXPRESSION = new GlslElementType("EXPRESSION");
   IElementType EXPRESSION_ASSIGN = new GlslElementType("EXPRESSION_ASSIGN");
+  IElementType EXPRESSION_ASSIGN_PAREN = new GlslElementType("EXPRESSION_ASSIGN_PAREN");
   IElementType EXPRESSION_NO_ASSIGN = new GlslElementType("EXPRESSION_NO_ASSIGN");
+  IElementType EXPRESSION_NO_ASSIGN_PAREN = new GlslElementType("EXPRESSION_NO_ASSIGN_PAREN");
   IElementType EXPRESSION_UNIT = new GlslElementType("EXPRESSION_UNIT");
   IElementType FUNCTION_ARGS = new GlslElementType("FUNCTION_ARGS");
   IElementType FUNCTION_CALL = new GlslElementType("FUNCTION_CALL");
@@ -63,6 +65,7 @@ public interface GlslTypes {
   IElementType MOD_ASSIGN = new GlslTokenType("MOD_ASSIGN");
   IElementType MUL_ASSIGN = new GlslTokenType("MUL_ASSIGN");
   IElementType NE_OP = new GlslTokenType("NE_OP");
+  IElementType NULL_TOKEN = new GlslTokenType("NULL_TOKEN");
   IElementType OR_ASSIGN = new GlslTokenType("OR_ASSIGN");
   IElementType OR_OP = new GlslTokenType("OR_OP");
   IElementType OUT = new GlslTokenType("out");
@@ -104,8 +107,14 @@ public interface GlslTypes {
       else if (type == EXPRESSION_ASSIGN) {
         return new GlslExpressionAssignImpl(node);
       }
+      else if (type == EXPRESSION_ASSIGN_PAREN) {
+        return new GlslExpressionAssignParenImpl(node);
+      }
       else if (type == EXPRESSION_NO_ASSIGN) {
         return new GlslExpressionNoAssignImpl(node);
+      }
+      else if (type == EXPRESSION_NO_ASSIGN_PAREN) {
+        return new GlslExpressionNoAssignParenImpl(node);
       }
       else if (type == EXPRESSION_UNIT) {
         return new GlslExpressionUnitImpl(node);

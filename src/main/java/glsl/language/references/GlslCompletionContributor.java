@@ -8,6 +8,8 @@ import glsl.language.psi.GlslTypes;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class GlslCompletionContributor extends CompletionContributor {
@@ -48,13 +50,16 @@ public class GlslCompletionContributor extends CompletionContributor {
                             if (lookBack != null)
                                 lookBack = lookBack.getPrevSibling();
                         }
+                        var lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
 
                         // No completion if we already have primitive/identifier types before us, or we're
-                        // a implementation origin identifier
-                        if ((lookBack != null && (GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS.contains(lookBack.getNode().getElementType()) ||
-                                lookBack.getNode().getElementType().equals(GlslTypes.IDENTIFIER))) ||
-                            GlslGroupTypes.IDENTIFIER_ORIGIN.contains(nodeParentType))
-                            return;
+                        // an implementation origin identifier, or we're preceded by assignment operator
+                        if (GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS.contains(lookBackType) ||
+                                lookBackType.equals(GlslTypes.IDENTIFIER) ||
+                                GlslGroupTypes.ASSIGNMENT_OP_KEYWORDS.contains(lookBackType) ||
+                                GlslGroupTypes.IDENTIFIER_ORIGIN.contains(nodeParentType) ||
+                                GlslTypes.INIT_VAL.equals(nodeParentType)
+                        ) return;
 
                         // Add primitive types
                         for (var elementBuilder : PRIMITIVE_LOOKUP) {
@@ -69,7 +74,7 @@ public class GlslCompletionContributor extends CompletionContributor {
                         }
 
                         // Add storage qualifier only if we do not have preceding storage qualifier
-                        if (lookBack == null || !GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBack.getNode().getElementType())) {
+                        if (!GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBackType)) {
                             for (var elementBuilder : STORAGE_QUALIFIER_LOOKUP) {
                                 resultSet.addElement(elementBuilder);
                             }

@@ -40,9 +40,15 @@ public class GlslExpressionNoAssignImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public GlslExpressionNoAssignParen getExpressionNoAssignParen() {
+    return findChildByClass(GlslExpressionNoAssignParen.class);
+  }
+
+  @Override
+  @Nullable
   public GlslExpressionUnit getExpressionUnit() {
-    return findNotNullChildByClass(GlslExpressionUnit.class);
+    return findChildByClass(GlslExpressionUnit.class);
   }
 
   @Override

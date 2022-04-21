@@ -27,7 +27,15 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitExpressionAssignParen(@NotNull GlslExpressionAssignParen o) {
+    visitPsiElement(o);
+  }
+
   public void visitExpressionNoAssign(@NotNull GlslExpressionNoAssign o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpressionNoAssignParen(@NotNull GlslExpressionNoAssignParen o) {
     visitPsiElement(o);
   }
 

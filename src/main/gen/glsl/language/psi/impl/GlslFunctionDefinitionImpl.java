@@ -28,6 +28,18 @@ public class GlslFunctionDefinitionImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
+  @NotNull
+  public List<GlslDeclaration> getDeclarationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslDeclaration.class);
+  }
+
+  @Override
+  @NotNull
+  public List<GlslExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslExpression.class);
+  }
+
+  @Override
   @Nullable
   public GlslFunctionArgs getFunctionArgs() {
     return findChildByClass(GlslFunctionArgs.class);

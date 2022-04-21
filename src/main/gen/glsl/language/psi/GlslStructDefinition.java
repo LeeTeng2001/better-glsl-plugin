@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlslStructDefinition extends PsiElement {
 
-  @NotNull
+  @Nullable
   GlslVarNameOriginStruct getVarNameOriginStruct();
 
   @NotNull

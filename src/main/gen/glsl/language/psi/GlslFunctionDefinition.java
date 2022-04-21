@@ -7,6 +7,12 @@ import com.intellij.psi.PsiElement;
 
 public interface GlslFunctionDefinition extends PsiElement {
 
+  @NotNull
+  List<GlslDeclaration> getDeclarationList();
+
+  @NotNull
+  List<GlslExpression> getExpressionList();
+
   @Nullable
   GlslFunctionArgs getFunctionArgs();
 

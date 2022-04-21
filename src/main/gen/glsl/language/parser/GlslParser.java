@@ -77,14 +77,14 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // struct_definition | variable_definition | function_definition
+  // struct_definition | function_definition | variable_definition
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DECLARATION, "<declaration>");
     r = struct_definition(b, l + 1);
-    if (!r) r = variable_definition(b, l + 1);
     if (!r) r = function_definition(b, l + 1);
+    if (!r) r = variable_definition(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -102,14 +102,23 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // expression_no_assign (assign_op expression_assign)?
+  // (expression_no_assign | expression_assign_paren) (assign_op expression_assign)?
   public static boolean expression_assign(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_assign")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, EXPRESSION_ASSIGN, "<expression assign>");
-    r = expression_no_assign(b, l + 1);
+    Marker m = enter_section_(b, l, _COLLAPSE_, EXPRESSION_ASSIGN, "<expression assign>");
+    r = expression_assign_0(b, l + 1);
     r = r && expression_assign_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // expression_no_assign | expression_assign_paren
+  private static boolean expression_assign_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_assign_0")) return false;
+    boolean r;
+    r = expression_no_assign(b, l + 1);
+    if (!r) r = expression_assign_paren(b, l + 1);
     return r;
   }
 
@@ -132,14 +141,37 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // expression_unit ((arithmetic_op | relational_op) expression_no_assign)?
+  // PAREN_L expression_assign PAREN_R
+  public static boolean expression_assign_paren(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_assign_paren")) return false;
+    if (!nextTokenIs(b, PAREN_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PAREN_L);
+    r = r && expression_assign(b, l + 1);
+    r = r && consumeToken(b, PAREN_R);
+    exit_section_(b, m, EXPRESSION_ASSIGN_PAREN, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // (expression_unit | expression_no_assign_paren) ((arithmetic_op | relational_op) expression_no_assign)?
   public static boolean expression_no_assign(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_no_assign")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, EXPRESSION_NO_ASSIGN, "<expression no assign>");
-    r = expression_unit(b, l + 1);
+    Marker m = enter_section_(b, l, _COLLAPSE_, EXPRESSION_NO_ASSIGN, "<expression no assign>");
+    r = expression_no_assign_0(b, l + 1);
     r = r && expression_no_assign_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // expression_unit | expression_no_assign_paren
+  private static boolean expression_no_assign_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_no_assign_0")) return false;
+    boolean r;
+    r = expression_unit(b, l + 1);
+    if (!r) r = expression_no_assign_paren(b, l + 1);
     return r;
   }
 
@@ -167,6 +199,20 @@ public class GlslParser implements PsiParser, LightPsiParser {
     boolean r;
     r = arithmetic_op(b, l + 1);
     if (!r) r = relational_op(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PAREN_L expression_no_assign PAREN_R
+  public static boolean expression_no_assign_paren(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_no_assign_paren")) return false;
+    if (!nextTokenIs(b, PAREN_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PAREN_L);
+    r = r && expression_no_assign(b, l + 1);
+    r = r && consumeToken(b, PAREN_R);
+    exit_section_(b, m, EXPRESSION_NO_ASSIGN_PAREN, r);
     return r;
   }
 
@@ -272,20 +318,21 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier_type var_name_origin_func PAREN_L function_args? PAREN_R (C_BRACKET_L C_BRACKET_R)? SEMICOLON
+  // identifier_type var_name_origin_func PAREN_L function_args? PAREN_R (C_BRACKET_L segment* C_BRACKET_R)? SEMICOLON?
   public static boolean function_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_definition")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, FUNCTION_DEFINITION, "<function definition>");
     r = identifier_type(b, l + 1);
     r = r && var_name_origin_func(b, l + 1);
     r = r && consumeToken(b, PAREN_L);
-    r = r && function_definition_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_R);
-    r = r && function_definition_5(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 3
+    r = r && report_error_(b, function_definition_3(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, PAREN_R)) && r;
+    r = p && report_error_(b, function_definition_5(b, l + 1)) && r;
+    r = p && function_definition_6(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // function_args?
@@ -295,21 +342,41 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (C_BRACKET_L C_BRACKET_R)?
+  // (C_BRACKET_L segment* C_BRACKET_R)?
   private static boolean function_definition_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_definition_5")) return false;
     function_definition_5_0(b, l + 1);
     return true;
   }
 
-  // C_BRACKET_L C_BRACKET_R
+  // C_BRACKET_L segment* C_BRACKET_R
   private static boolean function_definition_5_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_definition_5_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, C_BRACKET_L, C_BRACKET_R);
+    r = consumeToken(b, C_BRACKET_L);
+    r = r && function_definition_5_0_1(b, l + 1);
+    r = r && consumeToken(b, C_BRACKET_R);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // segment*
+  private static boolean function_definition_5_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_5_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!segment(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "function_definition_5_0_1", c)) break;
+    }
+    return true;
+  }
+
+  // SEMICOLON?
+  private static boolean function_definition_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_6")) return false;
+    consumeToken(b, SEMICOLON);
+    return true;
   }
 
   /* ********************************************************** */
@@ -350,6 +417,17 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, IDENTIFIER);
     if (!r) r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !SEMICOLON
+  static boolean recover_to_semicolon(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_to_semicolon")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -408,15 +486,16 @@ public class GlslParser implements PsiParser, LightPsiParser {
   public static boolean struct_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_definition")) return false;
     if (!nextTokenIs(b, STRUCT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, STRUCT_DEFINITION, null);
     r = consumeToken(b, STRUCT);
-    r = r && var_name_origin_struct(b, l + 1);
-    r = r && consumeToken(b, C_BRACKET_L);
-    r = r && struct_definition_3(b, l + 1);
-    r = r && consumeTokens(b, 0, C_BRACKET_R, SEMICOLON);
-    exit_section_(b, m, STRUCT_DEFINITION, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, var_name_origin_struct(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, C_BRACKET_L)) && r;
+    r = p && report_error_(b, struct_definition_3(b, l + 1)) && r;
+    r = p && report_error_(b, consumeTokens(b, -1, C_BRACKET_R, SEMICOLON)) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // variable_definition*
@@ -428,6 +507,12 @@ public class GlslParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "struct_definition_3", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // NULL_TOKEN
+  static boolean useless_expression(PsiBuilder b, int l) {
+    return consumeToken(b, NULL_TOKEN);
   }
 
   /* ********************************************************** */
@@ -482,15 +567,16 @@ public class GlslParser implements PsiParser, LightPsiParser {
   // storage_qualifier? identifier_type var_name_origin_variable (EQUAL init_val)? SEMICOLON
   public static boolean variable_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, VARIABLE_DEFINITION, "<variable definition>");
     r = variable_definition_0(b, l + 1);
     r = r && identifier_type(b, l + 1);
     r = r && var_name_origin_variable(b, l + 1);
-    r = r && variable_definition_3(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 3
+    r = r && report_error_(b, variable_definition_3(b, l + 1));
+    r = p && consumeToken(b, SEMICOLON) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // storage_qualifier?
