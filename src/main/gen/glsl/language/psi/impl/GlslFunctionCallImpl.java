@@ -11,14 +11,14 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslExpressionUnitImpl extends ASTWrapperPsiElement implements GlslExpressionUnit {
+public class GlslFunctionCallImpl extends ASTWrapperPsiElement implements GlslFunctionCall {
 
-  public GlslExpressionUnitImpl(@NotNull ASTNode node) {
+  public GlslFunctionCallImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitExpressionUnit(this);
+    visitor.visitFunctionCall(this);
   }
 
   @Override
@@ -28,15 +28,15 @@ public class GlslExpressionUnitImpl extends ASTWrapperPsiElement implements Glsl
   }
 
   @Override
-  @Nullable
-  public GlslFunctionCall getFunctionCall() {
-    return findChildByClass(GlslFunctionCall.class);
+  @NotNull
+  public List<GlslExpressionNoAssign> getExpressionNoAssignList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslExpressionNoAssign.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public GlslVarName getVarName() {
-    return findChildByClass(GlslVarName.class);
+    return findNotNullChildByClass(GlslVarName.class);
   }
 
 }

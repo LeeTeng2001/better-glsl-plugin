@@ -39,6 +39,10 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFunctionCall(@NotNull GlslFunctionCall o) {
+    visitPsiElement(o);
+  }
+
   public void visitFunctionDefinition(@NotNull GlslFunctionDefinition o) {
     visitPsiElement(o);
   }

@@ -90,13 +90,13 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // expression_assign
+  // expression_assign SEMICOLON
   public static boolean expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression")) return false;
-    if (!nextTokenIs(b, "<expression>", FLOAT_CONSTANT, INTEGER_CONSTANT)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION, "<expression>");
     r = expression_assign(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -105,7 +105,6 @@ public class GlslParser implements PsiParser, LightPsiParser {
   // expression_no_assign (assign_op expression_assign)?
   public static boolean expression_assign(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_assign")) return false;
-    if (!nextTokenIs(b, "<expression assign>", FLOAT_CONSTANT, INTEGER_CONSTANT)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION_ASSIGN, "<expression assign>");
     r = expression_no_assign(b, l + 1);
@@ -136,7 +135,6 @@ public class GlslParser implements PsiParser, LightPsiParser {
   // expression_unit ((arithmetic_op | relational_op) expression_no_assign)?
   public static boolean expression_no_assign(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_no_assign")) return false;
-    if (!nextTokenIs(b, "<expression no assign>", FLOAT_CONSTANT, INTEGER_CONSTANT)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION_NO_ASSIGN, "<expression no assign>");
     r = expression_unit(b, l + 1);
@@ -173,14 +171,15 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FLOAT_CONSTANT | INTEGER_CONSTANT
+  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | var_name
   public static boolean expression_unit(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_unit")) return false;
-    if (!nextTokenIs(b, "<expression unit>", FLOAT_CONSTANT, INTEGER_CONSTANT)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION_UNIT, "<expression unit>");
     r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
+    if (!r) r = function_call(b, l + 1);
+    if (!r) r = var_name(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -212,6 +211,62 @@ public class GlslParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
     r = r && function_args(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // var_name PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R
+  public static boolean function_call(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_call")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FUNCTION_CALL, null);
+    r = var_name(b, l + 1);
+    r = r && consumeToken(b, PAREN_L);
+    p = r; // pin = 2
+    r = r && report_error_(b, function_call_2(b, l + 1));
+    r = p && consumeToken(b, PAREN_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // (expression_no_assign (COMMA expression_no_assign)*)?
+  private static boolean function_call_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_call_2")) return false;
+    function_call_2_0(b, l + 1);
+    return true;
+  }
+
+  // expression_no_assign (COMMA expression_no_assign)*
+  private static boolean function_call_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_call_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = expression_no_assign(b, l + 1);
+    r = r && function_call_2_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA expression_no_assign)*
+  private static boolean function_call_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_call_2_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!function_call_2_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "function_call_2_0_1", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA expression_no_assign
+  private static boolean function_call_2_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_call_2_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && expression_no_assign(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -319,12 +374,12 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration | expression | COMMENT | CRLF
+  // expression | declaration | COMMENT | CRLF
   static boolean segment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "segment")) return false;
     boolean r;
-    r = declaration(b, l + 1);
-    if (!r) r = expression(b, l + 1);
+    r = expression(b, l + 1);
+    if (!r) r = declaration(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);
     return r;

@@ -16,6 +16,7 @@ public interface GlslTypes {
   IElementType EXPRESSION_NO_ASSIGN = new GlslElementType("EXPRESSION_NO_ASSIGN");
   IElementType EXPRESSION_UNIT = new GlslElementType("EXPRESSION_UNIT");
   IElementType FUNCTION_ARGS = new GlslElementType("FUNCTION_ARGS");
+  IElementType FUNCTION_CALL = new GlslElementType("FUNCTION_CALL");
   IElementType FUNCTION_DEFINITION = new GlslElementType("FUNCTION_DEFINITION");
   IElementType IDENTIFIER_TYPE = new GlslElementType("IDENTIFIER_TYPE");
   IElementType INIT_VAL = new GlslElementType("INIT_VAL");
@@ -111,6 +112,9 @@ public interface GlslTypes {
       }
       else if (type == FUNCTION_ARGS) {
         return new GlslFunctionArgsImpl(node);
+      }
+      else if (type == FUNCTION_CALL) {
+        return new GlslFunctionCallImpl(node);
       }
       else if (type == FUNCTION_DEFINITION) {
         return new GlslFunctionDefinitionImpl(node);
