@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class GlslCompletionContributor extends CompletionContributor {
-    private static LookupElementBuilder[] PRIMITIVE_LOOKUP = new LookupElementBuilder[] {
+    private static final LookupElementBuilder[] PRIMITIVE_LOOKUP = new LookupElementBuilder[] {
             LookupElementBuilder.create("void").withTypeText("primitive").withIcon(Nodes.Type),
             LookupElementBuilder.create("int").withTypeText("primitive").withIcon(Nodes.Type),
             LookupElementBuilder.create("uint").withTypeText("primitive").withIcon(Nodes.Type),
@@ -21,7 +21,7 @@ public class GlslCompletionContributor extends CompletionContributor {
             LookupElementBuilder.create("struct").withTypeText("primitive").withIcon(Nodes.Type),
     };
 
-    private static LookupElementBuilder[] STORAGE_QUALIFIER_LOOKUP = new LookupElementBuilder[] {
+    private static final LookupElementBuilder[] STORAGE_QUALIFIER_LOOKUP = new LookupElementBuilder[] {
             LookupElementBuilder.create("const").withTypeText("primitive").withIcon(Nodes.Type),
             LookupElementBuilder.create("in").withTypeText("primitive").withIcon(Nodes.Type),
             LookupElementBuilder.create("out").withTypeText("primitive").withIcon(Nodes.Type),
