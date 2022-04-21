@@ -22,6 +22,7 @@ public interface GlslTypes {
   IElementType FUNCTION_DEFINITION = new GlslElementType("FUNCTION_DEFINITION");
   IElementType IDENTIFIER_TYPE = new GlslElementType("IDENTIFIER_TYPE");
   IElementType INIT_VAL = new GlslElementType("INIT_VAL");
+  IElementType MEMBER_ACCESS = new GlslElementType("MEMBER_ACCESS");
   IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
@@ -49,6 +50,7 @@ public interface GlslTypes {
   IElementType C_BRACKET_R = new GlslTokenType("C_BRACKET_R");
   IElementType DASH = new GlslTokenType("DASH");
   IElementType DIV_ASSIGN = new GlslTokenType("DIV_ASSIGN");
+  IElementType DOT = new GlslTokenType("DOT");
   IElementType DOUBLE = new GlslTokenType("double");
   IElementType EQUAL = new GlslTokenType("EQUAL");
   IElementType EQ_OP = new GlslTokenType("EQ_OP");
@@ -133,6 +135,9 @@ public interface GlslTypes {
       }
       else if (type == INIT_VAL) {
         return new GlslInitValImpl(node);
+      }
+      else if (type == MEMBER_ACCESS) {
+        return new GlslMemberAccessImpl(node);
       }
       else if (type == RELATIONAL_OP) {
         return new GlslRelationalOpImpl(node);

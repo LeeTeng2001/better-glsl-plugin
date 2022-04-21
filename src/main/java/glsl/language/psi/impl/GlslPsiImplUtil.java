@@ -28,4 +28,14 @@ public class GlslPsiImplUtil {
 //        }
         return element;
     }
+
+    // function specific ----------------------------------------------------------------------------
+    // get return, get argument
+//    public static PsiElement get
+
+    // struct specific ----------------------------------------------------------------------------
+    // get all member
+
+    // variable specific ----------------------------------------------------------------------------
+    // Resolve usage origin (for expression, not type specification)
 }

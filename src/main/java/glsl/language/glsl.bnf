@@ -49,8 +49,9 @@ expression_assign ::= (expression_no_assign | expression_assign_paren) (assign_o
 expression_assign_paren ::= PAREN_L expression_assign PAREN_R
 expression_no_assign ::= (expression_unit | expression_no_assign_paren) ((arithmetic_op | relational_op) expression_no_assign)?
 expression_no_assign_paren ::= PAREN_L expression_no_assign PAREN_R
-expression_unit ::= FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | var_name
-function_call ::= var_name PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign?
+expression_unit ::= FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access  // function return member access??
+function_call ::= var_name PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign??
+member_access ::= var_name (DOT var_name)* {pin=2}  // TODO: reference
 
 // Swizzle built in type
 //swizzle_access ::= IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?

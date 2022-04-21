@@ -217,7 +217,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | var_name
+  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access
   public static boolean expression_unit(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_unit")) return false;
     boolean r;
@@ -225,7 +225,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
     if (!r) r = function_call(b, l + 1);
-    if (!r) r = var_name(b, l + 1);
+    if (!r) r = member_access(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -418,6 +418,41 @@ public class GlslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // var_name (DOT var_name)*
+  public static boolean member_access(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = var_name(b, l + 1);
+    r = r && member_access_1(b, l + 1);
+    exit_section_(b, m, MEMBER_ACCESS, r);
+    return r;
+  }
+
+  // (DOT var_name)*
+  private static boolean member_access_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!member_access_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "member_access_1", c)) break;
+    }
+    return true;
+  }
+
+  // DOT var_name
+  private static boolean member_access_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && var_name(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 

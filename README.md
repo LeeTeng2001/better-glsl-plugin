@@ -5,7 +5,9 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 
 ## Roadmap
+- [ ] Variable scope reference
 - [ ] Member access
+- [ ] Array support
 - [ ] Built-in function and variables
 - [ ] Initialise with built-in functions
 - [ ] Macro, version header

@@ -43,7 +43,7 @@ struct                                { return GlslTypes.STRUCT; }
 "("                                { return GlslTypes.PAREN_L; }
 ")"                                { return GlslTypes.PAREN_R; }
 ","                                { return GlslTypes.COMMA; }
-// "."                                { return GlslTypes.DOT; }
+"."                                { return GlslTypes.DOT; }
 
 // Assignment symbols --------------------------------------------
 "="                     {return GlslTypes.EQUAL; }
