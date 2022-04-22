@@ -29,8 +29,8 @@ public class GlslMemberAccessImpl extends ASTWrapperPsiElement implements GlslMe
 
   @Override
   @NotNull
-  public List<GlslVarName> getVarNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVarName.class);
+  public List<GlslVarNameAccess> getVarNameAccessList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVarNameAccess.class);
   }
 
 }

@@ -1,4 +1,4 @@
-package glsl.language.psi.impl;
+package glsl.language.psi.impl.origin;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
@@ -7,8 +7,8 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import glsl.language.psi.GlslNamedElement;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class GlslNamedFunctionDeclareImpl extends ASTWrapperPsiElement implements GlslNamedElement {
-    public GlslNamedFunctionDeclareImpl(@NotNull ASTNode node) {
+public abstract class GlslNamedVariableDeclareImpl extends ASTWrapperPsiElement implements GlslNamedElement {
+    public GlslNamedVariableDeclareImpl(@NotNull ASTNode node) {
         super(node);
     }
 

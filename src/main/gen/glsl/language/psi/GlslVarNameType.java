@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslVarName extends GlslNamedElement {
+public interface GlslVarNameType extends GlslNamedElement {
 
   String getName();
 

@@ -8,7 +8,6 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslTypes;
-import glsl.language.psi.GlslVarName;
 import glsl.language.psi.GlslVarNameOriginStruct;
 import glsl.language.utility.GlslSyntaxHighlighter;
 import glsl.language.utility.GlslUtil;
@@ -20,7 +19,7 @@ public class GlslAnnotator implements Annotator {
         var node = element.getNode();
 
         // Get identifier that's being use as a type node
-        if (node.getElementType().equals(GlslTypes.VAR_NAME) && element.getParent().getNode().getElementType().equals(GlslTypes.IDENTIFIER_TYPE)) {
+        if (node.getElementType().equals(GlslTypes.VAR_NAME_TYPE) && element.getParent().getNode().getElementType().equals(GlslTypes.IDENTIFIER_TYPE)) {
             // It has an identifier class type, highlight it
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element)

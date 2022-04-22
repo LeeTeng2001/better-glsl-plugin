@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface GlslIdentifierType extends PsiElement {
 
   @Nullable
-  GlslVarName getVarName();
+  GlslVarNameType getVarNameType();
 
 }

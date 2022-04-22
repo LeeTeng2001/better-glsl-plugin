@@ -1,17 +1,15 @@
-package glsl.language.psi.impl;
+package glsl.language.psi.impl.access;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.annotation.ExternalAnnotator;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import glsl.language.psi.GlslNamedElement;
-import glsl.language.psi.GlslTypes;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class GlslNamedVariableImpl extends ASTWrapperPsiElement implements GlslNamedElement {
-    public GlslNamedVariableImpl(@NotNull ASTNode node) {
+public abstract class GlslNamedVariableTypeImpl extends ASTWrapperPsiElement implements GlslNamedElement {
+    public GlslNamedVariableTypeImpl(@NotNull ASTNode node) {
         super(node);
     }
 
@@ -39,6 +37,4 @@ public abstract class GlslNamedVariableImpl extends ASTWrapperPsiElement impleme
 
         return references.length > 0 ? references[0] : null;
     }
-
-
 }

@@ -10,7 +10,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import glsl.language.property.GlslFileType;
 import glsl.language.psi.*;
-import glsl.language.psi.impl.GlslVarNameImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -34,6 +33,16 @@ public class GlslUtil {
         // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
         if (glslFile != null) {
             var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
+            result.addAll(declarations);
+        }
+        return result;
+    }
+
+    public static List<GlslVarNameOriginVariable> findDefinedVariables(PsiFile glslFile) {
+        List<GlslVarNameOriginVariable> result = new ArrayList<>();
+        // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
+        if (glslFile != null) {
+            var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
             result.addAll(declarations);
         }
         return result;

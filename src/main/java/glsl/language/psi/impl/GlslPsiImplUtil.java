@@ -3,6 +3,7 @@ package glsl.language.psi.impl;
 import com.intellij.psi.PsiElement;
 import glsl.language.psi.GlslNamedElement;
 import glsl.language.psi.GlslTypes;
+import glsl.language.utility.GlslUtil;
 
 public class GlslPsiImplUtil {
     public static PsiElement getNameIdentifier(GlslNamedElement element) {
@@ -37,5 +38,5 @@ public class GlslPsiImplUtil {
     // get all member
 
     // variable specific ----------------------------------------------------------------------------
-    // Resolve usage origin (for expression, not type specification)
+    // Access, type, function
 }

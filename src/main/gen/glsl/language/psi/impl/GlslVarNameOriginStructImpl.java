@@ -8,6 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
+import glsl.language.psi.impl.origin.GlslNamedStructDeclareImpl;
 import glsl.language.psi.*;
 
 public class GlslVarNameOriginStructImpl extends GlslNamedStructDeclareImpl implements GlslVarNameOriginStruct {

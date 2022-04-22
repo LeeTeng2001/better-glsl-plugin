@@ -79,7 +79,7 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitVarName(@NotNull GlslVarName o) {
+  public void visitVarNameAccess(@NotNull GlslVarNameAccess o) {
     visitNamedElement(o);
   }
 
@@ -92,6 +92,10 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitVarNameOriginVariable(@NotNull GlslVarNameOriginVariable o) {
+    visitNamedElement(o);
+  }
+
+  public void visitVarNameType(@NotNull GlslVarNameType o) {
     visitNamedElement(o);
   }
 

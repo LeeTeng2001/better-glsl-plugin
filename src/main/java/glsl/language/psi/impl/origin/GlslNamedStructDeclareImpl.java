@@ -1,4 +1,4 @@
-package glsl.language.psi.impl;
+package glsl.language.psi.impl.origin;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;

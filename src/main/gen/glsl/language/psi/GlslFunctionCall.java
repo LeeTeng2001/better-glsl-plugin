@@ -11,6 +11,6 @@ public interface GlslFunctionCall extends PsiElement {
   List<GlslExpressionNoAssign> getExpressionNoAssignList();
 
   @NotNull
-  GlslVarName getVarName();
+  GlslVarNameAccess getVarNameAccess();
 
 }

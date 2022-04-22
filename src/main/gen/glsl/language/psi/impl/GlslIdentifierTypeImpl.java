@@ -29,8 +29,8 @@ public class GlslIdentifierTypeImpl extends ASTWrapperPsiElement implements Glsl
 
   @Override
   @Nullable
-  public GlslVarName getVarName() {
-    return findChildByClass(GlslVarName.class);
+  public GlslVarNameType getVarNameType() {
+    return findChildByClass(GlslVarNameType.class);
   }
 
 }

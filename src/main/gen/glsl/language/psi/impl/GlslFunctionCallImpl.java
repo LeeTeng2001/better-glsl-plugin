@@ -35,8 +35,8 @@ public class GlslFunctionCallImpl extends ASTWrapperPsiElement implements GlslFu
 
   @Override
   @NotNull
-  public GlslVarName getVarName() {
-    return findNotNullChildByClass(GlslVarName.class);
+  public GlslVarNameAccess getVarNameAccess() {
+    return findNotNullChildByClass(GlslVarNameAccess.class);
   }
 
 }
