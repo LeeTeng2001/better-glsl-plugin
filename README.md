@@ -12,9 +12,10 @@
 - [x] Built-in function and variables (the essential first)
 - [ ] Initialise with built-in functions & initializer
 - [ ] Variable scope reference
-- [ ] Auto complete for member access
-- [ ] Smart function name, variable name filter
 - [ ] for, while, return expression
+- [ ] Auto complete for member access
+- [ ] Support for vec type, swizzle expression
+- [ ] Smart function name, variable name filter
 - [ ] Member error annotator
 - [ ] Formatter, auto indentation
 
