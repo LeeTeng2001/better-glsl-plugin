@@ -9,14 +9,14 @@
 - [x] Member access
 - [x] Array support
 - [x] Macro, version header
-- [ ] Built-in function and variables
-- [ ] Initialise with built-in functions & initialiser
+- [x] Built-in function and variables (the essential first)
+- [ ] Initialise with built-in functions & initializer
 - [ ] Variable scope reference
-- [ ] Member auto complete
+- [ ] Auto complete for member access
 - [ ] Smart function name, variable name filter
 - [ ] for, while, return expression
 - [ ] Member error annotator
-- [ ] Formatter, indentation and semicolon
+- [ ] Formatter, auto indentation
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.
