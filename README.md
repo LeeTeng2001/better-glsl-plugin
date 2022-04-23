@@ -12,6 +12,7 @@
 - [ ] Built-in function and variables
 - [ ] Initialise with built-in functions
 - [ ] Macro, version header
+- [ ] Smart function name, variable name filter
 - [ ] for, while, return expression
 - [ ] Member error annotator
 - [ ] Formatter, indentation and semicolon

@@ -22,14 +22,14 @@ public class GlslCompletionContributor extends CompletionContributor {
     };
 
     private static final LookupElementBuilder[] STORAGE_QUALIFIER_LOOKUP = new LookupElementBuilder[] {
-            LookupElementBuilder.create("const").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("in").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("out").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("attribute").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("uniform").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("varying").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("buffer").withTypeText("primitive").withIcon(Nodes.Type),
-            LookupElementBuilder.create("shared").withTypeText("primitive").withIcon(Nodes.Type),
+            LookupElementBuilder.create("const").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("in").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("out").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("attribute").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("uniform").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("varying").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("buffer").withTypeText("storage qualifier").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("shared").withTypeText("storage qualifier").withIcon(Nodes.Controller),
     };
 
     public GlslCompletionContributor() {
@@ -64,13 +64,6 @@ public class GlslCompletionContributor extends CompletionContributor {
                             resultSet.addElement(elementBuilder);
                         }
 
-                        // Add struct names
-                        var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile(), node.getTextOffset());
-                        for (var struct : definedStruct) {
-                            resultSet.addElement(LookupElementBuilder.create(struct.getText())
-                                    .withTypeText("struct").withIcon(Nodes.Class));
-                        }
-
                         // Add storage qualifier only if we do not have preceding storage qualifier
                         if (!GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBackType)) {
                             for (var elementBuilder : STORAGE_QUALIFIER_LOOKUP) {
@@ -78,9 +71,26 @@ public class GlslCompletionContributor extends CompletionContributor {
                             }
                         }
 
-                        // TODO: Add variable lookup
+                        // Add struct names
+                        var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile(), node.getTextOffset());
+                        for (var struct : definedStruct) {
+                            resultSet.addElement(LookupElementBuilder.create(struct.getText())
+                                    .withTypeText("struct").withIcon(Nodes.Class));
+                        }
 
-                        // TODO: Add function lookup
+                        // Add functions
+                        var definedFunc = GlslUtil.findDefinedFunctions(node.getContainingFile(), node.getTextOffset());
+                        for (var func : definedFunc) {
+                            resultSet.addElement(LookupElementBuilder.create(func.getText())
+                                    .withTypeText("user func").withIcon(Nodes.Function));
+                        }
+
+                        // Add variables
+                        var definedVariables = GlslUtil.findDefinedVariables(node.getContainingFile(), node.getTextOffset());
+                        for (var variable : definedVariables) {
+                            resultSet.addElement(LookupElementBuilder.create(variable.getText())
+                                    .withTypeText("variable").withIcon(Nodes.Variable));
+                        }
 
                         // TODO: Add built in function
                     }
