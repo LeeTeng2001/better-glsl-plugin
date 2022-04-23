@@ -26,7 +26,7 @@ public class GlslAnnotator implements Annotator {
                     .textAttributes(GlslSyntaxHighlighter.KEY)
                     .create();
 
-            var definedStruct = GlslUtil.findDefinedStruct(element.getContainingFile());
+            var definedStruct = GlslUtil.findDefinedStruct(element.getContainingFile(), element.getTextOffset());
             boolean isDefined = false;
             GlslVarNameOriginStruct defined = null;
 
@@ -43,14 +43,6 @@ public class GlslAnnotator implements Annotator {
             // Usage of undefined type
             if (!isDefined) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Undefined type")
-                        .range(element)
-                        .create();
-                return;
-            }
-
-            // Use before defining struct
-            if (defined.getTextOffset() > element.getTextOffset()) {
-                holder.newAnnotation(HighlightSeverity.ERROR, "Use before declaration")
                         .range(element)
                         .create();
                 return;

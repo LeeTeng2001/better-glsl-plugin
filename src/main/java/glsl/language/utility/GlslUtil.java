@@ -18,22 +18,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GlslUtil {
-    public static List<GlslVarNameOriginStruct> findDefinedStruct(PsiFile glslFile) {
+    public static List<GlslVarNameOriginStruct> findDefinedStruct(PsiFile glslFile, int curAt) {
         List<GlslVarNameOriginStruct> result = new ArrayList<>();
         // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
         if (glslFile != null) {
             var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginStruct.class);
-            result.addAll(declarations);
+            for (var node : declarations) {
+                if (node.getTextOffset() < curAt) {
+                    result.add(node);
+                }
+            }
         }
         return result;
     }
 
-    public static List<GlslVarNameOriginFunc> findDefinedFunctions(PsiFile glslFile) {
+    public static List<GlslVarNameOriginFunc> findDefinedFunctions(PsiFile glslFile, int curAt) {
         List<GlslVarNameOriginFunc> result = new ArrayList<>();
         // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
         if (glslFile != null) {
             var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
-            result.addAll(declarations);
+            for (var node : declarations) {
+                if (node.getTextOffset() < curAt) {
+                    result.add(node);
+                }
+            }
         }
         return result;
     }
@@ -47,23 +55,4 @@ public class GlslUtil {
         }
         return result;
     }
-
-
-    /**
-     * Attempts to collect any comment elements above the Simple key/value pair.
-     */
-//    public static @NotNull String findDocumentationComment(GlslProperty property) {
-//        List<String> result = new LinkedList<>();
-//        PsiElement element = property.getPrevSibling();
-//        while (element instanceof PsiComment || element instanceof PsiWhiteSpace) {
-//            if (element instanceof PsiComment) {
-//                String commentText = element.getText().replaceFirst("//+", "");
-//                result.add(commentText);
-//            }
-//            element = element.getPrevSibling();
-//        }
-//        return StringUtil.join(Lists.reverse(result),"\n ");
-//    }
-
-
 }

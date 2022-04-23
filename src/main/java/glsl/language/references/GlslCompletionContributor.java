@@ -67,7 +67,7 @@ public class GlslCompletionContributor extends CompletionContributor {
                         }
 
                         // Add struct names
-                        var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile());
+                        var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile(), node.getTextOffset());
                         for (var struct : definedStruct) {
                             resultSet.addElement(LookupElementBuilder.create(struct.getText())
                                     .withTypeText("struct").withIcon(Nodes.Class));

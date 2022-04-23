@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslFunctionCall extends PsiElement {
+public interface GlslVarNameAccessMember extends GlslNamedElement {
 
-  @NotNull
-  List<GlslExpressionNoAssign> getExpressionNoAssignList();
+  String getName();
 
-  @NotNull
-  GlslVarNameAccessFunc getVarNameAccessFunc();
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
 
 }

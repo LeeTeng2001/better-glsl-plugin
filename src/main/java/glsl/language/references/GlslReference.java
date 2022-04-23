@@ -17,6 +17,7 @@ public class GlslReference extends PsiReferenceBase<PsiElement> {
     @Nullable
     @Override
     public PsiElement resolve() {
+        PsiElement psdd;
         var eleReference = myElement.getReference();
         return eleReference != null ? eleReference.getElement() : null;
     }

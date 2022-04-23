@@ -50,8 +50,8 @@ expression_assign_paren ::= PAREN_L expression_assign PAREN_R
 expression_no_assign ::= (expression_unit | expression_no_assign_paren) ((arithmetic_op | relational_op) expression_no_assign)?
 expression_no_assign_paren ::= PAREN_L expression_no_assign PAREN_R
 expression_unit ::= FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access  // function return member access??
-function_call ::= var_name_access PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign??
-member_access ::= var_name_access (DOT var_name_access)* {pin=2}  // TODO: reference
+function_call ::= var_name_access_func PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign??
+member_access ::= var_name_access_var (DOT var_name_access_member)* {pin=2}  // TODO: reference
 
 // Swizzle built in type
 //swizzle_access ::= IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?
@@ -86,8 +86,20 @@ var_name_type ::= IDENTIFIER {
   methods=[getName setName getNameIdentifier]
 }
 
-var_name_access ::= IDENTIFIER {
-  mixin="glsl.language.psi.impl.access.GlslNamedVariableAccessImpl"
+var_name_access_func ::= IDENTIFIER {
+  mixin="glsl.language.psi.impl.access.GlslNamedVariableAccessFuncImpl"
+  implements="glsl.language.psi.GlslNamedElement"
+  methods=[getName setName getNameIdentifier]
+}
+
+var_name_access_var ::= IDENTIFIER {
+  mixin="glsl.language.psi.impl.access.GlslNamedVariableAccessVarImpl"
+  implements="glsl.language.psi.GlslNamedElement"
+  methods=[getName setName getNameIdentifier]
+}
+
+var_name_access_member ::= IDENTIFIER {
+  mixin="glsl.language.psi.impl.access.GlslNamedVariableAccessMemberImpl"
   implements="glsl.language.psi.GlslNamedElement"
   methods=[getName setName getNameIdentifier]
 }

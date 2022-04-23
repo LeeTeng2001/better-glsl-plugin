@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import glsl.language.psi.impl.access.GlslNamedVariableAccessFuncImpl;
 import glsl.language.psi.*;
 
-public class GlslMemberAccessImpl extends ASTWrapperPsiElement implements GlslMemberAccess {
+public class GlslVarNameAccessFuncImpl extends GlslNamedVariableAccessFuncImpl implements GlslVarNameAccessFunc {
 
-  public GlslMemberAccessImpl(@NotNull ASTNode node) {
+  public GlslVarNameAccessFuncImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitMemberAccess(this);
+    visitor.visitVarNameAccessFunc(this);
   }
 
   @Override
@@ -28,15 +28,18 @@ public class GlslMemberAccessImpl extends ASTWrapperPsiElement implements GlslMe
   }
 
   @Override
-  @NotNull
-  public List<GlslVarNameAccessMember> getVarNameAccessMemberList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVarNameAccessMember.class);
+  public String getName() {
+    return GlslPsiImplUtil.getName(this);
   }
 
   @Override
-  @NotNull
-  public GlslVarNameAccessVar getVarNameAccessVar() {
-    return findNotNullChildByClass(GlslVarNameAccessVar.class);
+  public PsiElement setName(String newName) {
+    return GlslPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return GlslPsiImplUtil.getNameIdentifier(this);
   }
 
 }

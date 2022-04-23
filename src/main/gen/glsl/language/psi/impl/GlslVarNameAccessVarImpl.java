@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static glsl.language.psi.GlslTypes.*;
-import glsl.language.psi.impl.access.GlslNamedVariableAccessImpl;
+import glsl.language.psi.impl.access.GlslNamedVariableAccessVarImpl;
 import glsl.language.psi.*;
 
-public class GlslVarNameAccessImpl extends GlslNamedVariableAccessImpl implements GlslVarNameAccess {
+public class GlslVarNameAccessVarImpl extends GlslNamedVariableAccessVarImpl implements GlslVarNameAccessVar {
 
-  public GlslVarNameAccessImpl(@NotNull ASTNode node) {
+  public GlslVarNameAccessVarImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitVarNameAccess(this);
+    visitor.visitVarNameAccessVar(this);
   }
 
   @Override

@@ -27,7 +27,9 @@ public interface GlslTypes {
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
-  IElementType VAR_NAME_ACCESS = new GlslElementType("VAR_NAME_ACCESS");
+  IElementType VAR_NAME_ACCESS_FUNC = new GlslElementType("VAR_NAME_ACCESS_FUNC");
+  IElementType VAR_NAME_ACCESS_MEMBER = new GlslElementType("VAR_NAME_ACCESS_MEMBER");
+  IElementType VAR_NAME_ACCESS_VAR = new GlslElementType("VAR_NAME_ACCESS_VAR");
   IElementType VAR_NAME_ORIGIN_FUNC = new GlslElementType("VAR_NAME_ORIGIN_FUNC");
   IElementType VAR_NAME_ORIGIN_STRUCT = new GlslElementType("VAR_NAME_ORIGIN_STRUCT");
   IElementType VAR_NAME_ORIGIN_VARIABLE = new GlslElementType("VAR_NAME_ORIGIN_VARIABLE");
@@ -152,8 +154,14 @@ public interface GlslTypes {
       else if (type == VARIABLE_DEFINITION) {
         return new GlslVariableDefinitionImpl(node);
       }
-      else if (type == VAR_NAME_ACCESS) {
-        return new GlslVarNameAccessImpl(node);
+      else if (type == VAR_NAME_ACCESS_FUNC) {
+        return new GlslVarNameAccessFuncImpl(node);
+      }
+      else if (type == VAR_NAME_ACCESS_MEMBER) {
+        return new GlslVarNameAccessMemberImpl(node);
+      }
+      else if (type == VAR_NAME_ACCESS_VAR) {
+        return new GlslVarNameAccessVarImpl(node);
       }
       else if (type == VAR_NAME_ORIGIN_FUNC) {
         return new GlslVarNameOriginFuncImpl(node);

@@ -4,13 +4,12 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.search.GlobalSearchScope;
 import glsl.language.psi.GlslNamedElement;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class GlslNamedVariableAccessImpl extends ASTWrapperPsiElement implements GlslNamedElement {
-    public GlslNamedVariableAccessImpl(@NotNull ASTNode node) {
+public abstract class GlslNamedVariableAccessFuncImpl extends ASTWrapperPsiElement implements GlslNamedElement {
+    public GlslNamedVariableAccessFuncImpl(@NotNull ASTNode node) {
         super(node);
     }
 

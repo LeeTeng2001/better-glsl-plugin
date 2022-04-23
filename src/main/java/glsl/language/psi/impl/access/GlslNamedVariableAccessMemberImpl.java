@@ -8,8 +8,8 @@ import glsl.language.psi.GlslNamedElement;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class GlslNamedVariableTypeImpl extends ASTWrapperPsiElement implements GlslNamedElement {
-    public GlslNamedVariableTypeImpl(@NotNull ASTNode node) {
+public abstract class GlslNamedVariableAccessMemberImpl extends ASTWrapperPsiElement implements GlslNamedElement {
+    public GlslNamedVariableAccessMemberImpl(@NotNull ASTNode node) {
         super(node);
     }
 
@@ -18,24 +18,25 @@ public abstract class GlslNamedVariableTypeImpl extends ASTWrapperPsiElement imp
         return ReferenceProvidersRegistry.getReferencesFromProviders(this);
     }
 
+    // Resolve usage origin (for access, not type specification)
     @Override
     public PsiReference getReference() {
         final PsiReference[] references = getReferences();
 
-        // Find reference to either function or struct
+        // Find reference to either defined function
         var myText = getText();
-//        getTextOffset()
-        var definedStruct = GlslUtil.findDefinedStruct(getContainingFile(), getTextOffset());
+        var definedVariables = GlslUtil.findDefinedVariables(getContainingFile());
 
-        for (var struct : definedStruct) {
-            var structName = struct.getText();
-            if (structName == null) continue;
-            if (structName.equals(myText)) {
-//                System.out.println(name + " " + structName.getReference());
-                return struct.getReference();
+        // Remember to check scope!
+        for (var variable : definedVariables) {
+            var name = variable.getText();
+            if (name == null) continue;
+            if (name.equals(myText)) {
+                return variable.getReference();
             }
         }
 
         return references.length > 0 ? references[0] : null;
     }
+
 }

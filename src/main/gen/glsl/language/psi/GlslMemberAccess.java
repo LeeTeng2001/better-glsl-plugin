@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface GlslMemberAccess extends PsiElement {
 
   @NotNull
-  List<GlslVarNameAccess> getVarNameAccessList();
+  List<GlslVarNameAccessMember> getVarNameAccessMemberList();
+
+  @NotNull
+  GlslVarNameAccessVar getVarNameAccessVar();
 
 }

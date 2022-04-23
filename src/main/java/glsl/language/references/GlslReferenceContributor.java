@@ -21,15 +21,15 @@ public class GlslReferenceContributor extends PsiReferenceContributor {
                 }
         );
 
-        registrar.registerReferenceProvider(psiElement(GlslTypes.VAR_NAME_ACCESS),
-                new PsiReferenceProvider() {
-                    @Override
-                    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                        return new GlslReference[]{new GlslReference(element, new TextRange(0, element.getText().length()))};
-                    }
-//                PsiReferenceRegistrar.HIGHER_PRIORITY  // specify priority
-                }
-        );
+//        registrar.registerReferenceProvider(psiElement(GlslTypes.VARNAME),
+//                new PsiReferenceProvider() {
+//                    @Override
+//                    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+//                        return new GlslReference[]{new GlslReference(element, new TextRange(0, element.getText().length()))};
+//                    }
+////                PsiReferenceRegistrar.HIGHER_PRIORITY  // specify priority
+//                }
+//        );
 
         registrar.registerReferenceProvider(psiElement(GlslTypes.VAR_NAME_ORIGIN_STRUCT),
                 new PsiReferenceProvider() {
