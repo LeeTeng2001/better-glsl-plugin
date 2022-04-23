@@ -22,7 +22,7 @@ import java.util.Collection;
 
 public class GlslStdLibraryProvider extends AdditionalLibraryRootsProvider {
     // Store all library file in this variable
-    static Collection<VirtualFile> stdLibFiles = new ArrayList<>();
+    static ArrayList<VirtualFile> stdLibFiles = new ArrayList<>();
 
     @Override
     public @NotNull Collection<SyntheticLibrary> getAdditionalProjectLibraries(@NotNull Project project) {

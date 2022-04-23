@@ -2,10 +2,12 @@ package glsl.language.utility;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import glsl.language.property.GlslFileType;
+import glsl.language.psi.GlslFile;
 import glsl.language.psi.GlslVarNameOriginFunc;
 import glsl.language.psi.GlslVarNameOriginStruct;
 import glsl.language.psi.GlslVarNameOriginVariable;
@@ -45,10 +47,15 @@ public class GlslUtil {
     }
 
     public static List<GlslVarNameOriginVariable> findDefinedVariables(PsiFile glslFile, int curAt) {
+        GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(glslFile.getProject()).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
+
         List<GlslVarNameOriginVariable> result = new ArrayList<>();
         // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
         if (glslFile != null) {
             var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
+            var declarationsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginVariable.class);
+            declarations.addAll(declarationsStd);
+
             for (var node : declarations) {
                 if (node.getTextOffset() < curAt) {
                     result.add(node);
