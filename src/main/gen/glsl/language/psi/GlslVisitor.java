@@ -63,6 +63,10 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMacro(@NotNull GlslMacro o) {
+    visitPsiElement(o);
+  }
+
   public void visitMemberAccess(@NotNull GlslMemberAccess o) {
     visitPsiElement(o);
   }

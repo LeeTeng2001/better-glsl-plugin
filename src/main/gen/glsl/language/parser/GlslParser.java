@@ -422,6 +422,30 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // HASHTAG IDENTIFIER init_val*
+  public static boolean macro(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro")) return false;
+    if (!nextTokenIs(b, HASHTAG)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, HASHTAG, IDENTIFIER);
+    r = r && macro_2(b, l + 1);
+    exit_section_(b, m, MACRO, r);
+    return r;
+  }
+
+  // init_val*
+  private static boolean macro_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!init_val(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "macro_2", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // var_name_access_var (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?
   public static boolean member_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access")) return false;
@@ -501,11 +525,12 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // expression | declaration | COMMENT | CRLF
+  // macro | expression | declaration | COMMENT | CRLF
   static boolean segment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "segment")) return false;
     boolean r;
-    r = expression(b, l + 1);
+    r = macro(b, l + 1);
+    if (!r) r = expression(b, l + 1);
     if (!r) r = declaration(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);

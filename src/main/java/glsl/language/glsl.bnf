@@ -21,12 +21,12 @@ glslFile ::= segment*
 //glslFile ::= header segment*
 
 //private header ::= '#version' 440
-private segment ::= expression | declaration | COMMENT | CRLF
+private segment ::= macro | expression | declaration | COMMENT | CRLF
 
 // Important top level segment
+macro ::= HASHTAG IDENTIFIER init_val*
 expression ::= expression_assign SEMICOLON
 declaration ::= struct_definition | function_definition | variable_definition
-//private rule_recover ::= !(SEMICOLON)
 
 // Terminal token
 storage_qualifier ::= const | in | out | attribute | uniform | varying | buffer | shared

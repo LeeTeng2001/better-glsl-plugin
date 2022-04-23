@@ -20,6 +20,9 @@ public interface GlslFunctionDefinition extends PsiElement {
   GlslIdentifierType getIdentifierType();
 
   @NotNull
+  List<GlslMacro> getMacroList();
+
+  @NotNull
   GlslVarNameOriginFunc getVarNameOriginFunc();
 
 }

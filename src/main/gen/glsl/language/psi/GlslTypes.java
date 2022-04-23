@@ -22,6 +22,7 @@ public interface GlslTypes {
   IElementType FUNCTION_DEFINITION = new GlslElementType("FUNCTION_DEFINITION");
   IElementType IDENTIFIER_TYPE = new GlslElementType("IDENTIFIER_TYPE");
   IElementType INIT_VAL = new GlslElementType("INIT_VAL");
+  IElementType MACRO = new GlslElementType("MACRO");
   IElementType MEMBER_ACCESS = new GlslElementType("MEMBER_ACCESS");
   IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
@@ -59,6 +60,7 @@ public interface GlslTypes {
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
   IElementType GE_OP = new GlslTokenType("GE_OP");
+  IElementType HASHTAG = new GlslTokenType("HASHTAG");
   IElementType IDENTIFIER = new GlslTokenType("IDENTIFIER");
   IElementType IN = new GlslTokenType("in");
   IElementType INT = new GlslTokenType("int");
@@ -139,6 +141,9 @@ public interface GlslTypes {
       }
       else if (type == INIT_VAL) {
         return new GlslInitValImpl(node);
+      }
+      else if (type == MACRO) {
+        return new GlslMacroImpl(node);
       }
       else if (type == MEMBER_ACCESS) {
         return new GlslMemberAccessImpl(node);

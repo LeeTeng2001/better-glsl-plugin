@@ -7,11 +7,11 @@
 ## Roadmap
 - [x] Autocomplete function name and variable name
 - [x] Member access
-- [ ] Array support
+- [x] Array support
+- [x] Macro, version header
 - [ ] Variable scope reference
 - [ ] Built-in function and variables
 - [ ] Initialise with built-in functions & initialiser
-- [ ] Macro, version header
 - [ ] Member auto complete
 - [ ] Smart function name, variable name filter
 - [ ] for, while, return expression

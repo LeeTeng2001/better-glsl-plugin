@@ -32,6 +32,12 @@ public class GlslCompletionContributor extends CompletionContributor {
             LookupElementBuilder.create("shared").withTypeText("storage qualifier").withIcon(Nodes.Controller),
     };
 
+    private static final LookupElementBuilder[] BUILT_IN_MACRO_LOOKUP = new LookupElementBuilder[] {
+            LookupElementBuilder.create("version").withTypeText("built in macro").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("extension").withTypeText("built in macro").withIcon(Nodes.Controller),
+            LookupElementBuilder.create("line").withTypeText("built in macro").withIcon(Nodes.Controller),
+    };
+
     public GlslCompletionContributor() {
 //        System.out.println("ONCE!");
 
@@ -45,9 +51,19 @@ public class GlslCompletionContributor extends CompletionContributor {
                         var lookBack = node;
                         // Look 2 step behind (skip whitespace token)
                         for (int i = 0; i < 2; i++) {
-                            if (lookBack != null)
-                                lookBack = lookBack.getPrevSibling();
+                            if (lookBack == null) break;
+
+                            // Macro definition
+                            if (lookBack.getNode().getElementType().equals(GlslTypes.HASHTAG)) {
+                                for (var elementBuilder : BUILT_IN_MACRO_LOOKUP) {
+                                    resultSet.addElement(elementBuilder);
+                                }
+                                return;
+                            }
+
+                            lookBack = lookBack.getPrevSibling();
                         }
+
                         var lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
 
                         // No completion if we already have primitive/identifier types before us, or we're

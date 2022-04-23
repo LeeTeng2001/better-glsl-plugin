@@ -46,6 +46,7 @@ struct                                { return GlslTypes.STRUCT; }
 ")"                                { return GlslTypes.PAREN_R; }
 ","                                { return GlslTypes.COMMA; }
 "."                                { return GlslTypes.DOT; }
+"#"                                { return GlslTypes.HASHTAG; }
 
 // Assignment symbols --------------------------------------------
 "="                     {return GlslTypes.EQUAL; }
@@ -101,7 +102,6 @@ shared                  {return GlslTypes.SHARED; }
 <YYINITIAL> {INTEGER_CONSTANT}                                { return GlslTypes.INTEGER_CONSTANT; }
 <YYINITIAL> {FLOAT_CONSTANT}                                { return GlslTypes.FLOAT_CONSTANT; }
 <YYINITIAL> {IDENTIFIER}                                { return GlslTypes.IDENTIFIER; }
-
 
 <WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 <WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }

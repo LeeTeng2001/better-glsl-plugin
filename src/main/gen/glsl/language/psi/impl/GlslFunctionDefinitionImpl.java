@@ -53,6 +53,12 @@ public class GlslFunctionDefinitionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
+  public List<GlslMacro> getMacroList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslMacro.class);
+  }
+
+  @Override
+  @NotNull
   public GlslVarNameOriginFunc getVarNameOriginFunc() {
     return findNotNullChildByClass(GlslVarNameOriginFunc.class);
   }
