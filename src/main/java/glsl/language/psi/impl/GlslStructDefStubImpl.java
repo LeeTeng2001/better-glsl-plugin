@@ -20,8 +20,6 @@ public class GlslStructDefStubImpl extends StubBase<GlslVarNameOriginStruct> imp
         return null;
     }
 
-
-
     @Override
     public ArrayList<Pair<String, String>> getMembers() {
         return null;
