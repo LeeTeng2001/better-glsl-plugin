@@ -50,13 +50,14 @@ public class GlslUtil {
 
     public static List<GlslVarNameOriginVariable> findDefinedVariables(PsiFile glslFile, int curAt) {
         GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(glslFile.getProject()).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
-        List<GlslVarNameOriginVariable> result = new ArrayList<>();
 
         // Not sure about performance impact of findChildren vs getChildren, virtual file vs custom language file
-        var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
         var declarationsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginVariable.class);
-        declarations.addAll(declarationsStd);
+        var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
 
+        List<GlslVarNameOriginVariable> result = new ArrayList<>(declarationsStd);
+
+        // Filter by current cursor position in current file
         for (var node : declarations) {
             if (node.getTextOffset() < curAt) {
                 result.add(node);

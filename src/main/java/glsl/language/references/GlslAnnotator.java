@@ -46,13 +46,16 @@ public class GlslAnnotator implements Annotator {
                         .create();
             }
         }
-        else if (node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_FUNC)) {
+        else if (node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_FUNC) ||
+                node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_VAR)) {
             var resolve = node.getPsi().getReference();
             assert resolve != null;
             if (!resolve.getElement().getNode().equals(node)) return;
 
-            // Undefined function access
-            holder.newAnnotation(HighlightSeverity.ERROR, "Call to undefined function")
+            // Undefined function/variable access
+            String message = node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_FUNC) ?
+                    "Call to undefined function" : "Call to undefined variable";
+            holder.newAnnotation(HighlightSeverity.ERROR, message)
                     .range(element)
                     .create();
         }

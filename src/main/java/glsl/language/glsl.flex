@@ -19,8 +19,8 @@ CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 
 END_OF_LINE_COMMENT="//"[^\r\n]*
-INTEGER_CONSTANT=\d+
-FLOAT_CONSTANT=\d+\.\d+
+INTEGER_CONSTANT=[+-]?\d+
+FLOAT_CONSTANT=[+-]?\d+\.\d+
 IDENTIFIER=[:jletter:][:jletterdigit:]*
 
 %state WAITING_VALUE
