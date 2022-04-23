@@ -569,7 +569,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HASHTAG IDENTIFIER IDENTIFIER? (FLOAT_CONSTANT | INTEGER_CONSTANT | IDENTIFIER)?
+  // HASHTAG IDENTIFIER IDENTIFIER? ((COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT)?
   public static boolean macro(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro")) return false;
     if (!nextTokenIs(b, HASHTAG)) return false;
@@ -589,20 +589,32 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (FLOAT_CONSTANT | INTEGER_CONSTANT | IDENTIFIER)?
+  // ((COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT)?
   private static boolean macro_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_3")) return false;
     macro_3_0(b, l + 1);
     return true;
   }
 
-  // FLOAT_CONSTANT | INTEGER_CONSTANT | IDENTIFIER
+  // (COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT
   private static boolean macro_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_3_0")) return false;
     boolean r;
-    r = consumeToken(b, FLOAT_CONSTANT);
+    Marker m = enter_section_(b);
+    r = macro_3_0_0(b, l + 1);
+    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
-    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COLON IDENTIFIER
+  private static boolean macro_3_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_3_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COLON, IDENTIFIER);
+    exit_section_(b, m, null, r);
     return r;
   }
 

@@ -74,8 +74,6 @@ public class GlslCompletionContributor extends CompletionContributor {
                             resultSet.addElement(LookupElementBuilder.create(variable.getText())
                                     .withTypeText("variable").withIcon(Nodes.Variable));
                         }
-
-                        // TODO: Add built in function
                     }
                 }
         );

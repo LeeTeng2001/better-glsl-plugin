@@ -47,6 +47,7 @@ public interface GlslTypes {
   IElementType BOOL = new GlslTokenType("bool");
   IElementType BUFFER = new GlslTokenType("buffer");
   IElementType CARET = new GlslTokenType("CARET");
+  IElementType COLON = new GlslTokenType("COLON");
   IElementType COMMA = new GlslTokenType("COMMA");
   IElementType COMMENT = new GlslTokenType("COMMENT");
   IElementType CONST = new GlslTokenType("const");

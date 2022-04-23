@@ -24,7 +24,7 @@ glslFile ::= segment*
 private segment ::= macro | expression | declaration | COMMENT | CRLF
 
 // Important top level segment
-macro ::= HASHTAG IDENTIFIER IDENTIFIER? (FLOAT_CONSTANT | INTEGER_CONSTANT | IDENTIFIER)?
+macro ::= HASHTAG IDENTIFIER IDENTIFIER? ((COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT)?  // TODO: cannot handle newline!
 expression ::= expression_assign SEMICOLON
 declaration ::= struct_definition | function_definition | variable_definition
 

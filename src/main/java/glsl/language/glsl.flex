@@ -38,6 +38,7 @@ struct                                { return GlslTypes.STRUCT; }
 
 // Other symbols ------------------------------------------------
 ";"                                { return GlslTypes.SEMICOLON; }
+":"                                { return GlslTypes.COLON; }
 "{"                                { return GlslTypes.C_BRACKET_L; }
 "}"                                { return GlslTypes.C_BRACKET_R; }
 "["                                { return GlslTypes.S_BRACKET_L; }
