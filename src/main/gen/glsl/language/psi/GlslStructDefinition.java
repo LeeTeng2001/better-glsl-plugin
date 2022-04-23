@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface GlslStructDefinition extends PsiElement {
 
   @Nullable
+  GlslLayoutQualifier getLayoutQualifier();
+
+  @Nullable
   GlslVarNameOriginStruct getVarNameOriginStruct();
 
   @NotNull

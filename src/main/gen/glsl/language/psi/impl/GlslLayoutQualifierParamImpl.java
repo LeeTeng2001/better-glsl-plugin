@@ -11,26 +11,20 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslStorageQualifierImpl extends ASTWrapperPsiElement implements GlslStorageQualifier {
+public class GlslLayoutQualifierParamImpl extends ASTWrapperPsiElement implements GlslLayoutQualifierParam {
 
-  public GlslStorageQualifierImpl(@NotNull ASTNode node) {
+  public GlslLayoutQualifierParamImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitStorageQualifier(this);
+    visitor.visitLayoutQualifierParam(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public GlslLayoutQualifier getLayoutQualifier() {
-    return findChildByClass(GlslLayoutQualifier.class);
   }
 
 }

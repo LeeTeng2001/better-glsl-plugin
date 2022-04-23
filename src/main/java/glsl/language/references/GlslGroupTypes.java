@@ -23,11 +23,10 @@ public class GlslGroupTypes {
             GlslTypes.CONST,
             GlslTypes.IN,
             GlslTypes.OUT,
-            GlslTypes.ATTRIBUTE,
             GlslTypes.UNIFORM,
-            GlslTypes.VARYING,
             GlslTypes.BUFFER,
-            GlslTypes.SHARED
+            GlslTypes.SHARED,
+            GlslTypes.LAYOUT
     ).collect(Collectors.toUnmodifiableSet());
 
     public static final Set<IElementType> ASSIGNMENT_OP_KEYWORDS = Stream.of(

@@ -63,6 +63,18 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInitializer(@NotNull GlslInitializer o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLayoutQualifier(@NotNull GlslLayoutQualifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLayoutQualifierParam(@NotNull GlslLayoutQualifierParam o) {
+    visitPsiElement(o);
+  }
+
   public void visitMacro(@NotNull GlslMacro o) {
     visitPsiElement(o);
   }

@@ -88,11 +88,12 @@ struct                                { return GlslTypes.STRUCT; }
 const                   {return GlslTypes.CONST; }
 in                   {return GlslTypes.IN; }
 out                   {return GlslTypes.OUT; }
-attribute               {return GlslTypes.ATTRIBUTE; }
 uniform                 {return GlslTypes.UNIFORM; }
-varying                 {return GlslTypes.VARYING; }
 buffer                  {return GlslTypes.BUFFER; }
 shared                  {return GlslTypes.SHARED; }
+layout                  {return GlslTypes.LAYOUT; }
+//attribute               {return GlslTypes.ATTRIBUTE; }  // drop deprecated keyword
+//varying                 {return GlslTypes.VARYING; }
 
 //centroid                {return CENTROID_KEYWORD; }
 //patch                   {return PATCH_KEYWORD; }

@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface GlslMacro extends PsiElement {
 
-  @NotNull
-  List<GlslInitVal> getInitValList();
-
 }

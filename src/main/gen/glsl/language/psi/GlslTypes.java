@@ -21,7 +21,10 @@ public interface GlslTypes {
   IElementType FUNCTION_CALL = new GlslElementType("FUNCTION_CALL");
   IElementType FUNCTION_DEFINITION = new GlslElementType("FUNCTION_DEFINITION");
   IElementType IDENTIFIER_TYPE = new GlslElementType("IDENTIFIER_TYPE");
+  IElementType INITIALIZER = new GlslElementType("INITIALIZER");
   IElementType INIT_VAL = new GlslElementType("INIT_VAL");
+  IElementType LAYOUT_QUALIFIER = new GlslElementType("LAYOUT_QUALIFIER");
+  IElementType LAYOUT_QUALIFIER_PARAM = new GlslElementType("LAYOUT_QUALIFIER_PARAM");
   IElementType MACRO = new GlslElementType("MACRO");
   IElementType MEMBER_ACCESS = new GlslElementType("MEMBER_ACCESS");
   IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
@@ -41,7 +44,6 @@ public interface GlslTypes {
   IElementType AND_OP = new GlslTokenType("AND_OP");
   IElementType ANGLE_L = new GlslTokenType("ANGLE_L");
   IElementType ANGLE_R = new GlslTokenType("ANGLE_R");
-  IElementType ATTRIBUTE = new GlslTokenType("attribute");
   IElementType BOOL = new GlslTokenType("bool");
   IElementType BUFFER = new GlslTokenType("buffer");
   IElementType CARET = new GlslTokenType("CARET");
@@ -65,6 +67,7 @@ public interface GlslTypes {
   IElementType IN = new GlslTokenType("in");
   IElementType INT = new GlslTokenType("int");
   IElementType INTEGER_CONSTANT = new GlslTokenType("INTEGER_CONSTANT");
+  IElementType LAYOUT = new GlslTokenType("layout");
   IElementType LEFT_ASSIGN = new GlslTokenType("LEFT_ASSIGN");
   IElementType LEFT_OP = new GlslTokenType("LEFT_OP");
   IElementType LE_OP = new GlslTokenType("LE_OP");
@@ -91,7 +94,6 @@ public interface GlslTypes {
   IElementType S_BRACKET_R = new GlslTokenType("S_BRACKET_R");
   IElementType UINT = new GlslTokenType("uint");
   IElementType UNIFORM = new GlslTokenType("uniform");
-  IElementType VARYING = new GlslTokenType("varying");
   IElementType VERTICAL_BAR = new GlslTokenType("VERTICAL_BAR");
   IElementType VOID = new GlslTokenType("void");
   IElementType XOR_ASSIGN = new GlslTokenType("XOR_ASSIGN");
@@ -139,8 +141,17 @@ public interface GlslTypes {
       else if (type == IDENTIFIER_TYPE) {
         return new GlslIdentifierTypeImpl(node);
       }
+      else if (type == INITIALIZER) {
+        return new GlslInitializerImpl(node);
+      }
       else if (type == INIT_VAL) {
         return new GlslInitValImpl(node);
+      }
+      else if (type == LAYOUT_QUALIFIER) {
+        return new GlslLayoutQualifierImpl(node);
+      }
+      else if (type == LAYOUT_QUALIFIER_PARAM) {
+        return new GlslLayoutQualifierParamImpl(node);
       }
       else if (type == MACRO) {
         return new GlslMacroImpl(node);

@@ -29,6 +29,12 @@ public class GlslStructDefinitionImpl extends ASTWrapperPsiElement implements Gl
 
   @Override
   @Nullable
+  public GlslLayoutQualifier getLayoutQualifier() {
+    return findChildByClass(GlslLayoutQualifier.class);
+  }
+
+  @Override
+  @Nullable
   public GlslVarNameOriginStruct getVarNameOriginStruct() {
     return findChildByClass(GlslVarNameOriginStruct.class);
   }

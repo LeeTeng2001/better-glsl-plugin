@@ -11,14 +11,14 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslStorageQualifierImpl extends ASTWrapperPsiElement implements GlslStorageQualifier {
+public class GlslLayoutQualifierImpl extends ASTWrapperPsiElement implements GlslLayoutQualifier {
 
-  public GlslStorageQualifierImpl(@NotNull ASTNode node) {
+  public GlslLayoutQualifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitStorageQualifier(this);
+    visitor.visitLayoutQualifier(this);
   }
 
   @Override
@@ -28,9 +28,9 @@ public class GlslStorageQualifierImpl extends ASTWrapperPsiElement implements Gl
   }
 
   @Override
-  @Nullable
-  public GlslLayoutQualifier getLayoutQualifier() {
-    return findChildByClass(GlslLayoutQualifier.class);
+  @NotNull
+  public List<GlslLayoutQualifierParam> getLayoutQualifierParamList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslLayoutQualifierParam.class);
   }
 
 }

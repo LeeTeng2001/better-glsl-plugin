@@ -27,10 +27,4 @@ public class GlslMacroImpl extends ASTWrapperPsiElement implements GlslMacro {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public List<GlslInitVal> getInitValList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslInitVal.class);
-  }
-
 }

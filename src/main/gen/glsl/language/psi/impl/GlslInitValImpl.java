@@ -27,4 +27,16 @@ public class GlslInitValImpl extends ASTWrapperPsiElement implements GlslInitVal
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public GlslInitializer getInitializer() {
+    return findChildByClass(GlslInitializer.class);
+  }
+
+  @Override
+  @Nullable
+  public GlslMemberAccess getMemberAccess() {
+    return findChildByClass(GlslMemberAccess.class);
+  }
+
 }

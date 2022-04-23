@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslInitVal extends PsiElement {
+public interface GlslInitializer extends PsiElement {
 
-  @Nullable
-  GlslInitializer getInitializer();
+  @NotNull
+  List<GlslExpressionNoAssign> getExpressionNoAssignList();
 
-  @Nullable
-  GlslMemberAccess getMemberAccess();
+  @NotNull
+  GlslIdentifierType getIdentifierType();
 
 }
