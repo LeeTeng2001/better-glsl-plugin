@@ -40,6 +40,9 @@
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslCommenter" />
 
+        <!-- libraries -->
+        <additionalLibraryRootsProvider implementation="glsl.language.utility.GlslStdLibraryProvider" />
+
     </extensions>
 
     <applicationListeners>

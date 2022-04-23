@@ -9,9 +9,9 @@
 - [x] Member access
 - [x] Array support
 - [x] Macro, version header
-- [ ] Variable scope reference
 - [ ] Built-in function and variables
 - [ ] Initialise with built-in functions & initialiser
+- [ ] Variable scope reference
 - [ ] Member auto complete
 - [ ] Smart function name, variable name filter
 - [ ] for, while, return expression
