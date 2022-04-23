@@ -18,9 +18,8 @@ public class GlslCompletionUtils {
             LookupElementBuilder.create("const").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             LookupElementBuilder.create("in").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             LookupElementBuilder.create("out").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
-            LookupElementBuilder.create("attribute").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             LookupElementBuilder.create("uniform").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
-            LookupElementBuilder.create("varying").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
+            LookupElementBuilder.create("layout").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             LookupElementBuilder.create("buffer").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             LookupElementBuilder.create("shared").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
     };

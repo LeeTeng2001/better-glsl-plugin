@@ -5,6 +5,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.icons.AllIcons.Nodes;
 import com.intellij.util.ProcessingContext;
 import glsl.language.psi.GlslTypes;
+import glsl.language.references.handles.GlslCallClause;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,15 +27,6 @@ public class GlslCompletionContributor extends CompletionContributor {
                         // Look 2 step behind (skip whitespace token)
                         for (int i = 0; i < 2; i++) {
                             if (lookBack == null) break;
-
-                            // Macro definition
-                            if (lookBack.getNode().getElementType().equals(GlslTypes.HASHTAG)) {
-                                for (var elementBuilder : BUILT_IN_MACRO_LOOKUP) {
-                                    resultSet.addElement(elementBuilder);
-                                }
-                                return;
-                            }
-
                             lookBack = lookBack.getPrevSibling();
                         }
 
@@ -70,8 +62,9 @@ public class GlslCompletionContributor extends CompletionContributor {
 
                         // Add functions
                         var definedFunc = GlslUtil.findDefinedFunctions(node.getContainingFile(), node.getTextOffset());
+                        var callClause = new GlslCallClause();
                         for (var func : definedFunc) {
-                            resultSet.addElement(LookupElementBuilder.create(func.getText())
+                            resultSet.addElement(LookupElementBuilder.create(func.getText()).withInsertHandler(callClause)
                                     .withTypeText("user func").withIcon(Nodes.Function));
                         }
 
@@ -83,6 +76,19 @@ public class GlslCompletionContributor extends CompletionContributor {
                         }
 
                         // TODO: Add built in function
+                    }
+                }
+        );
+
+
+        // Macro definition
+        extend(CompletionType.BASIC, psiElement().afterLeaf(psiElement(GlslTypes.HASHTAG)), new CompletionProvider<>() {
+                    public void addCompletions(@NotNull CompletionParameters parameters,
+                                               @NotNull ProcessingContext context,
+                                               @NotNull CompletionResultSet resultSet) {
+                        for (var elementBuilder : BUILT_IN_MACRO_LOOKUP) {
+                            resultSet.addElement(elementBuilder);
+                        }
                     }
                 }
         );
