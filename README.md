@@ -5,13 +5,14 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 
 ## Roadmap
-- [ ] Autocomplete function name and variable name
-- [ ] Member access
+- [x] Autocomplete function name and variable name
+- [x] Member access
 - [ ] Array support
 - [ ] Variable scope reference
 - [ ] Built-in function and variables
-- [ ] Initialise with built-in functions
+- [ ] Initialise with built-in functions & initialiser
 - [ ] Macro, version header
+- [ ] Member auto complete
 - [ ] Smart function name, variable name filter
 - [ ] for, while, return expression
 - [ ] Member error annotator

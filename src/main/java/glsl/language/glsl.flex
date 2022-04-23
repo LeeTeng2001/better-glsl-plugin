@@ -40,6 +40,8 @@ struct                                { return GlslTypes.STRUCT; }
 ";"                                { return GlslTypes.SEMICOLON; }
 "{"                                { return GlslTypes.C_BRACKET_L; }
 "}"                                { return GlslTypes.C_BRACKET_R; }
+"["                                { return GlslTypes.S_BRACKET_L; }
+"]"                                { return GlslTypes.S_BRACKET_R; }
 "("                                { return GlslTypes.PAREN_L; }
 ")"                                { return GlslTypes.PAREN_R; }
 ","                                { return GlslTypes.COMMA; }

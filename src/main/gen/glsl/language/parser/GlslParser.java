@@ -1,15 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.parser;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import com.intellij.lang.PsiParser;
-import com.intellij.psi.tree.IElementType;
-
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import static glsl.language.psi.GlslTypes.*;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.TokenSet;
+import com.intellij.lang.PsiParser;
+import com.intellij.lang.LightPsiParser;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class GlslParser implements PsiParser, LightPsiParser {
@@ -422,7 +422,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var_name_access_var (DOT var_name_access_member)*
+  // var_name_access_var (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?
   public static boolean member_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -430,28 +430,42 @@ public class GlslParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = var_name_access_var(b, l + 1);
     r = r && member_access_1(b, l + 1);
+    r = r && member_access_2(b, l + 1);
     exit_section_(b, m, MEMBER_ACCESS, r);
     return r;
   }
 
-  // (DOT var_name_access_member)*
+  // (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)?
   private static boolean member_access_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!member_access_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "member_access_1", c)) break;
-    }
+    member_access_1_0(b, l + 1);
     return true;
   }
 
-  // DOT var_name_access_member
+  // S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R
   private static boolean member_access_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, S_BRACKET_L, INTEGER_CONSTANT, S_BRACKET_R);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (DOT member_access)?
+  private static boolean member_access_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_2")) return false;
+    member_access_2_0(b, l + 1);
+    return true;
+  }
+
+  // DOT member_access
+  private static boolean member_access_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, DOT);
-    r = r && var_name_access_member(b, l + 1);
+    r = r && member_access(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -564,18 +578,6 @@ public class GlslParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // IDENTIFIER
-  public static boolean var_name_access_member(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "var_name_access_member")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, m, VAR_NAME_ACCESS_MEMBER, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER
   public static boolean var_name_access_var(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "var_name_access_var")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -635,7 +637,8 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // storage_qualifier? identifier_type var_name_origin_variable (EQUAL init_val)? SEMICOLON
+  // storage_qualifier? identifier_type var_name_origin_variable
+  //                         (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)? SEMICOLON
   public static boolean variable_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition")) return false;
     boolean r, p;
@@ -645,6 +648,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = r && var_name_origin_variable(b, l + 1);
     p = r; // pin = 3
     r = r && report_error_(b, variable_definition_3(b, l + 1));
+    r = p && report_error_(b, variable_definition_4(b, l + 1)) && r;
     r = p && consumeToken(b, SEMICOLON) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -657,16 +661,33 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (EQUAL init_val)?
+  // (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)?
   private static boolean variable_definition_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_3")) return false;
     variable_definition_3_0(b, l + 1);
     return true;
   }
 
-  // EQUAL init_val
+  // S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R
   private static boolean variable_definition_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, S_BRACKET_L, INTEGER_CONSTANT, S_BRACKET_R);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (EQUAL init_val)?
+  private static boolean variable_definition_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_4")) return false;
+    variable_definition_4_0(b, l + 1);
+    return true;
+  }
+
+  // EQUAL init_val
+  private static boolean variable_definition_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQUAL);

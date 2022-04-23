@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.PsiElement;
+import com.intellij.lang.ASTNode;
 import glsl.language.psi.impl.*;
 
 public interface GlslTypes {
@@ -28,7 +28,6 @@ public interface GlslTypes {
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
   IElementType VAR_NAME_ACCESS_FUNC = new GlslElementType("VAR_NAME_ACCESS_FUNC");
-  IElementType VAR_NAME_ACCESS_MEMBER = new GlslElementType("VAR_NAME_ACCESS_MEMBER");
   IElementType VAR_NAME_ACCESS_VAR = new GlslElementType("VAR_NAME_ACCESS_VAR");
   IElementType VAR_NAME_ORIGIN_FUNC = new GlslElementType("VAR_NAME_ORIGIN_FUNC");
   IElementType VAR_NAME_ORIGIN_STRUCT = new GlslElementType("VAR_NAME_ORIGIN_STRUCT");
@@ -86,6 +85,8 @@ public interface GlslTypes {
   IElementType STAR = new GlslTokenType("STAR");
   IElementType STRUCT = new GlslTokenType("struct");
   IElementType SUB_ASSIGN = new GlslTokenType("SUB_ASSIGN");
+  IElementType S_BRACKET_L = new GlslTokenType("S_BRACKET_L");
+  IElementType S_BRACKET_R = new GlslTokenType("S_BRACKET_R");
   IElementType UINT = new GlslTokenType("uint");
   IElementType UNIFORM = new GlslTokenType("uniform");
   IElementType VARYING = new GlslTokenType("varying");
@@ -156,9 +157,6 @@ public interface GlslTypes {
       }
       else if (type == VAR_NAME_ACCESS_FUNC) {
         return new GlslVarNameAccessFuncImpl(node);
-      }
-      else if (type == VAR_NAME_ACCESS_MEMBER) {
-        return new GlslVarNameAccessMemberImpl(node);
       }
       else if (type == VAR_NAME_ACCESS_VAR) {
         return new GlslVarNameAccessVarImpl(node);

@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi;
 
-import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
 
 public class GlslVisitor extends PsiElementVisitor {
 
@@ -80,10 +80,6 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitVarNameAccessFunc(@NotNull GlslVarNameAccessFunc o) {
-    visitNamedElement(o);
-  }
-
-  public void visitVarNameAccessMember(@NotNull GlslVarNameAccessMember o) {
     visitNamedElement(o);
   }
 

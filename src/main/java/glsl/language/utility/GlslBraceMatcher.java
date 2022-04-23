@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public class GlslBraceMatcher implements PairedBraceMatcher {
     private static final BracePair[] PAIRS = new BracePair[]{
             new BracePair(GlslTypes.C_BRACKET_L, GlslTypes.C_BRACKET_R, false),
+            new BracePair(GlslTypes.S_BRACKET_L, GlslTypes.S_BRACKET_R, false),
             new BracePair(GlslTypes.PAREN_L, GlslTypes.PAREN_R, false),
     };
 

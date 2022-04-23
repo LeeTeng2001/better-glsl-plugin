@@ -1,12 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import glsl.language.psi.GlslStorageQualifier;
-import glsl.language.psi.GlslVisitor;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.util.PsiTreeUtil;
+import static glsl.language.psi.GlslTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import glsl.language.psi.*;
 
 public class GlslStorageQualifierImpl extends ASTWrapperPsiElement implements GlslStorageQualifier {
 
