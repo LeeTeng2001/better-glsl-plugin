@@ -409,14 +409,14 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER | FLOAT_CONSTANT | INTEGER_CONSTANT
+  // FLOAT_CONSTANT | INTEGER_CONSTANT | IDENTIFIER
   public static boolean init_val(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "init_val")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, INIT_VAL, "<init val>");
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
+    r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
+    if (!r) r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

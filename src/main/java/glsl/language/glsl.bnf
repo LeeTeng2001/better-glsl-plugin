@@ -42,7 +42,7 @@ function_args ::= identifier_type var_name_origin_variable (COMMA function_args)
 // Definition
 struct_definition ::= struct var_name_origin_struct C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON {pin=1}
 variable_definition ::= storage_qualifier? identifier_type var_name_origin_variable (EQUAL init_val)? SEMICOLON {pin=3}
-init_val ::= IDENTIFIER | FLOAT_CONSTANT | INTEGER_CONSTANT
+init_val ::=  FLOAT_CONSTANT | INTEGER_CONSTANT | IDENTIFIER
 
 // expression ------------------------------------------------------------
 expression_assign ::= (expression_no_assign | expression_assign_paren) (assign_op expression_assign)?

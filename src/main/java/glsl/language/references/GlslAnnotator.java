@@ -19,7 +19,7 @@ public class GlslAnnotator implements Annotator {
         var node = element.getNode();
 
         // Get identifier that's being use as a type node
-        if (node.getElementType().equals(GlslTypes.VAR_NAME_TYPE) && element.getParent().getNode().getElementType().equals(GlslTypes.IDENTIFIER_TYPE)) {
+        if (node.getElementType().equals(GlslTypes.VAR_NAME_TYPE)) {
             // It has an identifier class type, highlight it
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element)
@@ -45,8 +45,17 @@ public class GlslAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Undefined type")
                         .range(element)
                         .create();
-                return;
             }
+        }
+        else if (node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_FUNC)) {
+            var resolve = node.getPsi().getReference();
+            assert resolve != null;
+            if (!resolve.getElement().getNode().equals(node)) return;
+
+            // Undefined function access
+            holder.newAnnotation(HighlightSeverity.ERROR, "Call to undefined function")
+                    .range(element)
+                    .create();
         }
     }
 }
