@@ -25,7 +25,7 @@ public abstract class GlslNamedVariableAccessFuncImpl extends ASTWrapperPsiEleme
 
         // Find reference to either defined function
         var myText = getText();
-        var definedVariables = GlslUtil.findDefinedVariables(getContainingFile());
+        var definedVariables = GlslUtil.findDefinedFunctions(getContainingFile(), getTextOffset());
 
         // Remember to check scope!
         for (var variable : definedVariables) {

@@ -22,19 +22,19 @@ public abstract class GlslNamedVariableAccessMemberImpl extends ASTWrapperPsiEle
     @Override
     public PsiReference getReference() {
         final PsiReference[] references = getReferences();
-
-        // Find reference to either defined function
-        var myText = getText();
-        var definedVariables = GlslUtil.findDefinedVariables(getContainingFile());
-
-        // Remember to check scope!
-        for (var variable : definedVariables) {
-            var name = variable.getText();
-            if (name == null) continue;
-            if (name.equals(myText)) {
-                return variable.getReference();
-            }
-        }
+//
+//        // Find reference to either defined function
+//        var myText = getText();
+//        var definedVariables = GlslUtil.findDefinedVariables(getContainingFile());
+//
+//        // Remember to check scope!
+//        for (var variable : definedVariables) {
+//            var name = variable.getText();
+//            if (name == null) continue;
+//            if (name.equals(myText)) {
+//                return variable.getReference();
+//            }
+//        }
 
         return references.length > 0 ? references[0] : null;
     }

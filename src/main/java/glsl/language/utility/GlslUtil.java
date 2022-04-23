@@ -46,12 +46,16 @@ public class GlslUtil {
         return result;
     }
 
-    public static List<GlslVarNameOriginVariable> findDefinedVariables(PsiFile glslFile) {
+    public static List<GlslVarNameOriginVariable> findDefinedVariables(PsiFile glslFile, int curAt) {
         List<GlslVarNameOriginVariable> result = new ArrayList<>();
         // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
         if (glslFile != null) {
             var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
-            result.addAll(declarations);
+            for (var node : declarations) {
+                if (node.getTextOffset() < curAt) {
+                    result.add(node);
+                }
+            }
         }
         return result;
     }
