@@ -1,13 +1,10 @@
 package glsl.language.references;
 
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import glsl.language.utility.GlslUtil;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReferenceBase;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GlslReference extends PsiReferenceBase<PsiElement> {
     public GlslReference(@NotNull PsiElement element, TextRange textRange) {

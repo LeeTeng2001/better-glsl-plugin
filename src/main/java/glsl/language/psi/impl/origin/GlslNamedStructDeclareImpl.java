@@ -2,17 +2,10 @@ package glsl.language.psi.impl.origin;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiCompiledElement;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.tree.IElementType;
 import glsl.language.psi.GlslNamedElement;
-import glsl.language.psi.GlslTypes;
-import kotlin.Pair;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public abstract class GlslNamedStructDeclareImpl extends ASTWrapperPsiElement implements GlslNamedElement {
     public GlslNamedStructDeclareImpl(@NotNull ASTNode node) {

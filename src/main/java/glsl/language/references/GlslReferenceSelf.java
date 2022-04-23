@@ -1,17 +1,9 @@
 package glsl.language.references;
 
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
-import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GlslReferenceSelf extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
     public GlslReferenceSelf(@NotNull PsiElement element, TextRange textRange) {

@@ -8,8 +8,6 @@ import glsl.language.psi.GlslTypes;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class GlslCompletionContributor extends CompletionContributor {

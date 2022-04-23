@@ -1,20 +1,12 @@
 package glsl.language.utility;
 
-import com.google.common.collect.Lists;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.search.FileTypeIndex;
-import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
-import glsl.language.property.GlslFileType;
-import glsl.language.psi.*;
-import org.jetbrains.annotations.NotNull;
+import glsl.language.psi.GlslVarNameOriginFunc;
+import glsl.language.psi.GlslVarNameOriginStruct;
+import glsl.language.psi.GlslVarNameOriginVariable;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 public class GlslUtil {

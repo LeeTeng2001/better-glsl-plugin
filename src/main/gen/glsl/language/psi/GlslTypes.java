@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.IElementType;
 import glsl.language.psi.impl.*;
 
 public interface GlslTypes {

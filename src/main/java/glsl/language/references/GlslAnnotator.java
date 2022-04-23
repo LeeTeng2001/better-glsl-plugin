@@ -6,7 +6,6 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
-import glsl.language.psi.GlslDeclaration;
 import glsl.language.psi.GlslTypes;
 import glsl.language.psi.GlslVarNameOriginStruct;
 import glsl.language.utility.GlslSyntaxHighlighter;

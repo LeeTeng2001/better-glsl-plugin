@@ -1,7 +1,7 @@
 package com.github.leeteng2001.betterglsljetbrain.services
 
-import com.intellij.openapi.project.Project
 import com.github.leeteng2001.betterglsljetbrain.MyBundle
+import com.intellij.openapi.project.Project
 
 class MyProjectService(project: Project) {
 

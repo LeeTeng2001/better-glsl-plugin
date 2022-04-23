@@ -1,7 +1,6 @@
 package glsl.language.psi.stub;
 
 import com.intellij.psi.stubs.StubElement;
-import com.intellij.psi.tree.IElementType;
 import glsl.language.psi.GlslVarNameOriginStruct;
 import kotlin.Pair;
 
