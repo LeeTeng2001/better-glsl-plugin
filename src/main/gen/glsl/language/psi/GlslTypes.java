@@ -44,6 +44,7 @@ public interface GlslTypes {
   IElementType UNARY_SIGN_OP = new GlslElementType("UNARY_SIGN_OP");
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
   IElementType VAR_NAME_ACCESS_FUNC = new GlslElementType("VAR_NAME_ACCESS_FUNC");
+  IElementType VAR_NAME_ACCESS_MEMBER = new GlslElementType("VAR_NAME_ACCESS_MEMBER");
   IElementType VAR_NAME_ACCESS_VAR = new GlslElementType("VAR_NAME_ACCESS_VAR");
   IElementType VAR_NAME_ORIGIN_FUNC = new GlslElementType("VAR_NAME_ORIGIN_FUNC");
   IElementType VAR_NAME_ORIGIN_STRUCT = new GlslElementType("VAR_NAME_ORIGIN_STRUCT");
@@ -240,6 +241,9 @@ public interface GlslTypes {
       }
       else if (type == VAR_NAME_ACCESS_FUNC) {
         return new GlslVarNameAccessFuncImpl(node);
+      }
+      else if (type == VAR_NAME_ACCESS_MEMBER) {
+        return new GlslVarNameAccessMemberImpl(node);
       }
       else if (type == VAR_NAME_ACCESS_VAR) {
         return new GlslVarNameAccessVarImpl(node);

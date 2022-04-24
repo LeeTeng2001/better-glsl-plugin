@@ -147,6 +147,10 @@ public class GlslVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitVarNameAccessMember(@NotNull GlslVarNameAccessMember o) {
+    visitNamedElement(o);
+  }
+
   public void visitVarNameAccessVar(@NotNull GlslVarNameAccessVar o) {
     visitNamedElement(o);
   }

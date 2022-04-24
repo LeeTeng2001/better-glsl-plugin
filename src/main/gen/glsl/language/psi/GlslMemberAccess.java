@@ -11,6 +11,6 @@ public interface GlslMemberAccess extends PsiElement {
   GlslMemberAccess getMemberAccess();
 
   @NotNull
-  GlslVarNameAccessVar getVarNameAccessVar();
+  GlslVarNameAccessMember getVarNameAccessMember();
 
 }

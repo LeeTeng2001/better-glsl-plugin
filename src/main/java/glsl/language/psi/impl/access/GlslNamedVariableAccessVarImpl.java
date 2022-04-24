@@ -36,17 +36,19 @@ public abstract class GlslNamedVariableAccessVarImpl extends ASTWrapperPsiElemen
     @Override
     public PsiReference getReference() {
         final PsiReference[] references = getReferences();
-
-        // Find reference to either defined function
         var myText = getText();
-        var definedVariables = GlslUtil.findDefinedVariables(getContainingFile(), getTextOffset());
+        return getReferenceVarAccess(references, myText, this);
+    }
+
+    public static PsiReference getReferenceVarAccess(final PsiReference[] references, String fromText, PsiElement fromNode) {
+        var definedVariables = GlslUtil.findDefinedVariables(fromNode.getContainingFile(), fromNode.getTextOffset());
 
         // check candidates
         var candidates = new ArrayList<PsiElement>();
         for (var variable : definedVariables) {
             var name = variable.getText();
             if (name == null) continue;
-            if (name.equals(myText)) {
+            if (name.equals(fromText)) {
                 candidates.add(variable);
             }
         }
@@ -56,7 +58,7 @@ public abstract class GlslNamedVariableAccessVarImpl extends ASTWrapperPsiElemen
         else if (candidates.size() == 1) return candidates.get(0).getReference();
 
         // Check scope starting from access node the closest scope
-        PsiElement accessScope = getClosestScope(this);
+        PsiElement accessScope = getClosestScope(fromNode);
         while (accessScope != null) {
             for (var candidate : candidates) {
                 var candScope = getClosestScope(candidate);

@@ -83,7 +83,7 @@ expression_no_assign ::= (expression_unit | expression_no_assign_paren) ((arithm
 expression_no_assign_paren ::= PAREN_L expression_no_assign PAREN_R
 expression_unit ::= unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access) unary_back_op?  // TODO: lazy unary
 function_call ::= var_name_access_func PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign??
-member_access ::= var_name_access_var (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?  // TODO: reference, non-integer access
+member_access ::= var_name_access_member (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?  // TODO: reference, non-integer access
 
 // Swizzle built in type
 //swizzle_access ::= IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?
@@ -130,11 +130,11 @@ var_name_access_var ::= IDENTIFIER {
   methods=[getName setName getNameIdentifier]
 }
 
-//var_name_access_member ::= IDENTIFIER {
-//  mixin="glsl.language.psi.impl.access.GlslNamedVariableAccessMemberImpl"
-//  implements="glsl.language.psi.GlslNamedElement"
-//  methods=[getName setName getNameIdentifier]
-//}
+var_name_access_member ::= IDENTIFIER {
+  mixin="glsl.language.psi.impl.access.GlslNamedVariableAccessMemberImpl"
+  implements="glsl.language.psi.GlslNamedElement"
+  methods=[getName setName getNameIdentifier]
+}
 
 // Useless token to represent no token
 private useless_expression ::= NULL_TOKEN
