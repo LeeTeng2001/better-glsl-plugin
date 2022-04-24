@@ -36,6 +36,22 @@ double                                { return GlslTypes.DOUBLE; }
 bool                                { return GlslTypes.BOOL; }
 struct                                { return GlslTypes.STRUCT; }
 
+// Control flow keyword ------------------------------------------------
+if                                { return GlslTypes.IF; }
+else                                { return GlslTypes.ELSE; }
+switch                                { return GlslTypes.SWITCH; }
+case                                { return GlslTypes.CASE; }
+default                                { return GlslTypes.DEFAULT; }
+do                                { return GlslTypes.DO; }
+while                                { return GlslTypes.WHILE; }
+for                                { return GlslTypes.FOR; }
+
+break                                { return GlslTypes.BREAK; }
+continue                                { return GlslTypes.CONTINUE; }
+return                                { return GlslTypes.RETURN; }
+discard                                { return GlslTypes.DISCARD; }
+
+
 // Other symbols ------------------------------------------------
 ";"                                { return GlslTypes.SEMICOLON; }
 ":"                                { return GlslTypes.COLON; }
@@ -95,6 +111,9 @@ shared                  {return GlslTypes.SHARED; }
 layout                  {return GlslTypes.LAYOUT; }
 //attribute               {return GlslTypes.ATTRIBUTE; }  // drop deprecated keyword
 //varying                 {return GlslTypes.VARYING; }
+
+
+// Layout qualifier keyword?
 
 //centroid                {return CENTROID_KEYWORD; }
 //patch                   {return PATCH_KEYWORD; }

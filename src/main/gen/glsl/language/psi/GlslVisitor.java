@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi;
 
-import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
 
 public class GlslVisitor extends PsiElementVisitor {
 
@@ -16,6 +16,14 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitDeclaration(@NotNull GlslDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExitControlReturn(@NotNull GlslExitControlReturn o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExitControlSingle(@NotNull GlslExitControlSingle o) {
     visitPsiElement(o);
   }
 
@@ -84,6 +92,34 @@ public class GlslVisitor extends PsiElementVisitor {
   }
 
   public void visitRelationalOp(@NotNull GlslRelationalOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatement(@NotNull GlslStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatementDoWhile(@NotNull GlslStatementDoWhile o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatementElse(@NotNull GlslStatementElse o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatementFor(@NotNull GlslStatementFor o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatementIf(@NotNull GlslStatementIf o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatementSwitch(@NotNull GlslStatementSwitch o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStatementWhileNormal(@NotNull GlslStatementWhileNormal o) {
     visitPsiElement(o);
   }
 

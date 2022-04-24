@@ -1,11 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface GlslFunctionDefinition extends PsiElement {
 
@@ -23,6 +21,9 @@ public interface GlslFunctionDefinition extends PsiElement {
 
   @NotNull
   List<GlslMacro> getMacroList();
+
+  @NotNull
+  List<GlslStatement> getStatementList();
 
   @NotNull
   GlslVarNameOriginFunc getVarNameOriginFunc();

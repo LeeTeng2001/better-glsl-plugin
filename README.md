@@ -12,13 +12,16 @@
 - [x] Built-in function and variables (the essential first)
 - [x] Initialise with built-in functions & initializer
 - [x] Formatter, auto indentation
-- [ ] standard library usage styling
-- [ ] Variable scope reference
+- [x] standard library usage styling
 - [ ] for, while, return expression
+- [ ] Variable scope reference
 - [ ] Auto complete for member access
 - [ ] Support for vec type, swizzle expression
 - [ ] Smart function name, variable name filter
 - [ ] Member error annotator
+
+## Feature that's good to have but not in top priority
+- Expression validation
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.

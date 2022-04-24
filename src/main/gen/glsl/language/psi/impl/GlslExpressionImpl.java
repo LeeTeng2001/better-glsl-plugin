@@ -1,13 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import glsl.language.psi.GlslExpression;
-import glsl.language.psi.GlslExpressionAssign;
-import glsl.language.psi.GlslVisitor;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.util.PsiTreeUtil;
+import static glsl.language.psi.GlslTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import glsl.language.psi.*;
 
 public class GlslExpressionImpl extends ASTWrapperPsiElement implements GlslExpression {
 
@@ -26,9 +28,21 @@ public class GlslExpressionImpl extends ASTWrapperPsiElement implements GlslExpr
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public GlslExitControlReturn getExitControlReturn() {
+    return findChildByClass(GlslExitControlReturn.class);
+  }
+
+  @Override
+  @Nullable
+  public GlslExitControlSingle getExitControlSingle() {
+    return findChildByClass(GlslExitControlSingle.class);
+  }
+
+  @Override
+  @Nullable
   public GlslExpressionAssign getExpressionAssign() {
-    return findNotNullChildByClass(GlslExpressionAssign.class);
+    return findChildByClass(GlslExpressionAssign.class);
   }
 
 }

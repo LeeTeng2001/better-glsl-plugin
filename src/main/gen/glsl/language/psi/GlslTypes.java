@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.PsiElement;
+import com.intellij.lang.ASTNode;
 import glsl.language.psi.impl.*;
 
 public interface GlslTypes {
@@ -11,6 +11,8 @@ public interface GlslTypes {
   IElementType ARITHMETIC_OP = new GlslElementType("ARITHMETIC_OP");
   IElementType ASSIGN_OP = new GlslElementType("ASSIGN_OP");
   IElementType DECLARATION = new GlslElementType("DECLARATION");
+  IElementType EXIT_CONTROL_RETURN = new GlslElementType("EXIT_CONTROL_RETURN");
+  IElementType EXIT_CONTROL_SINGLE = new GlslElementType("EXIT_CONTROL_SINGLE");
   IElementType EXPRESSION = new GlslElementType("EXPRESSION");
   IElementType EXPRESSION_ASSIGN = new GlslElementType("EXPRESSION_ASSIGN");
   IElementType EXPRESSION_ASSIGN_PAREN = new GlslElementType("EXPRESSION_ASSIGN_PAREN");
@@ -28,6 +30,13 @@ public interface GlslTypes {
   IElementType MACRO = new GlslElementType("MACRO");
   IElementType MEMBER_ACCESS = new GlslElementType("MEMBER_ACCESS");
   IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
+  IElementType STATEMENT = new GlslElementType("STATEMENT");
+  IElementType STATEMENT_DO_WHILE = new GlslElementType("STATEMENT_DO_WHILE");
+  IElementType STATEMENT_ELSE = new GlslElementType("STATEMENT_ELSE");
+  IElementType STATEMENT_FOR = new GlslElementType("STATEMENT_FOR");
+  IElementType STATEMENT_IF = new GlslElementType("STATEMENT_IF");
+  IElementType STATEMENT_SWITCH = new GlslElementType("STATEMENT_SWITCH");
+  IElementType STATEMENT_WHILE_NORMAL = new GlslElementType("STATEMENT_WHILE_NORMAL");
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
@@ -45,26 +54,35 @@ public interface GlslTypes {
   IElementType ANGLE_L = new GlslTokenType("ANGLE_L");
   IElementType ANGLE_R = new GlslTokenType("ANGLE_R");
   IElementType BOOL = new GlslTokenType("bool");
+  IElementType BREAK = new GlslTokenType("break");
   IElementType BUFFER = new GlslTokenType("buffer");
   IElementType CARET = new GlslTokenType("CARET");
+  IElementType CASE = new GlslTokenType("case");
   IElementType COLON = new GlslTokenType("COLON");
   IElementType COMMA = new GlslTokenType("COMMA");
   IElementType COMMENT = new GlslTokenType("COMMENT");
   IElementType CONST = new GlslTokenType("const");
+  IElementType CONTINUE = new GlslTokenType("continue");
   IElementType CRLF = new GlslTokenType("CRLF");
   IElementType C_BRACKET_L = new GlslTokenType("C_BRACKET_L");
   IElementType C_BRACKET_R = new GlslTokenType("C_BRACKET_R");
   IElementType DASH = new GlslTokenType("DASH");
+  IElementType DEFAULT = new GlslTokenType("default");
+  IElementType DISCARD = new GlslTokenType("discard");
   IElementType DIV_ASSIGN = new GlslTokenType("DIV_ASSIGN");
+  IElementType DO = new GlslTokenType("do");
   IElementType DOT = new GlslTokenType("DOT");
   IElementType DOUBLE = new GlslTokenType("double");
+  IElementType ELSE = new GlslTokenType("else");
   IElementType EQUAL = new GlslTokenType("EQUAL");
   IElementType EQ_OP = new GlslTokenType("EQ_OP");
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
+  IElementType FOR = new GlslTokenType("for");
   IElementType GE_OP = new GlslTokenType("GE_OP");
   IElementType HASHTAG = new GlslTokenType("HASHTAG");
   IElementType IDENTIFIER = new GlslTokenType("IDENTIFIER");
+  IElementType IF = new GlslTokenType("if");
   IElementType IN = new GlslTokenType("in");
   IElementType INT = new GlslTokenType("int");
   IElementType INTEGER_CONSTANT = new GlslTokenType("INTEGER_CONSTANT");
@@ -83,6 +101,7 @@ public interface GlslTypes {
   IElementType PAREN_R = new GlslTokenType("PAREN_R");
   IElementType PERCENT = new GlslTokenType("PERCENT");
   IElementType PLUS = new GlslTokenType("PLUS");
+  IElementType RETURN = new GlslTokenType("return");
   IElementType RIGHT_ASSIGN = new GlslTokenType("RIGHT_ASSIGN");
   IElementType RIGHT_OP = new GlslTokenType("RIGHT_OP");
   IElementType SEMICOLON = new GlslTokenType("SEMICOLON");
@@ -91,12 +110,14 @@ public interface GlslTypes {
   IElementType STAR = new GlslTokenType("STAR");
   IElementType STRUCT = new GlslTokenType("struct");
   IElementType SUB_ASSIGN = new GlslTokenType("SUB_ASSIGN");
+  IElementType SWITCH = new GlslTokenType("switch");
   IElementType S_BRACKET_L = new GlslTokenType("S_BRACKET_L");
   IElementType S_BRACKET_R = new GlslTokenType("S_BRACKET_R");
   IElementType UINT = new GlslTokenType("uint");
   IElementType UNIFORM = new GlslTokenType("uniform");
   IElementType VERTICAL_BAR = new GlslTokenType("VERTICAL_BAR");
   IElementType VOID = new GlslTokenType("void");
+  IElementType WHILE = new GlslTokenType("while");
   IElementType XOR_ASSIGN = new GlslTokenType("XOR_ASSIGN");
   IElementType XOR_OP = new GlslTokenType("XOR_OP");
 
@@ -111,6 +132,12 @@ public interface GlslTypes {
       }
       else if (type == DECLARATION) {
         return new GlslDeclarationImpl(node);
+      }
+      else if (type == EXIT_CONTROL_RETURN) {
+        return new GlslExitControlReturnImpl(node);
+      }
+      else if (type == EXIT_CONTROL_SINGLE) {
+        return new GlslExitControlSingleImpl(node);
       }
       else if (type == EXPRESSION) {
         return new GlslExpressionImpl(node);
@@ -162,6 +189,27 @@ public interface GlslTypes {
       }
       else if (type == RELATIONAL_OP) {
         return new GlslRelationalOpImpl(node);
+      }
+      else if (type == STATEMENT) {
+        return new GlslStatementImpl(node);
+      }
+      else if (type == STATEMENT_DO_WHILE) {
+        return new GlslStatementDoWhileImpl(node);
+      }
+      else if (type == STATEMENT_ELSE) {
+        return new GlslStatementElseImpl(node);
+      }
+      else if (type == STATEMENT_FOR) {
+        return new GlslStatementForImpl(node);
+      }
+      else if (type == STATEMENT_IF) {
+        return new GlslStatementIfImpl(node);
+      }
+      else if (type == STATEMENT_SWITCH) {
+        return new GlslStatementSwitchImpl(node);
+      }
+      else if (type == STATEMENT_WHILE_NORMAL) {
+        return new GlslStatementWhileNormalImpl(node);
       }
       else if (type == STORAGE_QUALIFIER) {
         return new GlslStorageQualifierImpl(node);

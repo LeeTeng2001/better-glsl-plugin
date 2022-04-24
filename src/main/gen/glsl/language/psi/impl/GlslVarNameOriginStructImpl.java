@@ -1,13 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package glsl.language.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import glsl.language.psi.GlslVarNameOriginStruct;
-import glsl.language.psi.GlslVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static glsl.language.psi.GlslTypes.*;
 import glsl.language.psi.impl.origin.GlslNamedStructDeclareImpl;
-import org.jetbrains.annotations.NotNull;
+import glsl.language.psi.*;
 
 public class GlslVarNameOriginStructImpl extends GlslNamedStructDeclareImpl implements GlslVarNameOriginStruct {
 
