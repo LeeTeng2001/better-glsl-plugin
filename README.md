@@ -14,12 +14,13 @@
 - [x] Formatter, auto indentation
 - [x] standard library usage styling
 - [x] for, while, return expression
-- [ ] Boolean
-- [ ] Variable scope reference
+- [x] Boolean
+- [x] Variable proper scope reference
 - [ ] Unary, prefix, postfix operation
-- [ ] Auto complete for member access
 - [ ] Support for vec type, swizzle expression
-- [ ] Smart function name, variable name filter
+- [ ] Auto complete for member access
+- [ ] Add stub for performance and std library
+- [ ] Better auto complete, smart function name, variable name filter
 - [ ] Member error annotator
 
 ## Feature that's good to have but not in top priority
