@@ -39,6 +39,9 @@
         <lang.commenter
                 language="Glsl"
                 implementationClass="glsl.language.utility.GlslCommenter" />
+        <lang.formatter
+                language="Glsl"
+                implementationClass="glsl.language.formatter.GlslFormattingModelBuilder" />
 
         <!-- libraries -->
         <additionalLibraryRootsProvider implementation="glsl.language.utility.GlslStdLibraryProvider" />

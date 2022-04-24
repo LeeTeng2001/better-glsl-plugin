@@ -10,7 +10,7 @@
 - [x] Array support
 - [x] Macro, version header
 - [x] Built-in function and variables (the essential first)
-- [ ] Initialise with built-in functions & initializer
+- [x] Initialise with built-in functions & initializer
 - [ ] Variable scope reference
 - [ ] for, while, return expression
 - [ ] Auto complete for member access
