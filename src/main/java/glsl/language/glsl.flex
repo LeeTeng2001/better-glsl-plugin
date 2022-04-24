@@ -89,6 +89,8 @@ discard                                { return GlslTypes.DISCARD; }
 "&"                     {return GlslTypes.AMPERSAND; }
 "^"                     {return GlslTypes.CARET; }
 "|"                     {return GlslTypes.VERTICAL_BAR; }
+"++"                     {return GlslTypes.INCREMENT; }
+"--"                     {return GlslTypes.DECREMENT; }
 
 // Relational symbols ------------------------------------------------
 "=="                    {return GlslTypes.EQ_OP; }

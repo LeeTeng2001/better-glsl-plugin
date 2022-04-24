@@ -41,8 +41,8 @@ public class GlslStatementForImpl extends ASTWrapperPsiElement implements GlslSt
 
   @Override
   @NotNull
-  public List<GlslExpressionAssign> getExpressionAssignList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslExpressionAssign.class);
+  public GlslIdentifierType getIdentifierType() {
+    return findNotNullChildByClass(GlslIdentifierType.class);
   }
 
   @Override
@@ -53,14 +53,26 @@ public class GlslStatementForImpl extends ASTWrapperPsiElement implements GlslSt
 
   @Override
   @NotNull
+  public GlslRelationalOp getRelationalOp() {
+    return findNotNullChildByClass(GlslRelationalOp.class);
+  }
+
+  @Override
+  @NotNull
   public List<GlslStatement> getStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslStatement.class);
   }
 
   @Override
-  @Nullable
-  public GlslVariableDefinition getVariableDefinition() {
-    return findChildByClass(GlslVariableDefinition.class);
+  @NotNull
+  public List<GlslVarNameAccessVar> getVarNameAccessVarList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVarNameAccessVar.class);
+  }
+
+  @Override
+  @NotNull
+  public GlslVarNameOriginVariable getVarNameOriginVariable() {
+    return findNotNullChildByClass(GlslVarNameOriginVariable.class);
   }
 
 }

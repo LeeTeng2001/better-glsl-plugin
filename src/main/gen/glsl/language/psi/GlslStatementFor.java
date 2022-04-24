@@ -14,15 +14,21 @@ public interface GlslStatementFor extends PsiElement {
   List<GlslExpression> getExpressionList();
 
   @NotNull
-  List<GlslExpressionAssign> getExpressionAssignList();
+  GlslIdentifierType getIdentifierType();
 
   @NotNull
   List<GlslMacro> getMacroList();
 
   @NotNull
+  GlslRelationalOp getRelationalOp();
+
+  @NotNull
   List<GlslStatement> getStatementList();
 
-  @Nullable
-  GlslVariableDefinition getVariableDefinition();
+  @NotNull
+  List<GlslVarNameAccessVar> getVarNameAccessVarList();
+
+  @NotNull
+  GlslVarNameOriginVariable getVarNameOriginVariable();
 
 }

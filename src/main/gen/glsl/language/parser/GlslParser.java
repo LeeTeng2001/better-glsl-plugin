@@ -873,47 +873,116 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (variable_definition | SEMICOLON)? expression_assign? SEMICOLON expression_assign?
+  // statement_for_var_initialise SEMICOLON statement_for_var_termination SEMICOLON statement_for_var_increment
   static boolean statement_for_paren(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_paren")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = statement_for_paren_0(b, l + 1);
-    r = r && statement_for_paren_1(b, l + 1);
+    r = statement_for_var_initialise(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
-    r = r && statement_for_paren_3(b, l + 1);
+    r = r && statement_for_var_termination(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    r = r && statement_for_var_increment(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (variable_definition | SEMICOLON)?
-  private static boolean statement_for_paren_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_for_paren_0")) return false;
-    statement_for_paren_0_0(b, l + 1);
-    return true;
-  }
-
-  // variable_definition | SEMICOLON
-  private static boolean statement_for_paren_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_for_paren_0_0")) return false;
+  /* ********************************************************** */
+  // var_name_access_var ((INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT)))
+  static boolean statement_for_var_increment(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
-    r = variable_definition(b, l + 1);
-    if (!r) r = consumeToken(b, SEMICOLON);
+    Marker m = enter_section_(b);
+    r = var_name_access_var(b, l + 1);
+    r = r && statement_for_var_increment_1(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
-  // expression_assign?
-  private static boolean statement_for_paren_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_for_paren_1")) return false;
-    expression_assign(b, l + 1);
-    return true;
+  // (INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT))
+  private static boolean statement_for_var_increment_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = statement_for_var_increment_1_0(b, l + 1);
+    if (!r) r = statement_for_var_increment_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
-  // expression_assign?
-  private static boolean statement_for_paren_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_for_paren_3")) return false;
-    expression_assign(b, l + 1);
-    return true;
+  // INCREMENT | DECREMENT
+  private static boolean statement_for_var_increment_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, INCREMENT);
+    if (!r) r = consumeToken(b, DECREMENT);
+    return r;
+  }
+
+  // (ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT)
+  private static boolean statement_for_var_increment_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = statement_for_var_increment_1_1_0(b, l + 1);
+    r = r && statement_for_var_increment_1_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ADD_ASSIGN | SUB_ASSIGN
+  private static boolean statement_for_var_increment_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment_1_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, ADD_ASSIGN);
+    if (!r) r = consumeToken(b, SUB_ASSIGN);
+    return r;
+  }
+
+  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  private static boolean statement_for_var_increment_1_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment_1_1_1")) return false;
+    boolean r;
+    r = consumeToken(b, INTEGER_CONSTANT);
+    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier_type EQUAL var_name_origin_variable
+  static boolean statement_for_var_initialise(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_initialise")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier_type(b, l + 1);
+    r = r && consumeToken(b, EQUAL);
+    r = r && var_name_origin_variable(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // var_name_access_var relational_op (INTEGER_CONSTANT | FLOAT_CONSTANT)
+  static boolean statement_for_var_termination(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_termination")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = var_name_access_var(b, l + 1);
+    r = r && relational_op(b, l + 1);
+    r = r && statement_for_var_termination_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  private static boolean statement_for_var_termination_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_termination_2")) return false;
+    boolean r;
+    r = consumeToken(b, INTEGER_CONSTANT);
+    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
+    return r;
   }
 
   /* ********************************************************** */

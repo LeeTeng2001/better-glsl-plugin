@@ -67,6 +67,7 @@ public interface GlslTypes {
   IElementType C_BRACKET_L = new GlslTokenType("C_BRACKET_L");
   IElementType C_BRACKET_R = new GlslTokenType("C_BRACKET_R");
   IElementType DASH = new GlslTokenType("DASH");
+  IElementType DECREMENT = new GlslTokenType("DECREMENT");
   IElementType DEFAULT = new GlslTokenType("default");
   IElementType DISCARD = new GlslTokenType("discard");
   IElementType DIV_ASSIGN = new GlslTokenType("DIV_ASSIGN");
@@ -84,6 +85,7 @@ public interface GlslTypes {
   IElementType IDENTIFIER = new GlslTokenType("IDENTIFIER");
   IElementType IF = new GlslTokenType("if");
   IElementType IN = new GlslTokenType("in");
+  IElementType INCREMENT = new GlslTokenType("INCREMENT");
   IElementType INT = new GlslTokenType("int");
   IElementType INTEGER_CONSTANT = new GlslTokenType("INTEGER_CONSTANT");
   IElementType LAYOUT = new GlslTokenType("layout");

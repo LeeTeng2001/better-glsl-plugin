@@ -16,7 +16,7 @@
 - [x] for, while, return expression
 - [ ] Boolean
 - [ ] Variable scope reference
-- [ ] Unary operation
+- [ ] Unary, prefix, postfix operation
 - [ ] Auto complete for member access
 - [ ] Support for vec type, swizzle expression
 - [ ] Smart function name, variable name filter

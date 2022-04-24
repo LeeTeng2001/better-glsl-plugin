@@ -62,7 +62,11 @@ private statement_while_header ::= while PAREN_L expression_no_assign PAREN_R
 statement_do_while ::= do C_BRACKET_L segment* C_BRACKET_R statement_while_header SEMICOLON
 statement_while_normal ::= statement_while_header C_BRACKET_L segment* C_BRACKET_R
 statement_for ::= for PAREN_L statement_for_paren PAREN_R C_BRACKET_L segment* C_BRACKET_R
-private statement_for_paren ::= (variable_definition | SEMICOLON)? expression_assign? SEMICOLON expression_assign?
+private statement_for_paren ::= statement_for_var_initialise SEMICOLON statement_for_var_termination SEMICOLON statement_for_var_increment
+private statement_for_var_initialise ::= identifier_type EQUAL var_name_origin_variable
+private statement_for_var_termination ::= var_name_access_var relational_op (INTEGER_CONSTANT | FLOAT_CONSTANT)
+private statement_for_var_increment ::= var_name_access_var ((INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT)))
+// Glsl is quite limited for condition testing for parallel efficiency
 
 // Control flow keyword
 exit_control_single ::= discard | break | continue  // TODO: Hook up with checking valid context logic
