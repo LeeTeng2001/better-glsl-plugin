@@ -91,5 +91,18 @@ public class GlslCompletionContributor extends CompletionContributor {
         );
 
 
+        extend(CompletionType.BASIC, psiElement().afterLeaf(psiElement(GlslTypes.PAREN_L)).afterLeaf(psiElement(GlslTypes.LAYOUT)), new CompletionProvider<>() {
+                    public void addCompletions(@NotNull CompletionParameters parameters,
+                                               @NotNull ProcessingContext context,
+                                               @NotNull CompletionResultSet resultSet) {
+                        System.out.println("layout auto complete called");
+//                        for (var elementBuilder : BUILT_IN_MACRO_LOOKUP) {
+//                            resultSet.addElement(elementBuilder);
+//                        }
+                    }
+                }
+        );
+
+
     }
 }

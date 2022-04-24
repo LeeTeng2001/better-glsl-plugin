@@ -19,12 +19,12 @@ CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 
 END_OF_LINE_COMMENT="//"[^\r\n]*
-INTEGER_CONSTANT=\d+
-FLOAT_CONSTANT=\d*\.\d+
+INTEGER_CONSTANT=\d+(u|U)?
+FLOAT_CONSTANT=\d*\.\d+(lf|f|F|LF)?
 IDENTIFIER=[:jletter:][:jletterdigit:]*
 
 NATIVE_VECTOR=(bvec|ivec|uvec|vec|dvec)[234]
-NATIVE_MATRIX=mat[234](x[234])?
+NATIVE_MATRIX=d?mat[234](x[234])?
 
 %state WAITING_VALUE
 

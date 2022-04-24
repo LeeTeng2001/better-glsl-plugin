@@ -13,6 +13,9 @@ public interface GlslStructDefinition extends PsiElement {
   @Nullable
   GlslVarNameOriginStruct getVarNameOriginStruct();
 
+  @Nullable
+  GlslVarNameOriginVariable getVarNameOriginVariable();
+
   @NotNull
   List<GlslVariableDefinition> getVariableDefinitionList();
 

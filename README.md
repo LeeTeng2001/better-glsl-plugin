@@ -19,8 +19,9 @@
 - [x] Unary, prefix, postfix operation
 - [x] Support for vec type, swizzle expression
 - [x] Prefix match in auto complete to reduce noise
-- [ ] Support for matrix type, double array
+- [x] Support for matrix type, double array
 - [ ] Layout qualifier auto complete
+- [ ] Samplers
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter
 

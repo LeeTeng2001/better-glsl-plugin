@@ -1335,7 +1335,8 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (layout_qualifier? (in | out))? struct var_name_origin_struct C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON
+  // (layout_qualifier? (in | out))? struct var_name_origin_struct C_BRACKET_L
+  //                         variable_definition* C_BRACKET_R var_name_origin_variable? SEMICOLON
   public static boolean struct_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_definition")) return false;
     boolean r, p;
@@ -1346,7 +1347,9 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = r && report_error_(b, var_name_origin_struct(b, l + 1));
     r = p && report_error_(b, consumeToken(b, C_BRACKET_L)) && r;
     r = p && report_error_(b, struct_definition_4(b, l + 1)) && r;
-    r = p && report_error_(b, consumeTokens(b, -1, C_BRACKET_R, SEMICOLON)) && r;
+    r = p && report_error_(b, consumeToken(b, C_BRACKET_R)) && r;
+    r = p && report_error_(b, struct_definition_6(b, l + 1)) && r;
+    r = p && consumeToken(b, SEMICOLON) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -1393,6 +1396,13 @@ public class GlslParser implements PsiParser, LightPsiParser {
       if (!variable_definition(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "struct_definition_4", c)) break;
     }
+    return true;
+  }
+
+  // var_name_origin_variable?
+  private static boolean struct_definition_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "struct_definition_6")) return false;
+    var_name_origin_variable(b, l + 1);
     return true;
   }
 
@@ -1538,18 +1548,16 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // storage_qualifier? identifier_type var_name_origin_variable
-  //                         (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)? SEMICOLON
+  // storage_qualifier? identifier_type variable_definition_body (COMMA variable_definition_body)* SEMICOLON
   public static boolean variable_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition")) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, VARIABLE_DEFINITION, "<variable definition>");
     r = variable_definition_0(b, l + 1);
     r = r && identifier_type(b, l + 1);
-    r = r && var_name_origin_variable(b, l + 1);
+    r = r && variable_definition_body(b, l + 1);
     p = r; // pin = 3
     r = r && report_error_(b, variable_definition_3(b, l + 1));
-    r = p && report_error_(b, variable_definition_4(b, l + 1)) && r;
     r = p && consumeToken(b, SEMICOLON) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -1562,16 +1570,52 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)?
+  // (COMMA variable_definition_body)*
   private static boolean variable_definition_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_3")) return false;
-    variable_definition_3_0(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!variable_definition_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "variable_definition_3", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA variable_definition_body
+  private static boolean variable_definition_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && variable_definition_body(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // var_name_origin_variable (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)?
+  static boolean variable_definition_body(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_body")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = var_name_origin_variable(b, l + 1);
+    r = r && variable_definition_body_1(b, l + 1);
+    r = r && variable_definition_body_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)?
+  private static boolean variable_definition_body_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_body_1")) return false;
+    variable_definition_body_1_0(b, l + 1);
     return true;
   }
 
   // S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R
-  private static boolean variable_definition_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_definition_3_0")) return false;
+  private static boolean variable_definition_body_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_body_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, S_BRACKET_L, INTEGER_CONSTANT, S_BRACKET_R);
@@ -1580,15 +1624,15 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   // (EQUAL init_val)?
-  private static boolean variable_definition_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_definition_4")) return false;
-    variable_definition_4_0(b, l + 1);
+  private static boolean variable_definition_body_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_body_2")) return false;
+    variable_definition_body_2_0(b, l + 1);
     return true;
   }
 
   // EQUAL init_val
-  private static boolean variable_definition_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_definition_4_0")) return false;
+  private static boolean variable_definition_body_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_body_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQUAL);

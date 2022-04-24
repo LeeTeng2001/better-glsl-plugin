@@ -34,9 +34,9 @@ public class GlslVariableDefinitionImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @Nullable
-  public GlslInitVal getInitVal() {
-    return findChildByClass(GlslInitVal.class);
+  @NotNull
+  public List<GlslInitVal> getInitValList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslInitVal.class);
   }
 
   @Override
@@ -47,8 +47,8 @@ public class GlslVariableDefinitionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public GlslVarNameOriginVariable getVarNameOriginVariable() {
-    return findNotNullChildByClass(GlslVarNameOriginVariable.class);
+  public List<GlslVarNameOriginVariable> getVarNameOriginVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVarNameOriginVariable.class);
   }
 
 }
