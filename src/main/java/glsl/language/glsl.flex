@@ -36,6 +36,9 @@ double                                { return GlslTypes.DOUBLE; }
 bool                                { return GlslTypes.BOOL; }
 struct                                { return GlslTypes.STRUCT; }
 
+true                                { return GlslTypes.TRUE; }
+false                                { return GlslTypes.FALSE; }
+
 // Control flow keyword ------------------------------------------------
 if                                { return GlslTypes.IF; }
 else                                { return GlslTypes.ELSE; }

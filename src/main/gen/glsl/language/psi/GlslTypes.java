@@ -77,6 +77,7 @@ public interface GlslTypes {
   IElementType ELSE = new GlslTokenType("else");
   IElementType EQUAL = new GlslTokenType("EQUAL");
   IElementType EQ_OP = new GlslTokenType("EQ_OP");
+  IElementType FALSE = new GlslTokenType("false");
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
   IElementType FOR = new GlslTokenType("for");
@@ -115,6 +116,7 @@ public interface GlslTypes {
   IElementType SWITCH = new GlslTokenType("switch");
   IElementType S_BRACKET_L = new GlslTokenType("S_BRACKET_L");
   IElementType S_BRACKET_R = new GlslTokenType("S_BRACKET_R");
+  IElementType TRUE = new GlslTokenType("true");
   IElementType UINT = new GlslTokenType("uint");
   IElementType UNIFORM = new GlslTokenType("uniform");
   IElementType VERTICAL_BAR = new GlslTokenType("VERTICAL_BAR");
