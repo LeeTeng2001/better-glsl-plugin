@@ -17,15 +17,15 @@
 - [x] Boolean
 - [x] Variable proper scope reference
 - [x] Unary, prefix, postfix operation
-- [ ] Support for vec type, swizzle expression
+- [x] Support for vec type, swizzle expression
 - [ ] Prefix match in auto compelte to reduce noise
 - [ ] Auto complete for member access
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter
-- [ ] Member error annotator
 
 ## Feature that's good to have but not in top priority
 - Expression validation
+- Validate member access like swizzle, array access, valid member name
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.

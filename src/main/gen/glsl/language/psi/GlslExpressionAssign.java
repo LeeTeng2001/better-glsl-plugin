@@ -19,4 +19,7 @@ public interface GlslExpressionAssign extends PsiElement {
   @Nullable
   GlslExpressionNoAssign getExpressionNoAssign();
 
+  @Nullable
+  GlslInitializer getInitializer();
+
 }

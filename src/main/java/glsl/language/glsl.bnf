@@ -77,7 +77,7 @@ exit_control_single ::= discard | break | continue  // TODO: Hook up with checki
 exit_control_return ::= return expression_no_assign?
 
 // expression ------------------------------------------------------------
-expression_assign ::= (expression_no_assign | expression_assign_paren) (assign_op expression_assign)?
+expression_assign ::= (expression_no_assign | expression_assign_paren | initializer) (assign_op expression_assign)?  // TODO: suitable position for initializer?
 expression_assign_paren ::= PAREN_L expression_assign PAREN_R
 expression_no_assign ::= (expression_unit | expression_no_assign_paren) ((arithmetic_op | relational_op) expression_no_assign)?
 expression_no_assign_paren ::= PAREN_L expression_no_assign PAREN_R

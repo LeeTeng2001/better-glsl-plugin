@@ -145,7 +145,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (expression_no_assign | expression_assign_paren) (assign_op expression_assign)?
+  // (expression_no_assign | expression_assign_paren | initializer) (assign_op expression_assign)?
   public static boolean expression_assign(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_assign")) return false;
     boolean r;
@@ -156,12 +156,13 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // expression_no_assign | expression_assign_paren
+  // expression_no_assign | expression_assign_paren | initializer
   private static boolean expression_assign_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_assign_0")) return false;
     boolean r;
     r = expression_no_assign(b, l + 1);
     if (!r) r = expression_assign_paren(b, l + 1);
+    if (!r) r = initializer(b, l + 1);
     return r;
   }
 

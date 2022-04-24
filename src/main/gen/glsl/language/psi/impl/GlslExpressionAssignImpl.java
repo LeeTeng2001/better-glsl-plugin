@@ -51,4 +51,10 @@ public class GlslExpressionAssignImpl extends ASTWrapperPsiElement implements Gl
     return findChildByClass(GlslExpressionNoAssign.class);
   }
 
+  @Override
+  @Nullable
+  public GlslInitializer getInitializer() {
+    return findChildByClass(GlslInitializer.class);
+  }
+
 }
