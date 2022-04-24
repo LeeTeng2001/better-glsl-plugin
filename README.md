@@ -18,14 +18,16 @@
 - [x] Variable proper scope reference
 - [x] Unary, prefix, postfix operation
 - [x] Support for vec type, swizzle expression
-- [ ] Prefix match in auto compelte to reduce noise
-- [ ] Auto complete for member access
+- [x] Prefix match in auto complete to reduce noise
+- [ ] Support for matrix type, double array
+- [ ] Layout qualifier auto complete
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter
 
 ## Feature that's good to have but not in top priority
-- Expression validation
 - Validate member access like swizzle, array access, valid member name
+- Auto complete for member access
+- Expression validation (no idea where to start)
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.

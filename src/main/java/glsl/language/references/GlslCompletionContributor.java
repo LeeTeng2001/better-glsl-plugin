@@ -40,19 +40,16 @@ public class GlslCompletionContributor extends CompletionContributor {
                                 GlslTypes.INIT_VAL.equals(nodeParentType)
                         ) return;
 
-                        // Only add prefix
-//                        var cursorText = node.getText().replace("IntellijIdeaRulezzz", ""); // contextText + IntellijIdeaRulezzz to prevent empty string
+                        // Only add prefix, for built-in type, we hardly want to match everything by context
+                        // contextText has IntellijIdeaRulezzz to prevent empty string
+                        var cursorText = node.getText().replace("IntellijIdeaRulezzz", "").toLowerCase();
 
                         // Add primitive types
-                        for (var elementBuilder : PRIMITIVE_LOOKUP) {
-                            resultSet.addElement(elementBuilder);
-                        }
+                        addMatchingPrefixOnly(cursorText, resultSet, PRIMITIVE_LOOKUP_STRING, PRIMITIVE_LOOKUP);
 
                         // Add storage qualifier only if we do not have preceding storage qualifier
                         if (!GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBackType)) {
-                            for (var elementBuilder : STORAGE_QUALIFIER_LOOKUP) {
-                                resultSet.addElement(elementBuilder);
-                            }
+                            addMatchingPrefixOnly(cursorText, resultSet, STORAGE_QUALIFIER_LOOKUP_STRING, STORAGE_QUALIFIER_LOOKUP);
                         }
 
                         // Add struct names
