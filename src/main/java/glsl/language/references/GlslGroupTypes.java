@@ -3,6 +3,7 @@ package glsl.language.references;
 import com.intellij.psi.tree.IElementType;
 import glsl.language.psi.GlslTypes;
 
+import javax.xml.bind.util.ValidationEventCollector;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +19,7 @@ public class GlslGroupTypes {
             FLOAT,
             DOUBLE,
             BOOL,
+            NATIVE_VECTOR,
             STRUCT
     ).collect(Collectors.toUnmodifiableSet());
 

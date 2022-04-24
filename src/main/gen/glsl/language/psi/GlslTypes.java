@@ -99,6 +99,7 @@ public interface GlslTypes {
   IElementType LE_OP = new GlslTokenType("LE_OP");
   IElementType MOD_ASSIGN = new GlslTokenType("MOD_ASSIGN");
   IElementType MUL_ASSIGN = new GlslTokenType("MUL_ASSIGN");
+  IElementType NATIVE_VECTOR = new GlslTokenType("NATIVE_VECTOR");
   IElementType NE_OP = new GlslTokenType("NE_OP");
   IElementType NULL_TOKEN = new GlslTokenType("NULL_TOKEN");
   IElementType OR_ASSIGN = new GlslTokenType("OR_ASSIGN");

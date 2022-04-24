@@ -18,6 +18,7 @@
 - [x] Variable proper scope reference
 - [x] Unary, prefix, postfix operation
 - [ ] Support for vec type, swizzle expression
+- [ ] Prefix match in auto compelte to reduce noise
 - [ ] Auto complete for member access
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter

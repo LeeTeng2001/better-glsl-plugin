@@ -12,6 +12,22 @@ public class GlslCompletionUtils {
             LookupElementBuilder.create("double").withTypeText("primitive").withIcon(AllIcons.Nodes.Type),
             LookupElementBuilder.create("bool").withTypeText("primitive").withIcon(AllIcons.Nodes.Type),
             LookupElementBuilder.create("struct").withTypeText("primitive").withIcon(AllIcons.Nodes.Type),
+            // Advance type
+            LookupElementBuilder.create("bvec2").withTypeText("bool vec2").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("bvec3").withTypeText("bool vec3").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("bvec4").withTypeText("bool vec4").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("ivec2").withTypeText("int vec2").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("ivec3").withTypeText("int vec3").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("ivec4").withTypeText("int vec4").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("uvec2").withTypeText("uint vec2").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("uvec3").withTypeText("uint vec3").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("uvec4").withTypeText("uint vec4").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("vec2").withTypeText("float vec2").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("vec3").withTypeText("float vec3").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("vec4").withTypeText("float vec4").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("dvec2").withTypeText("double vec2").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("dvec3").withTypeText("double vec3").withIcon(AllIcons.Nodes.Lambda),
+            LookupElementBuilder.create("dvec4").withTypeText("double vec4").withIcon(AllIcons.Nodes.Lambda),
     };
 
     public static final LookupElementBuilder[] STORAGE_QUALIFIER_LOOKUP = new LookupElementBuilder[] {

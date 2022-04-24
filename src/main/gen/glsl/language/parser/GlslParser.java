@@ -459,7 +459,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // void | int | uint | float | double | bool | var_name_type
+  // void | int | uint | float | double | bool | NATIVE_VECTOR | var_name_type
   public static boolean identifier_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_type")) return false;
     boolean r;
@@ -470,6 +470,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FLOAT);
     if (!r) r = consumeToken(b, DOUBLE);
     if (!r) r = consumeToken(b, BOOL);
+    if (!r) r = consumeToken(b, NATIVE_VECTOR);
     if (!r) r = var_name_type(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;

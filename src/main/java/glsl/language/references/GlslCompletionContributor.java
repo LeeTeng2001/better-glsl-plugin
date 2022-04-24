@@ -21,7 +21,6 @@ public class GlslCompletionContributor extends CompletionContributor {
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
                         var node = parameters.getPosition();
-//                        var nodeText = node.getText(); // contextText + IntellijIdeaRulezzz to prevent empty string
                         var nodeParentType = node.getParent().getNode().getElementType();
                         var lookBack = node;
                         // Look 2 step behind (skip whitespace token)
@@ -40,6 +39,9 @@ public class GlslCompletionContributor extends CompletionContributor {
                                 GlslGroupTypes.IDENTIFIER_ORIGIN.contains(nodeParentType) ||
                                 GlslTypes.INIT_VAL.equals(nodeParentType)
                         ) return;
+
+                        // Only add prefix
+//                        var cursorText = node.getText().replace("IntellijIdeaRulezzz", ""); // contextText + IntellijIdeaRulezzz to prevent empty string
 
                         // Add primitive types
                         for (var elementBuilder : PRIMITIVE_LOOKUP) {

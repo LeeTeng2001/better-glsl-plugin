@@ -23,6 +23,8 @@ public abstract class GlslNamedStructDeclareImpl extends ASTWrapperPsiElement im
         return references.length > 0 ? references[0] : null;
     }
 
+
+
 //    public ArrayList<Pair<IElementType, String>> getMembers() {
 //        var allMembers = new ArrayList<Pair<IElementType, String>>();
 //        var findMembers = getParent().getChildren();

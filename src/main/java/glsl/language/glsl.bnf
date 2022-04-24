@@ -31,13 +31,14 @@ statement ::= statement_if | statement_else | statement_switch | statement_do_wh
 
 // Terminal token
 storage_qualifier ::= const | uniform | buffer | shared | (layout_qualifier? (in | out))
-identifier_type ::= void | int | uint | float | double | bool | var_name_type
+identifier_type ::= void | int | uint | float | double | bool | NATIVE_VECTOR | var_name_type
 assign_op ::= EQUAL | MUL_ASSIGN | DIV_ASSIGN | ADD_ASSIGN | SUB_ASSIGN | MOD_ASSIGN | LEFT_ASSIGN | RIGHT_ASSIGN | AND_ASSIGN | XOR_ASSIGN | OR_ASSIGN
 arithmetic_op ::= PLUS | DASH | STAR | SLASH | PERCENT | LEFT_OP | RIGHT_OP | AMPERSAND | CARET | VERTICAL_BAR
 relational_op ::= EQ_OP | ANGLE_L | ANGLE_R | GE_OP | LE_OP | NE_OP | AND_OP | OR_OP | XOR_OP
 unary_sign_op ::=  PLUS | DASH
 unary_front_op ::= INCREMENT | DECREMENT | EXCLAMATION | unary_sign_op
 unary_back_op ::= INCREMENT | DECREMENT
+
 
 // Special qualifier
 layout_qualifier ::= layout PAREN_L layout_qualifier_param? (COMMA layout_qualifier_param)* PAREN_R {pin=2}
