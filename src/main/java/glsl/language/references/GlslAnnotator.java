@@ -1,13 +1,14 @@
 package glsl.language.references;
 
-//import com.intellij.psi.PsiLiteralExpression;
-
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiManager;
+import glsl.language.psi.GlslFile;
 import glsl.language.psi.GlslTypes;
 import glsl.language.psi.GlslVarNameOriginStruct;
+import glsl.language.utility.GlslStdLibraryProvider;
 import glsl.language.utility.GlslSyntaxHighlighter;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +51,18 @@ public class GlslAnnotator implements Annotator {
                 node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_VAR)) {
             var resolve = node.getPsi().getReference();
             assert resolve != null;
-            if (!resolve.getElement().getNode().equals(node)) return;
+
+            if (!resolve.getElement().getNode().equals(node)) {
+                GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(node.getPsi().getProject()).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
+                // We have a reference, check if it's coming from standard library
+                if (resolve.getElement().getContainingFile().equals(stdGlslFile)) {
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(element)
+                            .textAttributes(GlslSyntaxHighlighter.FROM_STANDARD_LIB)
+                            .create();
+                }
+                return;
+            }
 
             // Undefined function/variable access
             String message = node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_FUNC) ?

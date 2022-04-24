@@ -33,15 +33,16 @@ public class GlslUtil {
     }
 
     public static List<GlslVarNameOriginFunc> findDefinedFunctions(PsiFile glslFile, int curAt) {
-        List<GlslVarNameOriginFunc> result = new ArrayList<>();
+        GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(glslFile.getProject()).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
 
-        // Not sure about performance of findChildren vs getChildren, virtual file vs custom language file
-        if (glslFile != null) {
-            var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
-            for (var node : declarations) {
-                if (node.getTextOffset() < curAt) {
-                    result.add(node);
-                }
+        var functionsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginFunc.class);
+        var functions = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
+
+        List<GlslVarNameOriginFunc> result = new ArrayList<>(functionsStd);
+
+        for (var node : functions) {
+            if (node.getTextOffset() < curAt) {
+                result.add(node);
             }
         }
 

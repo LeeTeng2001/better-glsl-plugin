@@ -20,12 +20,15 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("GLSL_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey KEY =
             createTextAttributesKey("GLSL_KEY", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey FROM_STANDARD_LIB =
+            createTextAttributesKey("GLSL_STD_LIB", DefaultLanguageHighlighterColors.CONSTANT);
     public static final TextAttributesKey IDENTIFIER =
             createTextAttributesKey("GLSL_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey COMMENT =
             createTextAttributesKey("GLSL_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("GLSL_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
+
 
     // color group?
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
@@ -34,6 +37,7 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
+
 
     @Override
     public @NotNull Lexer getHighlightingLexer() {

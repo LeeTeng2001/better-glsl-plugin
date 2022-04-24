@@ -93,3 +93,10 @@ in int gl_InstanceIndex;  // only present when targeting Vulkan
 in int gl_DrawID;
 in int gl_BaseVertex;
 in int gl_BaseInstance;
+
+
+// Built in function ------------------------------------------------------------
+float sin(float angle);
+float cos(float angle);
+float tan(float angle);
+

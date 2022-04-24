@@ -38,5 +38,4 @@ public abstract class GlslNamedVariableAccessVarImpl extends ASTWrapperPsiElemen
 
         return references.length > 0 ? references[0] : null;
     }
-
 }
