@@ -4,14 +4,31 @@ import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
+import com.intellij.psi.tree.IElementType;
 import glsl.language.psi.GlslTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static glsl.language.psi.GlslTypes.*;
 
 public class GlslBlock extends AbstractBlock {
+    private static final Set<IElementType> CHILDREN_SHOULD_INDENT = Stream.of(
+            FUNCTION_DEFINITION,
+            STRUCT_DEFINITION,
+            STATEMENT_IF,
+            STATEMENT_ELSE,
+            STATEMENT_SWITCH,
+            STATEMENT_DO_WHILE,
+            STATEMENT_WHILE_NORMAL,
+            STATEMENT_FOR
+    ).collect(Collectors.toUnmodifiableSet());
+
     private final boolean childShouldIndent;
     private final SpacingBuilder spacingBuilder;
     private final Indent indent;
@@ -20,8 +37,7 @@ public class GlslBlock extends AbstractBlock {
         super(node, wrap, alignment);
         this.spacingBuilder = spacingBuilder;
         this.indent = indent;
-        childShouldIndent = node.getElementType().equals(GlslTypes.FUNCTION_DEFINITION) ||
-                            node.getElementType().equals(GlslTypes.STRUCT_DEFINITION);
+        childShouldIndent = CHILDREN_SHOULD_INDENT.contains(node.getElementType());
     }
 
     // Important method to build children
@@ -36,11 +52,20 @@ public class GlslBlock extends AbstractBlock {
             if (child.getElementType().equals(GlslTypes.C_BRACKET_L)) hasBraces = true;
             else if (child.getElementType().equals(GlslTypes.C_BRACKET_R)) hasBraces = false;
 
-            if (child.getElementType() != TokenType.WHITE_SPACE) {
+            // Follow parent indent for special switch case
+            if (child.getElementType() == CASE || child.getElementType() == DEFAULT) {
                 Block block = new GlslBlock(child,
                         Wrap.createWrap(WrapType.NONE, false),
                         Alignment.createAlignment(),
-                        hasBraces ? Indent.getNormalIndent() : Indent.getNoneIndent(),
+                        Indent.getNoneIndent(),
+                        spacingBuilder);
+                blocks.add(block);
+            }
+            else if (child.getElementType() != TokenType.WHITE_SPACE) {
+                Block block = new GlslBlock(child,
+                        Wrap.createWrap(WrapType.NONE, false),
+                        Alignment.createAlignment(),
+                        hasBraces ? Indent.getNormalIndent(true) : Indent.getNoneIndent(),
                         spacingBuilder);
                 blocks.add(block);
             }
