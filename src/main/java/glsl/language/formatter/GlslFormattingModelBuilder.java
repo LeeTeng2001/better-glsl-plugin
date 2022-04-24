@@ -24,10 +24,22 @@ public class GlslFormattingModelBuilder implements FormattingModelBuilder {
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         return new SpacingBuilder(settings, GlslLanguage.INSTANCE)
                 .after(C_BRACKET_L).lineBreakInCode()
+                .before(C_BRACKET_L).spaces(1)
                 .before(C_BRACKET_R).lineBreakInCode()
                 .after(S_BRACKET_L).none()
                 .before(S_BRACKET_R).none()
-                .after(PAREN_L).none()
-                .before(PAREN_R).none();
+                .after(PAREN_L).spaces(0)
+                .before(PAREN_R).spaces(0)
+                .before(DO).lineBreakInCode()
+                .before(WHILE).lineBreakInCode()
+                .after(COMMA).spaces(1)
+                .after(ASSIGN_OP).spaces(1)
+                .before(ASSIGN_OP).spaces(1)
+                .after(RELATIONAL_OP).spaces(1)
+                .before(RELATIONAL_OP).spaces(1)
+                .after(ARITHMETIC_OP).spaces(1)
+                .before(ARITHMETIC_OP).spaces(1)
+                .before(SEMICOLON).spaces(0)
+                ;
     }
 }
