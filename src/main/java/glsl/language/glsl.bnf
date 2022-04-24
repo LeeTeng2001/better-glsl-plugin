@@ -31,7 +31,7 @@ statement ::= statement_if | statement_else | statement_switch | statement_do_wh
 
 // Terminal token
 storage_qualifier ::= const | uniform | buffer | shared | (layout_qualifier? (in | out))
-identifier_type ::= void | int | uint | float | double | bool | NATIVE_VECTOR | var_name_type
+identifier_type ::= void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | var_name_type
 assign_op ::= EQUAL | MUL_ASSIGN | DIV_ASSIGN | ADD_ASSIGN | SUB_ASSIGN | MOD_ASSIGN | LEFT_ASSIGN | RIGHT_ASSIGN | AND_ASSIGN | XOR_ASSIGN | OR_ASSIGN
 arithmetic_op ::= PLUS | DASH | STAR | SLASH | PERCENT | LEFT_OP | RIGHT_OP | AMPERSAND | CARET | VERTICAL_BAR
 relational_op ::= EQ_OP | ANGLE_L | ANGLE_R | GE_OP | LE_OP | NE_OP | AND_OP | OR_OP | XOR_OP
@@ -52,7 +52,7 @@ function_args ::= identifier_type var_name_origin_variable (COMMA function_args)
 struct_definition ::= (layout_qualifier? (in | out))? struct var_name_origin_struct C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON {pin=2}
 variable_definition ::= storage_qualifier? identifier_type var_name_origin_variable
                         (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)? SEMICOLON {pin=3}
-init_val ::=  true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access | initializer
+init_val ::=  true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access_head | initializer
 initializer ::= identifier_type (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)?
                 PAREN_L expression_no_assign? (COMMA expression_no_assign)* PAREN_R
 
@@ -81,9 +81,15 @@ expression_assign ::= (expression_no_assign | expression_assign_paren | initiali
 expression_assign_paren ::= PAREN_L expression_assign PAREN_R
 expression_no_assign ::= (expression_unit | expression_no_assign_paren) ((arithmetic_op | relational_op) expression_no_assign)?
 expression_no_assign_paren ::= PAREN_L expression_no_assign PAREN_R
-expression_unit ::= unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access) unary_back_op?  // TODO: lazy unary
+expression_unit ::= unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access_head) unary_back_op?  // TODO: lazy unary
 function_call ::= var_name_access_func PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign??
-member_access ::= var_name_access_member (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?  // TODO: reference, non-integer access
+member_access_head ::= var_name_access_var member_access_postfix
+member_access ::= var_name_access_member member_access_postfix
+private member_access_postfix ::= (member_access_array | member_access_func)?  (DOT member_access)?   // TODO: reference, non-integer access
+private member_access_array ::= S_BRACKET_L valid_access_index S_BRACKET_R (S_BRACKET_L valid_access_index S_BRACKET_R)?
+private member_access_func ::= PAREN_L PAREN_R
+//member_access_unit
+private valid_access_index ::= var_name_access_var | INTEGER_CONSTANT
 
 // Swizzle built in type
 //swizzle_access ::= IDENTIFIER DOT swizzle_prop? swizzle_prop? swizzle_prop? swizzle_prop?

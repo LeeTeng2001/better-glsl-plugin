@@ -11,7 +11,7 @@ public interface GlslExpressionUnit extends PsiElement {
   GlslFunctionCall getFunctionCall();
 
   @Nullable
-  GlslMemberAccess getMemberAccess();
+  GlslMemberAccessHead getMemberAccessHead();
 
   @Nullable
   GlslUnaryBackOp getUnaryBackOp();

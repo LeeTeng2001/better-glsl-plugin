@@ -261,7 +261,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access) unary_back_op?
+  // unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access_head) unary_back_op?
   public static boolean expression_unit(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_unit")) return false;
     boolean r;
@@ -280,14 +280,14 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access
+  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access_head
   private static boolean expression_unit_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_unit_1")) return false;
     boolean r;
     r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
     if (!r) r = function_call(b, l + 1);
-    if (!r) r = member_access(b, l + 1);
+    if (!r) r = member_access_head(b, l + 1);
     return r;
   }
 
@@ -460,7 +460,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // void | int | uint | float | double | bool | NATIVE_VECTOR | var_name_type
+  // void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | var_name_type
   public static boolean identifier_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_type")) return false;
     boolean r;
@@ -472,13 +472,14 @@ public class GlslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DOUBLE);
     if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, NATIVE_VECTOR);
+    if (!r) r = consumeToken(b, NATIVE_MATRIX);
     if (!r) r = var_name_type(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access | initializer
+  // true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access_head | initializer
   public static boolean init_val(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "init_val")) return false;
     boolean r;
@@ -486,7 +487,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
     if (!r) r = init_val_2(b, l + 1);
-    if (!r) r = member_access(b, l + 1);
+    if (!r) r = member_access_head(b, l + 1);
     if (!r) r = initializer(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -717,46 +718,115 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var_name_access_member (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?
+  // var_name_access_member member_access_postfix
   public static boolean member_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = var_name_access_member(b, l + 1);
-    r = r && member_access_1(b, l + 1);
-    r = r && member_access_2(b, l + 1);
+    r = r && member_access_postfix(b, l + 1);
     exit_section_(b, m, MEMBER_ACCESS, r);
     return r;
   }
 
-  // (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)?
-  private static boolean member_access_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "member_access_1")) return false;
-    member_access_1_0(b, l + 1);
-    return true;
-  }
-
-  // S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R
-  private static boolean member_access_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "member_access_1_0")) return false;
+  /* ********************************************************** */
+  // S_BRACKET_L valid_access_index S_BRACKET_R (S_BRACKET_L valid_access_index S_BRACKET_R)?
+  static boolean member_access_array(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_array")) return false;
+    if (!nextTokenIs(b, S_BRACKET_L)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, S_BRACKET_L, INTEGER_CONSTANT, S_BRACKET_R);
+    r = consumeToken(b, S_BRACKET_L);
+    r = r && valid_access_index(b, l + 1);
+    r = r && consumeToken(b, S_BRACKET_R);
+    r = r && member_access_array_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  // (S_BRACKET_L valid_access_index S_BRACKET_R)?
+  private static boolean member_access_array_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_array_3")) return false;
+    member_access_array_3_0(b, l + 1);
+    return true;
+  }
+
+  // S_BRACKET_L valid_access_index S_BRACKET_R
+  private static boolean member_access_array_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_array_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, S_BRACKET_L);
+    r = r && valid_access_index(b, l + 1);
+    r = r && consumeToken(b, S_BRACKET_R);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PAREN_L PAREN_R
+  static boolean member_access_func(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_func")) return false;
+    if (!nextTokenIs(b, PAREN_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, PAREN_L, PAREN_R);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // var_name_access_var member_access_postfix
+  public static boolean member_access_head(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_head")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = var_name_access_var(b, l + 1);
+    r = r && member_access_postfix(b, l + 1);
+    exit_section_(b, m, MEMBER_ACCESS_HEAD, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // (member_access_array | member_access_func)?  (DOT member_access)?
+  static boolean member_access_postfix(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_postfix")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = member_access_postfix_0(b, l + 1);
+    r = r && member_access_postfix_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (member_access_array | member_access_func)?
+  private static boolean member_access_postfix_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_postfix_0")) return false;
+    member_access_postfix_0_0(b, l + 1);
+    return true;
+  }
+
+  // member_access_array | member_access_func
+  private static boolean member_access_postfix_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_postfix_0_0")) return false;
+    boolean r;
+    r = member_access_array(b, l + 1);
+    if (!r) r = member_access_func(b, l + 1);
+    return r;
+  }
+
   // (DOT member_access)?
-  private static boolean member_access_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "member_access_2")) return false;
-    member_access_2_0(b, l + 1);
+  private static boolean member_access_postfix_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_postfix_1")) return false;
+    member_access_postfix_1_0(b, l + 1);
     return true;
   }
 
   // DOT member_access
-  private static boolean member_access_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "member_access_2_0")) return false;
+  private static boolean member_access_postfix_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_postfix_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, DOT);
@@ -1370,6 +1440,17 @@ public class GlslParser implements PsiParser, LightPsiParser {
   // NULL_TOKEN
   static boolean useless_expression(PsiBuilder b, int l) {
     return consumeToken(b, NULL_TOKEN);
+  }
+
+  /* ********************************************************** */
+  // var_name_access_var | INTEGER_CONSTANT
+  static boolean valid_access_index(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "valid_access_index")) return false;
+    if (!nextTokenIs(b, "", IDENTIFIER, INTEGER_CONSTANT)) return false;
+    boolean r;
+    r = var_name_access_var(b, l + 1);
+    if (!r) r = consumeToken(b, INTEGER_CONSTANT);
+    return r;
   }
 
   /* ********************************************************** */

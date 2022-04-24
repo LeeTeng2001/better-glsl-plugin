@@ -22,13 +22,13 @@ public abstract class GlslNamedVariableAccessMemberImpl extends ASTWrapperPsiEle
     @Override
     public PsiReference getReference() {
         final PsiReference[] references = getReferences();
-        var myText = getText();
-        var parent = getParent().getParent(); // shouldn't crash since it's valid context
-
-        // If our parent is top most, it's a variable access
-        if (!parent.getNode().getElementType().equals(GlslTypes.MEMBER_ACCESS)) {
-            return GlslNamedVariableAccessVarImpl.getReferenceVarAccess(references, myText, this);
-        }
+//        var myText = getText();
+//        var parent = getParent().getParent(); // shouldn't crash since it's valid context
+//
+//        // If our parent is top most, it's a variable access
+//        if (!parent.getNode().getElementType().equals(GlslTypes.MEMBER_ACCESS)) {
+//            return GlslNamedVariableAccessVarImpl.getReferenceVarAccess(references, myText, this);
+//        }
 
         // TODO: Otherwise, we need to resolve member usage
 

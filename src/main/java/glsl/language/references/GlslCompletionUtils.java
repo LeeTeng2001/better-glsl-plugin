@@ -3,6 +3,8 @@ package glsl.language.references;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.icons.AllIcons;
+import glsl.language.references.handles.GlslCallClause;
+import glsl.language.references.handles.GlslInsertExtraSpaceClause;
 
 import static com.intellij.codeInsight.lookup.LookupElementBuilder.create;
 
@@ -10,7 +12,7 @@ public class GlslCompletionUtils {
     public static final String[] PRIMITIVE_LOOKUP_STRING = new String[]{
             "void", "int", "uint", "float", "double", "bool", "struct", "bvec2", "bvec3",
             "bvec4", "ivec2", "ivec3", "ivec4", "uvec2", "uvec3", "uvec4", "vec2", "vec3",
-            "vec4", "dvec2", "dvec3", "dvec4"
+            "vec4", "dvec2", "dvec3", "dvec4", "mat1", "mat2", "mat3", "mat4"
     };
 
     public static final LookupElementBuilder[] PRIMITIVE_LOOKUP = new LookupElementBuilder[] {
@@ -37,6 +39,11 @@ public class GlslCompletionUtils {
             create("dvec2").withTypeText("double vec2").withIcon(AllIcons.Nodes.Lambda),
             create("dvec3").withTypeText("double vec3").withIcon(AllIcons.Nodes.Lambda),
             create("dvec4").withTypeText("double vec4").withIcon(AllIcons.Nodes.Lambda),
+            // Matrix, I fell like people don't use n * m matrix a lot?
+            create("mat1").withTypeText("1x1 matrix").withIcon(AllIcons.Nodes.Lambda),
+            create("mat2").withTypeText("2x2 matrix").withIcon(AllIcons.Nodes.Lambda),
+            create("mat3").withTypeText("3x3 matrix").withIcon(AllIcons.Nodes.Lambda),
+            create("mat4").withTypeText("4x4 matrix").withIcon(AllIcons.Nodes.Lambda),
     };
 
     public static final String[] STORAGE_QUALIFIER_LOOKUP_STRING = new String[]{
@@ -106,6 +113,8 @@ public class GlslCompletionUtils {
             create("index").withTypeText("layoutQ assignment").withIcon(AllIcons.Nodes.Controller),
     };
 
+    private static final GlslInsertExtraSpaceClause extraSpaceHandle = new GlslInsertExtraSpaceClause();
+
     public static void addMatchingPrefixOnly(String curPrefix, CompletionResultSet addTo, final String[] lookupStrings, final LookupElementBuilder[] lookupElements) {
         if (lookupStrings.length != lookupElements.length) {
             System.err.println("lookup string != lookup elements");
@@ -113,7 +122,7 @@ public class GlslCompletionUtils {
 
         for (int i = 0; i < lookupStrings.length; i++) {
             if (lookupStrings[i].startsWith(curPrefix)) {
-                addTo.addElement(lookupElements[i]);
+                addTo.addElement(lookupElements[i].withInsertHandler(extraSpaceHandle));
             }
         }
     }

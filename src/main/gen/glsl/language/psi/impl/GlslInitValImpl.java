@@ -35,8 +35,8 @@ public class GlslInitValImpl extends ASTWrapperPsiElement implements GlslInitVal
 
   @Override
   @Nullable
-  public GlslMemberAccess getMemberAccess() {
-    return findChildByClass(GlslMemberAccess.class);
+  public GlslMemberAccessHead getMemberAccessHead() {
+    return findChildByClass(GlslMemberAccessHead.class);
   }
 
   @Override

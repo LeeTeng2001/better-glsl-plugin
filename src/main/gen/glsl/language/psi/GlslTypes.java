@@ -29,6 +29,7 @@ public interface GlslTypes {
   IElementType LAYOUT_QUALIFIER_PARAM = new GlslElementType("LAYOUT_QUALIFIER_PARAM");
   IElementType MACRO = new GlslElementType("MACRO");
   IElementType MEMBER_ACCESS = new GlslElementType("MEMBER_ACCESS");
+  IElementType MEMBER_ACCESS_HEAD = new GlslElementType("MEMBER_ACCESS_HEAD");
   IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
   IElementType STATEMENT = new GlslElementType("STATEMENT");
   IElementType STATEMENT_DO_WHILE = new GlslElementType("STATEMENT_DO_WHILE");
@@ -100,6 +101,7 @@ public interface GlslTypes {
   IElementType LE_OP = new GlslTokenType("LE_OP");
   IElementType MOD_ASSIGN = new GlslTokenType("MOD_ASSIGN");
   IElementType MUL_ASSIGN = new GlslTokenType("MUL_ASSIGN");
+  IElementType NATIVE_MATRIX = new GlslTokenType("NATIVE_MATRIX");
   IElementType NATIVE_VECTOR = new GlslTokenType("NATIVE_VECTOR");
   IElementType NE_OP = new GlslTokenType("NE_OP");
   IElementType NULL_TOKEN = new GlslTokenType("NULL_TOKEN");
@@ -196,6 +198,9 @@ public interface GlslTypes {
       }
       else if (type == MEMBER_ACCESS) {
         return new GlslMemberAccessImpl(node);
+      }
+      else if (type == MEMBER_ACCESS_HEAD) {
+        return new GlslMemberAccessHeadImpl(node);
       }
       else if (type == RELATIONAL_OP) {
         return new GlslRelationalOpImpl(node);

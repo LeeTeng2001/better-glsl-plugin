@@ -91,6 +91,10 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMemberAccessHead(@NotNull GlslMemberAccessHead o) {
+    visitPsiElement(o);
+  }
+
   public void visitRelationalOp(@NotNull GlslRelationalOp o) {
     visitPsiElement(o);
   }

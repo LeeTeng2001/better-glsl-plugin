@@ -22,7 +22,9 @@ END_OF_LINE_COMMENT="//"[^\r\n]*
 INTEGER_CONSTANT=\d+
 FLOAT_CONSTANT=\d*\.\d+
 IDENTIFIER=[:jletter:][:jletterdigit:]*
+
 NATIVE_VECTOR=(bvec|ivec|uvec|vec|dvec)[234]
+NATIVE_MATRIX=mat[234](x[234])?
 
 %state WAITING_VALUE
 
@@ -42,6 +44,7 @@ false                                { return GlslTypes.FALSE; }
 
 // Advance type
 <YYINITIAL> {NATIVE_VECTOR}                                { return GlslTypes.NATIVE_VECTOR; }
+<YYINITIAL> {NATIVE_MATRIX}                                { return GlslTypes.NATIVE_MATRIX; }
 
 // Control flow keyword ------------------------------------------------
 if                                { return GlslTypes.IF; }

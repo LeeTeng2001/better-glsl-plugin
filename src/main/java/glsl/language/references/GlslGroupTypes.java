@@ -20,6 +20,7 @@ public class GlslGroupTypes {
             DOUBLE,
             BOOL,
             NATIVE_VECTOR,
+            NATIVE_MATRIX,
             STRUCT
     ).collect(Collectors.toUnmodifiableSet());
 

@@ -22,23 +22,23 @@ public class GlslCompletionContributor extends CompletionContributor {
                                                @NotNull CompletionResultSet resultSet) {
                         var node = parameters.getPosition();
                         var nodeParentType = node.getParent().getNode().getElementType();
-                        var lookBack = node;
-                        // Look 2 step behind (skip whitespace token)
-                        for (int i = 0; i < 2; i++) {
-                            if (lookBack == null) break;
-                            lookBack = lookBack.getPrevSibling();
-                        }
-
+                        var lookBack = node.getPrevSibling();
                         var lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
 
-                        // No completion if we already have primitive/identifier types before us, or we're
-                        // an implementation origin identifier, or we're preceded by assignment operator
-                        if (GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS.contains(lookBackType) ||
-                                lookBackType.equals(GlslTypes.IDENTIFIER) ||
-                                GlslGroupTypes.ASSIGNMENT_OP_KEYWORDS.contains(lookBackType) ||
-                                GlslGroupTypes.IDENTIFIER_ORIGIN.contains(nodeParentType) ||
-                                GlslTypes.INIT_VAL.equals(nodeParentType)
-                        ) return;
+                        // Look max 2 step behind (skip whitespace token)
+                        for (int i = 0; i < 1; i++) {
+                            if (lookBack == null) break;
+                            // No completion if we already have primitive/identifier types before us, or we're
+                            // an implementation origin identifier, or we're preceded by assignment operator
+                            if (GlslGroupTypes.PRIMITIVE_TYPES_KEYWORDS.contains(lookBackType) ||
+                                    lookBackType.equals(GlslTypes.IDENTIFIER) ||
+                                    GlslGroupTypes.ASSIGNMENT_OP_KEYWORDS.contains(lookBackType)
+                            ) return;
+
+                            lookBack = lookBack.getPrevSibling();
+                            lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
+                        }
+
 
                         // Only add prefix, for built-in type, we hardly want to match everything by context
                         // contextText has IntellijIdeaRulezzz to prevent empty string

@@ -11,7 +11,7 @@ public interface GlslInitVal extends PsiElement {
   GlslInitializer getInitializer();
 
   @Nullable
-  GlslMemberAccess getMemberAccess();
+  GlslMemberAccessHead getMemberAccessHead();
 
   @Nullable
   GlslUnarySignOp getUnarySignOp();
