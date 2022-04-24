@@ -3,9 +3,9 @@
 package glsl.language;
 
 import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
-import glsl.language.psi.GlslTypes;  // contain token we'll use
+import com.intellij.psi.tree.IElementType;
+import glsl.language.psi.GlslTypes;
 
 
 /**

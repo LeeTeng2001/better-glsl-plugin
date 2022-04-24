@@ -1,17 +1,12 @@
 package glsl.language.utility;
 
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.search.FileTypeIndex;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import glsl.language.property.GlslFileType;
 import glsl.language.psi.GlslFile;
 import glsl.language.psi.GlslVarNameOriginFunc;
 import glsl.language.psi.GlslVarNameOriginStruct;
 import glsl.language.psi.GlslVarNameOriginVariable;
-import org.apache.tools.ant.types.selectors.TypeSelector;
 
 import java.util.ArrayList;
 import java.util.List;
