@@ -39,6 +39,9 @@ public interface GlslTypes {
   IElementType STATEMENT_WHILE_NORMAL = new GlslElementType("STATEMENT_WHILE_NORMAL");
   IElementType STORAGE_QUALIFIER = new GlslElementType("STORAGE_QUALIFIER");
   IElementType STRUCT_DEFINITION = new GlslElementType("STRUCT_DEFINITION");
+  IElementType UNARY_BACK_OP = new GlslElementType("UNARY_BACK_OP");
+  IElementType UNARY_FRONT_OP = new GlslElementType("UNARY_FRONT_OP");
+  IElementType UNARY_SIGN_OP = new GlslElementType("UNARY_SIGN_OP");
   IElementType VARIABLE_DEFINITION = new GlslElementType("VARIABLE_DEFINITION");
   IElementType VAR_NAME_ACCESS_FUNC = new GlslElementType("VAR_NAME_ACCESS_FUNC");
   IElementType VAR_NAME_ACCESS_VAR = new GlslElementType("VAR_NAME_ACCESS_VAR");
@@ -77,6 +80,7 @@ public interface GlslTypes {
   IElementType ELSE = new GlslTokenType("else");
   IElementType EQUAL = new GlslTokenType("EQUAL");
   IElementType EQ_OP = new GlslTokenType("EQ_OP");
+  IElementType EXCLAMATION = new GlslTokenType("EXCLAMATION");
   IElementType FALSE = new GlslTokenType("false");
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
@@ -220,6 +224,15 @@ public interface GlslTypes {
       }
       else if (type == STRUCT_DEFINITION) {
         return new GlslStructDefinitionImpl(node);
+      }
+      else if (type == UNARY_BACK_OP) {
+        return new GlslUnaryBackOpImpl(node);
+      }
+      else if (type == UNARY_FRONT_OP) {
+        return new GlslUnaryFrontOpImpl(node);
+      }
+      else if (type == UNARY_SIGN_OP) {
+        return new GlslUnarySignOpImpl(node);
       }
       else if (type == VARIABLE_DEFINITION) {
         return new GlslVariableDefinitionImpl(node);

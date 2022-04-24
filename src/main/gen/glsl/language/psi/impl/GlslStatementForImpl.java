@@ -65,6 +65,12 @@ public class GlslStatementForImpl extends ASTWrapperPsiElement implements GlslSt
 
   @Override
   @NotNull
+  public List<GlslUnarySignOp> getUnarySignOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslUnarySignOp.class);
+  }
+
+  @Override
+  @NotNull
   public List<GlslVarNameAccessVar> getVarNameAccessVarList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslVarNameAccessVar.class);
   }

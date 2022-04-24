@@ -26,6 +26,9 @@ public interface GlslStatementFor extends PsiElement {
   List<GlslStatement> getStatementList();
 
   @NotNull
+  List<GlslUnarySignOp> getUnarySignOpList();
+
+  @NotNull
   List<GlslVarNameAccessVar> getVarNameAccessVarList();
 
   @NotNull

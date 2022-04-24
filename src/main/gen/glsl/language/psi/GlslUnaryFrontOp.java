@@ -5,13 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslInitVal extends PsiElement {
-
-  @Nullable
-  GlslInitializer getInitializer();
-
-  @Nullable
-  GlslMemberAccess getMemberAccess();
+public interface GlslUnaryFrontOp extends PsiElement {
 
   @Nullable
   GlslUnarySignOp getUnarySignOp();

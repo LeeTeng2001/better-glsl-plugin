@@ -11,38 +11,20 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslInitValImpl extends ASTWrapperPsiElement implements GlslInitVal {
+public class GlslUnaryBackOpImpl extends ASTWrapperPsiElement implements GlslUnaryBackOp {
 
-  public GlslInitValImpl(@NotNull ASTNode node) {
+  public GlslUnaryBackOpImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitInitVal(this);
+    visitor.visitUnaryBackOp(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public GlslInitializer getInitializer() {
-    return findChildByClass(GlslInitializer.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslMemberAccess getMemberAccess() {
-    return findChildByClass(GlslMemberAccess.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslUnarySignOp getUnarySignOp() {
-    return findChildByClass(GlslUnarySignOp.class);
   }
 
 }

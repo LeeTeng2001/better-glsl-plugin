@@ -39,4 +39,10 @@ public class GlslStatementSwitchImpl extends ASTWrapperPsiElement implements Gls
     return findNotNullChildByClass(GlslExpressionUnit.class);
   }
 
+  @Override
+  @NotNull
+  public List<GlslUnarySignOp> getUnarySignOpList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GlslUnarySignOp.class);
+  }
+
 }

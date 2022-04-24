@@ -39,4 +39,16 @@ public class GlslExpressionUnitImpl extends ASTWrapperPsiElement implements Glsl
     return findChildByClass(GlslMemberAccess.class);
   }
 
+  @Override
+  @Nullable
+  public GlslUnaryBackOp getUnaryBackOp() {
+    return findChildByClass(GlslUnaryBackOp.class);
+  }
+
+  @Override
+  @Nullable
+  public GlslUnaryFrontOp getUnaryFrontOp() {
+    return findChildByClass(GlslUnaryFrontOp.class);
+  }
+
 }

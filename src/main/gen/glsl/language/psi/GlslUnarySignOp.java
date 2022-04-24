@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslExitControlReturn extends PsiElement {
-
-  @Nullable
-  GlslExpressionNoAssign getExpressionNoAssign();
+public interface GlslUnarySignOp extends PsiElement {
 
 }

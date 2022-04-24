@@ -90,7 +90,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // return expression_assign?
+  // return expression_no_assign?
   public static boolean exit_control_return(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "exit_control_return")) return false;
     if (!nextTokenIs(b, RETURN)) return false;
@@ -102,10 +102,10 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // expression_assign?
+  // expression_no_assign?
   private static boolean exit_control_return_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "exit_control_return_1")) return false;
-    expression_assign(b, l + 1);
+    expression_no_assign(b, l + 1);
     return true;
   }
 
@@ -260,17 +260,41 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access
+  // unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access) unary_back_op?
   public static boolean expression_unit(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_unit")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION_UNIT, "<expression unit>");
+    r = expression_unit_0(b, l + 1);
+    r = r && expression_unit_1(b, l + 1);
+    r = r && expression_unit_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // unary_front_op?
+  private static boolean expression_unit_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_unit_0")) return false;
+    unary_front_op(b, l + 1);
+    return true;
+  }
+
+  // FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access
+  private static boolean expression_unit_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_unit_1")) return false;
+    boolean r;
     r = consumeToken(b, FLOAT_CONSTANT);
     if (!r) r = consumeToken(b, INTEGER_CONSTANT);
     if (!r) r = function_call(b, l + 1);
     if (!r) r = member_access(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // unary_back_op?
+  private static boolean expression_unit_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_unit_2")) return false;
+    unary_back_op(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -452,18 +476,44 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // true | false | FLOAT_CONSTANT | INTEGER_CONSTANT | member_access | initializer
+  // true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access | initializer
   public static boolean init_val(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "init_val")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, INIT_VAL, "<init val>");
     r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
-    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
-    if (!r) r = consumeToken(b, INTEGER_CONSTANT);
+    if (!r) r = init_val_2(b, l + 1);
     if (!r) r = member_access(b, l + 1);
     if (!r) r = initializer(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)
+  private static boolean init_val_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "init_val_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = init_val_2_0(b, l + 1);
+    r = r && init_val_2_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // unary_sign_op?
+  private static boolean init_val_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "init_val_2_0")) return false;
+    unary_sign_op(b, l + 1);
+    return true;
+  }
+
+  // FLOAT_CONSTANT | INTEGER_CONSTANT
+  private static boolean init_val_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "init_val_2_1")) return false;
+    boolean r;
+    r = consumeToken(b, FLOAT_CONSTANT);
+    if (!r) r = consumeToken(b, INTEGER_CONSTANT);
     return r;
   }
 
@@ -890,7 +940,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var_name_access_var ((INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT)))
+  // var_name_access_var ((INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)))
   static boolean statement_for_var_increment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_increment")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -902,7 +952,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT))
+  // (INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT))
   private static boolean statement_for_var_increment_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_increment_1")) return false;
     boolean r;
@@ -922,13 +972,14 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT)
+  // (ADD_ASSIGN | SUB_ASSIGN) unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)
   private static boolean statement_for_var_increment_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_increment_1_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = statement_for_var_increment_1_1_0(b, l + 1);
     r = r && statement_for_var_increment_1_1_1(b, l + 1);
+    r = r && statement_for_var_increment_1_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -942,9 +993,16 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  // unary_sign_op?
   private static boolean statement_for_var_increment_1_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_increment_1_1_1")) return false;
+    unary_sign_op(b, l + 1);
+    return true;
+  }
+
+  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  private static boolean statement_for_var_increment_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_increment_1_1_2")) return false;
     boolean r;
     r = consumeToken(b, INTEGER_CONSTANT);
     if (!r) r = consumeToken(b, FLOAT_CONSTANT);
@@ -952,20 +1010,38 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier_type EQUAL var_name_origin_variable
+  // identifier_type var_name_origin_variable EQUAL unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)
   static boolean statement_for_var_initialise(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_initialise")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = identifier_type(b, l + 1);
-    r = r && consumeToken(b, EQUAL);
     r = r && var_name_origin_variable(b, l + 1);
+    r = r && consumeToken(b, EQUAL);
+    r = r && statement_for_var_initialise_3(b, l + 1);
+    r = r && statement_for_var_initialise_4(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  // unary_sign_op?
+  private static boolean statement_for_var_initialise_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_initialise_3")) return false;
+    unary_sign_op(b, l + 1);
+    return true;
+  }
+
+  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  private static boolean statement_for_var_initialise_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_initialise_4")) return false;
+    boolean r;
+    r = consumeToken(b, INTEGER_CONSTANT);
+    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
+    return r;
+  }
+
   /* ********************************************************** */
-  // var_name_access_var relational_op (INTEGER_CONSTANT | FLOAT_CONSTANT)
+  // var_name_access_var relational_op unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)
   static boolean statement_for_var_termination(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_termination")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -974,13 +1050,21 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = var_name_access_var(b, l + 1);
     r = r && relational_op(b, l + 1);
     r = r && statement_for_var_termination_2(b, l + 1);
+    r = r && statement_for_var_termination_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  // unary_sign_op?
   private static boolean statement_for_var_termination_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_var_termination_2")) return false;
+    unary_sign_op(b, l + 1);
+    return true;
+  }
+
+  // INTEGER_CONSTANT | FLOAT_CONSTANT
+  private static boolean statement_for_var_termination_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_var_termination_3")) return false;
     boolean r;
     r = consumeToken(b, INTEGER_CONSTANT);
     if (!r) r = consumeToken(b, FLOAT_CONSTANT);
@@ -1042,7 +1126,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (default | (case INTEGER_CONSTANT)) COLON expression*
+  // (default | (case unary_sign_op? INTEGER_CONSTANT)) COLON expression*
   static boolean statement_switch_case(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_switch_case")) return false;
     if (!nextTokenIs(b, "", CASE, DEFAULT)) return false;
@@ -1055,7 +1139,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // default | (case INTEGER_CONSTANT)
+  // default | (case unary_sign_op? INTEGER_CONSTANT)
   private static boolean statement_switch_case_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_switch_case_0")) return false;
     boolean r;
@@ -1066,14 +1150,23 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // case INTEGER_CONSTANT
+  // case unary_sign_op? INTEGER_CONSTANT
   private static boolean statement_switch_case_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_switch_case_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, CASE, INTEGER_CONSTANT);
+    r = consumeToken(b, CASE);
+    r = r && statement_switch_case_0_1_1(b, l + 1);
+    r = r && consumeToken(b, INTEGER_CONSTANT);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // unary_sign_op?
+  private static boolean statement_switch_case_0_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_switch_case_0_1_1")) return false;
+    unary_sign_op(b, l + 1);
+    return true;
   }
 
   // expression*
@@ -1229,6 +1322,46 @@ public class GlslParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "struct_definition_4", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // INCREMENT | DECREMENT
+  public static boolean unary_back_op(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unary_back_op")) return false;
+    if (!nextTokenIs(b, "<unary back op>", DECREMENT, INCREMENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, UNARY_BACK_OP, "<unary back op>");
+    r = consumeToken(b, INCREMENT);
+    if (!r) r = consumeToken(b, DECREMENT);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // INCREMENT | DECREMENT | EXCLAMATION | unary_sign_op
+  public static boolean unary_front_op(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unary_front_op")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, UNARY_FRONT_OP, "<unary front op>");
+    r = consumeToken(b, INCREMENT);
+    if (!r) r = consumeToken(b, DECREMENT);
+    if (!r) r = consumeToken(b, EXCLAMATION);
+    if (!r) r = unary_sign_op(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PLUS | DASH
+  public static boolean unary_sign_op(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unary_sign_op")) return false;
+    if (!nextTokenIs(b, "<unary sign op>", DASH, PLUS)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, UNARY_SIGN_OP, "<unary sign op>");
+    r = consumeToken(b, PLUS);
+    if (!r) r = consumeToken(b, DASH);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */

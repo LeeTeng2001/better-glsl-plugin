@@ -131,6 +131,18 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitUnaryBackOp(@NotNull GlslUnaryBackOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUnaryFrontOp(@NotNull GlslUnaryFrontOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUnarySignOp(@NotNull GlslUnarySignOp o) {
+    visitPsiElement(o);
+  }
+
   public void visitVarNameAccessFunc(@NotNull GlslVarNameAccessFunc o) {
     visitNamedElement(o);
   }

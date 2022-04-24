@@ -16,7 +16,7 @@
 - [x] for, while, return expression
 - [x] Boolean
 - [x] Variable proper scope reference
-- [ ] Unary, prefix, postfix operation
+- [x] Unary, prefix, postfix operation
 - [ ] Support for vec type, swizzle expression
 - [ ] Auto complete for member access
 - [ ] Add stub for performance and std library

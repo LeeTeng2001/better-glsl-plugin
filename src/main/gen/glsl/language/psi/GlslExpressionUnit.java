@@ -13,4 +13,10 @@ public interface GlslExpressionUnit extends PsiElement {
   @Nullable
   GlslMemberAccess getMemberAccess();
 
+  @Nullable
+  GlslUnaryBackOp getUnaryBackOp();
+
+  @Nullable
+  GlslUnaryFrontOp getUnaryFrontOp();
+
 }

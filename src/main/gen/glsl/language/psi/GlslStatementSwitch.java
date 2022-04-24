@@ -13,4 +13,7 @@ public interface GlslStatementSwitch extends PsiElement {
   @NotNull
   GlslExpressionUnit getExpressionUnit();
 
+  @NotNull
+  List<GlslUnarySignOp> getUnarySignOpList();
+
 }

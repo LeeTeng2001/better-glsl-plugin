@@ -11,32 +11,20 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslInitValImpl extends ASTWrapperPsiElement implements GlslInitVal {
+public class GlslUnaryFrontOpImpl extends ASTWrapperPsiElement implements GlslUnaryFrontOp {
 
-  public GlslInitValImpl(@NotNull ASTNode node) {
+  public GlslUnaryFrontOpImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitInitVal(this);
+    visitor.visitUnaryFrontOp(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GlslVisitor) accept((GlslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public GlslInitializer getInitializer() {
-    return findChildByClass(GlslInitializer.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslMemberAccess getMemberAccess() {
-    return findChildByClass(GlslMemberAccess.class);
   }
 
   @Override

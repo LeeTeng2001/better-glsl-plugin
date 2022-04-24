@@ -35,6 +35,9 @@ identifier_type ::= void | int | uint | float | double | bool | var_name_type
 assign_op ::= EQUAL | MUL_ASSIGN | DIV_ASSIGN | ADD_ASSIGN | SUB_ASSIGN | MOD_ASSIGN | LEFT_ASSIGN | RIGHT_ASSIGN | AND_ASSIGN | XOR_ASSIGN | OR_ASSIGN
 arithmetic_op ::= PLUS | DASH | STAR | SLASH | PERCENT | LEFT_OP | RIGHT_OP | AMPERSAND | CARET | VERTICAL_BAR
 relational_op ::= EQ_OP | ANGLE_L | ANGLE_R | GE_OP | LE_OP | NE_OP | AND_OP | OR_OP | XOR_OP
+unary_sign_op ::=  PLUS | DASH
+unary_front_op ::= INCREMENT | DECREMENT | EXCLAMATION | unary_sign_op
+unary_back_op ::= INCREMENT | DECREMENT
 
 // Special qualifier
 layout_qualifier ::= layout PAREN_L layout_qualifier_param? (COMMA layout_qualifier_param)* PAREN_R {pin=2}
@@ -48,7 +51,7 @@ function_args ::= identifier_type var_name_origin_variable (COMMA function_args)
 struct_definition ::= (layout_qualifier? (in | out))? struct var_name_origin_struct C_BRACKET_L variable_definition* C_BRACKET_R SEMICOLON {pin=2}
 variable_definition ::= storage_qualifier? identifier_type var_name_origin_variable
                         (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)? SEMICOLON {pin=3}
-init_val ::=  true | false | FLOAT_CONSTANT | INTEGER_CONSTANT | member_access | initializer
+init_val ::=  true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access | initializer
 initializer ::= identifier_type (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)?
                 PAREN_L expression_no_assign? (COMMA expression_no_assign)* PAREN_R
 
@@ -57,27 +60,27 @@ initializer ::= identifier_type (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)?
 statement_if ::= if PAREN_L expression_no_assign PAREN_R C_BRACKET_L segment* C_BRACKET_R
 statement_else ::= else (statement_if | (C_BRACKET_L segment* C_BRACKET_R))
 statement_switch ::= switch PAREN_L expression_unit PAREN_R C_BRACKET_L statement_switch_case* C_BRACKET_R
-private statement_switch_case ::= (default | (case INTEGER_CONSTANT)) COLON expression*
+private statement_switch_case ::= (default | (case unary_sign_op? INTEGER_CONSTANT)) COLON expression*
 private statement_while_header ::= while PAREN_L expression_no_assign PAREN_R
 statement_do_while ::= do C_BRACKET_L segment* C_BRACKET_R statement_while_header SEMICOLON
 statement_while_normal ::= statement_while_header C_BRACKET_L segment* C_BRACKET_R
 statement_for ::= for PAREN_L statement_for_paren PAREN_R C_BRACKET_L segment* C_BRACKET_R
 private statement_for_paren ::= statement_for_var_initialise SEMICOLON statement_for_var_termination SEMICOLON statement_for_var_increment
-private statement_for_var_initialise ::= identifier_type EQUAL var_name_origin_variable
-private statement_for_var_termination ::= var_name_access_var relational_op (INTEGER_CONSTANT | FLOAT_CONSTANT)
-private statement_for_var_increment ::= var_name_access_var ((INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) (INTEGER_CONSTANT | FLOAT_CONSTANT)))
+private statement_for_var_initialise ::= identifier_type var_name_origin_variable EQUAL unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)
+private statement_for_var_termination ::= var_name_access_var relational_op unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)
+private statement_for_var_increment ::= var_name_access_var ((INCREMENT | DECREMENT) | ((ADD_ASSIGN | SUB_ASSIGN) unary_sign_op? (INTEGER_CONSTANT | FLOAT_CONSTANT)))
 // Glsl is quite limited for condition testing for parallel efficiency
 
 // Control flow keyword
 exit_control_single ::= discard | break | continue  // TODO: Hook up with checking valid context logic
-exit_control_return ::= return expression_assign?
+exit_control_return ::= return expression_no_assign?
 
 // expression ------------------------------------------------------------
 expression_assign ::= (expression_no_assign | expression_assign_paren) (assign_op expression_assign)?
 expression_assign_paren ::= PAREN_L expression_assign PAREN_R
 expression_no_assign ::= (expression_unit | expression_no_assign_paren) ((arithmetic_op | relational_op) expression_no_assign)?
 expression_no_assign_paren ::= PAREN_L expression_no_assign PAREN_R
-expression_unit ::= FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access  // function return member access??
+expression_unit ::= unary_front_op? (FLOAT_CONSTANT | INTEGER_CONSTANT | function_call | member_access) unary_back_op?  // TODO: lazy unary
 function_call ::= var_name_access_func PAREN_L (expression_no_assign (COMMA expression_no_assign)*)? PAREN_R {pin=2}  // No assign or assign??
 member_access ::= var_name_access_var (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (DOT member_access)?  // TODO: reference, non-integer access
 
