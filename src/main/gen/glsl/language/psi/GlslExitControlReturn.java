@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GlslExitControlReturn extends PsiElement {
 
-  @NotNull
-  GlslExpression getExpression();
+  @Nullable
+  GlslExpressionAssign getExpressionAssign();
 
 }

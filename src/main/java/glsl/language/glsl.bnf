@@ -57,16 +57,16 @@ initializer ::= identifier_type (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)?
 statement_if ::= if PAREN_L expression_no_assign PAREN_R C_BRACKET_L segment* C_BRACKET_R
 statement_else ::= else (statement_if | (C_BRACKET_L segment* C_BRACKET_R))
 statement_switch ::= switch PAREN_L expression_unit PAREN_R C_BRACKET_L statement_switch_case* C_BRACKET_R
-private statement_switch_case ::= (default | (case INTEGER_CONSTANT)) COLON expression* break SEMICOLON
+private statement_switch_case ::= (default | (case INTEGER_CONSTANT)) COLON expression*
 private statement_while_header ::= while PAREN_L expression_no_assign PAREN_R
 statement_do_while ::= do C_BRACKET_L segment* C_BRACKET_R statement_while_header SEMICOLON
 statement_while_normal ::= statement_while_header C_BRACKET_L segment* C_BRACKET_R
 statement_for ::= for PAREN_L statement_for_paren PAREN_R C_BRACKET_L segment* C_BRACKET_R
-private statement_for_paren ::= variable_definition? SEMICOLON expression_assign? SEMICOLON expression_assign?
+private statement_for_paren ::= (variable_definition | SEMICOLON)? expression_assign? SEMICOLON expression_assign?
 
 // Control flow keyword
 exit_control_single ::= discard | break | continue  // TODO: Hook up with checking valid context logic
-exit_control_return ::= return expression
+exit_control_return ::= return expression_assign?
 
 // expression ------------------------------------------------------------
 expression_assign ::= (expression_no_assign | expression_assign_paren) (assign_op expression_assign)?

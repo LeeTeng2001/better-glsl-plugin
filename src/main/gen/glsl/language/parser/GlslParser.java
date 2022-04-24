@@ -90,16 +90,23 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // return expression
+  // return expression_assign?
   public static boolean exit_control_return(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "exit_control_return")) return false;
     if (!nextTokenIs(b, RETURN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, RETURN);
-    r = r && expression(b, l + 1);
+    r = r && exit_control_return_1(b, l + 1);
     exit_section_(b, m, EXIT_CONTROL_RETURN, r);
     return r;
+  }
+
+  // expression_assign?
+  private static boolean exit_control_return_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exit_control_return_1")) return false;
+    expression_assign(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -866,37 +873,45 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable_definition? SEMICOLON expression_assign? SEMICOLON expression_assign?
+  // (variable_definition | SEMICOLON)? expression_assign? SEMICOLON expression_assign?
   static boolean statement_for_paren(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_paren")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = statement_for_paren_0(b, l + 1);
+    r = r && statement_for_paren_1(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
-    r = r && statement_for_paren_2(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    r = r && statement_for_paren_4(b, l + 1);
+    r = r && statement_for_paren_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // variable_definition?
+  // (variable_definition | SEMICOLON)?
   private static boolean statement_for_paren_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_for_paren_0")) return false;
-    variable_definition(b, l + 1);
+    statement_for_paren_0_0(b, l + 1);
     return true;
   }
 
+  // variable_definition | SEMICOLON
+  private static boolean statement_for_paren_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_paren_0_0")) return false;
+    boolean r;
+    r = variable_definition(b, l + 1);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    return r;
+  }
+
   // expression_assign?
-  private static boolean statement_for_paren_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_for_paren_2")) return false;
+  private static boolean statement_for_paren_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_paren_1")) return false;
     expression_assign(b, l + 1);
     return true;
   }
 
   // expression_assign?
-  private static boolean statement_for_paren_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_for_paren_4")) return false;
+  private static boolean statement_for_paren_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_for_paren_3")) return false;
     expression_assign(b, l + 1);
     return true;
   }
@@ -956,7 +971,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (default | (case INTEGER_CONSTANT)) COLON expression* break SEMICOLON
+  // (default | (case INTEGER_CONSTANT)) COLON expression*
   static boolean statement_switch_case(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement_switch_case")) return false;
     if (!nextTokenIs(b, "", CASE, DEFAULT)) return false;
@@ -965,7 +980,6 @@ public class GlslParser implements PsiParser, LightPsiParser {
     r = statement_switch_case_0(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && statement_switch_case_2(b, l + 1);
-    r = r && consumeTokens(b, 0, BREAK, SEMICOLON);
     exit_section_(b, m, null, r);
     return r;
   }

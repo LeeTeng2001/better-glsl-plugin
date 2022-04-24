@@ -50,7 +50,8 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
         if (ASSIGNMENT_OP_KEYWORDS.contains(tokenType)) {
             return OPERATOR_KEYS;
         }
-        if (PRIMITIVE_TYPES_KEYWORDS.contains(tokenType) | STORAGE_QUALIFIER_KEYWORDS.contains(tokenType)) {
+        if (PRIMITIVE_TYPES_KEYWORDS.contains(tokenType) || STORAGE_QUALIFIER_KEYWORDS.contains(tokenType)||
+            CONTROL_FLOW_KEYWORDS.contains(tokenType)) {
             return KEY_KEYS;
         }
         if (tokenType.equals(GlslTypes.IDENTIFIER)) {

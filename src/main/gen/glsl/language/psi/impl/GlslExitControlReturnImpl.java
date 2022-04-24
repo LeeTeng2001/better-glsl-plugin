@@ -28,9 +28,9 @@ public class GlslExitControlReturnImpl extends ASTWrapperPsiElement implements G
   }
 
   @Override
-  @NotNull
-  public GlslExpression getExpression() {
-    return findNotNullChildByClass(GlslExpression.class);
+  @Nullable
+  public GlslExpressionAssign getExpressionAssign() {
+    return findChildByClass(GlslExpressionAssign.class);
   }
 
 }

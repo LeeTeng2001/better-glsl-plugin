@@ -13,8 +13,10 @@
 - [x] Initialise with built-in functions & initializer
 - [x] Formatter, auto indentation
 - [x] standard library usage styling
-- [ ] for, while, return expression
+- [x] for, while, return expression
+- [ ] Boolean
 - [ ] Variable scope reference
+- [ ] Unary operation
 - [ ] Auto complete for member access
 - [ ] Support for vec type, swizzle expression
 - [ ] Smart function name, variable name filter

@@ -45,7 +45,7 @@ default                                { return GlslTypes.DEFAULT; }
 do                                { return GlslTypes.DO; }
 while                                { return GlslTypes.WHILE; }
 for                                { return GlslTypes.FOR; }
-
+// exit control keyword
 break                                { return GlslTypes.BREAK; }
 continue                                { return GlslTypes.CONTINUE; }
 return                                { return GlslTypes.RETURN; }
@@ -109,9 +109,8 @@ uniform                 {return GlslTypes.UNIFORM; }
 buffer                  {return GlslTypes.BUFFER; }
 shared                  {return GlslTypes.SHARED; }
 layout                  {return GlslTypes.LAYOUT; }
-//attribute               {return GlslTypes.ATTRIBUTE; }  // drop deprecated keyword
+//attribute               {return GlslTypes.ATTRIBUTE; }  // drop support for deprecated keyword
 //varying                 {return GlslTypes.VARYING; }
-
 
 // Layout qualifier keyword?
 
