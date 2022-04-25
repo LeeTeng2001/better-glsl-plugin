@@ -1,0 +1,20 @@
+<templateSet group="glsl-testing">
+    <template name="fi" value="for(int $INDEX$ = 0; $INDEX$ &lt; $LIMIT$; $INDEX$++) {&#10;  $END$&#10;}"
+              description="for loop" toReformat="false" toShortenFQNames="true">
+        <variable name="INDEX" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="LIMIT" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="OTHER" value="true"/>
+        </context>
+    </template>
+    <template name="lay" value="layout($INDEX$) $INOUT$ $TYPE$ $IDENTIFIER$$END$;"
+              description="layout variable definition" toReformat="false" toShortenFQNames="true">
+        <variable name="INDEX" expression="&quot;location=&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="INOUT" expression="&quot;in&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="TYPE" expression="&quot;int&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="IDENTIFIER" expression="&quot;variableName&quot;" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="OTHER" value="true"/>
+        </context>
+    </template>
+</templateSet>

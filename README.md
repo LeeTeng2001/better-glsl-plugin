@@ -21,7 +21,8 @@
 - [x] Prefix match in auto complete to reduce noise
 - [x] Support for matrix type, double array
 - [x] Samplers & images & textures keywords
-- [ ] Layout qualifier usage validation
+- [x] Layout qualifier usage validation
+- [x] Common live templates like for, new file etc
 - [ ] Check redefined variable in the same scope
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter

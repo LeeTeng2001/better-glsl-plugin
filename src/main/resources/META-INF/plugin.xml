@@ -46,6 +46,10 @@
         <!-- libraries -->
         <additionalLibraryRootsProvider implementation="glsl.language.utility.GlslStdLibraryProvider" />
 
+        <!--   Live Templates     -->
+        <defaultLiveTemplates file="/liveTemplates/glslLiveTemplates.xml" />
+        <liveTemplateContext implementation="glsl.language.utility.livetemplate.GlslFileContext" />
+
     </extensions>
 
     <applicationListeners>

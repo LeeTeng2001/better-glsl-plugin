@@ -50,6 +50,17 @@ public class GlslAnnotator implements Annotator {
                         .create();
             }
         }
+        else if (node.getElementType().equals(GlslTypes.VAR_NAME_ORIGIN_VARIABLE)) {
+            var resolve = node.getPsi().getReference();
+            assert resolve != null;
+
+            // Not equal to self, redefinition of variables
+            if (!resolve.getElement().getNode().equals(node)) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Redefinition of the same identifier name")
+                        .range(element)
+                        .create();
+            }
+        }
         else if (node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_FUNC) ||
                 node.getElementType().equals(GlslTypes.VAR_NAME_ACCESS_VAR)) {
             var resolve = node.getPsi().getReference();
@@ -110,8 +121,7 @@ public class GlslAnnotator implements Annotator {
                     .range(idNode)
                     .textAttributes(GlslSyntaxHighlighter.KEY)
                     .create();
-
-            System.out.println(idNodeText + " " + childAssign);
+//            System.out.println(idNodeText + " " + childAssign);
 
             final String[] compareStrings = childAssign == null ? LAYOUT_QUALIFIER_ID_ONLY_STRING : LAYOUT_QUALIFIER_ASSIGNMENT_STRING;
             final String[] compareStringsOpposite = childAssign == null ? LAYOUT_QUALIFIER_ASSIGNMENT_STRING : LAYOUT_QUALIFIER_ID_ONLY_STRING;

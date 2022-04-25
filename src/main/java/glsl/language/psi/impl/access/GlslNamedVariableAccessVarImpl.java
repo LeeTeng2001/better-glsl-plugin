@@ -83,7 +83,7 @@ public abstract class GlslNamedVariableAccessVarImpl extends ASTWrapperPsiElemen
             STATEMENT_FOR
     ).collect(Collectors.toUnmodifiableSet());
 
-    private static PsiElement getClosestScope(PsiElement startFrom) {
+    public static PsiElement getClosestScope(PsiElement startFrom) {
         while (startFrom != null) {
             var node = startFrom.getNode();
             if (node == null) return null;

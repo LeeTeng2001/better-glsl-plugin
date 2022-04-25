@@ -3,10 +3,7 @@ package glsl.language.utility;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiTreeUtil;
-import glsl.language.psi.GlslFile;
-import glsl.language.psi.GlslVarNameOriginFunc;
-import glsl.language.psi.GlslVarNameOriginStruct;
-import glsl.language.psi.GlslVarNameOriginVariable;
+import glsl.language.psi.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +30,15 @@ public class GlslUtil {
         var functionsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginFunc.class);
         var functions = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
 
-        List<GlslVarNameOriginFunc> result = new ArrayList<>(functionsStd);
+        List<GlslVarNameOriginFunc> result = new ArrayList<>();
 
+        // Add local first, then global
         for (var node : functions) {
             if (node.getTextOffset() < curAt) {
                 result.add(node);
             }
         }
+        result.addAll(functionsStd);
 
         return result;
     }
@@ -51,11 +50,18 @@ public class GlslUtil {
         var declarationsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginVariable.class);
         var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
 
-        List<GlslVarNameOriginVariable> result = new ArrayList<>(declarationsStd);
+        List<GlslVarNameOriginVariable> result = new ArrayList<>();
 
         // Filter by current cursor position in current file
         for (var node : declarations) {
             if (node.getTextOffset() < curAt) {
+                result.add(node);
+            }
+        }
+
+        // Add global node only
+        for (var node : declarationsStd) {
+            if (!node.getParent().getNode().getElementType().equals(GlslTypes.FUNCTION_ARGS)) {
                 result.add(node);
             }
         }
