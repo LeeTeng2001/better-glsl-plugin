@@ -44,6 +44,8 @@
 - [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html).
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
+## Plugin description
+
 <!-- Plugin description -->
 
 Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their ide. I've tried various shader plugin in VSCode, jetbrain, but all they do is simple syntax highlighting only.

@@ -3,5 +3,21 @@
 # better-glsl-jetbrain Changelog
 
 ## [Unreleased]
+
+
+## [0.0.3] - 2022-04-25
+### Changed
+- Fix plugin name to fit the platform naming standard
+
+## [0.0.2] - 2022-04-25
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Added description
+- Added plugin logo
+### Changed
+- Support intellij 2022
+- Fix deprecated icon function usage
+
+## [0.0.1] - 2022-04-25
+### Added
+- Baseline language support, auto-completion, highlighter, annotator, formatter etc.
+- Support intellij 2021
