@@ -45,13 +45,17 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
+
 This is a plugin that try to give you the native intellij IDE experience for Glsl language, you have the familiar code completion, reference symbol, syntax highlighter, common error annotator, standard library function & variable reference.
 
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+I try very hard to make this usable, currently it has some known limitation
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+- No member access validation
+- No expression validation
+- No auto-completion for member access
+- 
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+
 <!-- Plugin description end -->
 
 ## Installation
