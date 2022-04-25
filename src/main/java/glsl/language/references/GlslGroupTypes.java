@@ -31,6 +31,7 @@ public class GlslGroupTypes {
             CONST,
             IN,
             OUT,
+            INOUT,
             UNIFORM,
             BUFFER,
             SHARED,

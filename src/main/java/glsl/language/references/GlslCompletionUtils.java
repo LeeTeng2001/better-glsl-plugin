@@ -54,13 +54,14 @@ public class GlslCompletionUtils {
     };
 
     public static final String[] STORAGE_QUALIFIER_LOOKUP_STRING = new String[]{
-            "const", "in", "out", "uniform", "layout", "buffer", "shared"
+            "const", "in", "out", "inout", "uniform", "layout", "buffer", "shared"
     };
 
     public static final LookupElementBuilder[] STORAGE_QUALIFIER_LOOKUP = new LookupElementBuilder[] {
             create("const").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             create("in").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             create("out").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
+            create("inout").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             create("uniform").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             create("layout").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
             create("buffer").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
