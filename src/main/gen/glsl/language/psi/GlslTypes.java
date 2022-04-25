@@ -93,6 +93,7 @@ public interface GlslTypes {
   IElementType IF = new GlslTokenType("if");
   IElementType IN = new GlslTokenType("in");
   IElementType INCREMENT = new GlslTokenType("INCREMENT");
+  IElementType INOUT = new GlslTokenType("inout");
   IElementType INT = new GlslTokenType("int");
   IElementType INTEGER_CONSTANT = new GlslTokenType("INTEGER_CONSTANT");
   IElementType LAYOUT = new GlslTokenType("layout");
@@ -101,8 +102,11 @@ public interface GlslTypes {
   IElementType LE_OP = new GlslTokenType("LE_OP");
   IElementType MOD_ASSIGN = new GlslTokenType("MOD_ASSIGN");
   IElementType MUL_ASSIGN = new GlslTokenType("MUL_ASSIGN");
+  IElementType NATIVE_IMAGES = new GlslTokenType("NATIVE_IMAGES");
   IElementType NATIVE_MATRIX = new GlslTokenType("NATIVE_MATRIX");
+  IElementType NATIVE_SAMPLER = new GlslTokenType("NATIVE_SAMPLER");
   IElementType NATIVE_VECTOR = new GlslTokenType("NATIVE_VECTOR");
+  IElementType NATIVE_VULKAN_TEXTURE = new GlslTokenType("NATIVE_VULKAN_TEXTURE");
   IElementType NE_OP = new GlslTokenType("NE_OP");
   IElementType NULL_TOKEN = new GlslTokenType("NULL_TOKEN");
   IElementType OR_ASSIGN = new GlslTokenType("OR_ASSIGN");
@@ -112,6 +116,7 @@ public interface GlslTypes {
   IElementType PAREN_R = new GlslTokenType("PAREN_R");
   IElementType PERCENT = new GlslTokenType("PERCENT");
   IElementType PLUS = new GlslTokenType("PLUS");
+  IElementType RESERVED_FUTURE_KEYWORD = new GlslTokenType("reserved_future_keyword");
   IElementType RETURN = new GlslTokenType("return");
   IElementType RIGHT_ASSIGN = new GlslTokenType("RIGHT_ASSIGN");
   IElementType RIGHT_OP = new GlslTokenType("RIGHT_OP");

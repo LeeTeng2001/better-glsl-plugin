@@ -460,7 +460,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | var_name_type
+  // void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | NATIVE_SAMPLER | NATIVE_IMAGES | NATIVE_VULKAN_TEXTURE | var_name_type
   public static boolean identifier_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_type")) return false;
     boolean r;
@@ -473,6 +473,9 @@ public class GlslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, NATIVE_VECTOR);
     if (!r) r = consumeToken(b, NATIVE_MATRIX);
+    if (!r) r = consumeToken(b, NATIVE_SAMPLER);
+    if (!r) r = consumeToken(b, NATIVE_IMAGES);
+    if (!r) r = consumeToken(b, NATIVE_VULKAN_TEXTURE);
     if (!r) r = var_name_type(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -863,6 +866,12 @@ public class GlslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, XOR_OP);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // reserved_future_keyword
+  static boolean reserved_keyword(PsiBuilder b, int l) {
+    return consumeToken(b, RESERVED_FUTURE_KEYWORD);
   }
 
   /* ********************************************************** */
@@ -1293,7 +1302,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // const | uniform | buffer | shared | (layout_qualifier? (in | out))
+  // const | uniform | buffer | shared | (layout_qualifier? (in | out | inout))
   public static boolean storage_qualifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "storage_qualifier")) return false;
     boolean r;
@@ -1307,7 +1316,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // layout_qualifier? (in | out)
+  // layout_qualifier? (in | out | inout)
   private static boolean storage_qualifier_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "storage_qualifier_4")) return false;
     boolean r;
@@ -1325,12 +1334,13 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // in | out
+  // in | out | inout
   private static boolean storage_qualifier_4_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "storage_qualifier_4_1")) return false;
     boolean r;
     r = consumeToken(b, IN);
     if (!r) r = consumeToken(b, OUT);
+    if (!r) r = consumeToken(b, INOUT);
     return r;
   }
 

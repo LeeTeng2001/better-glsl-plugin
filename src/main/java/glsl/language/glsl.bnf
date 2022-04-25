@@ -30,8 +30,8 @@ declaration ::= struct_definition | function_definition | variable_definition
 statement ::= statement_if | statement_else | statement_switch | statement_do_while | statement_while_normal | statement_for
 
 // Terminal token
-storage_qualifier ::= const | uniform | buffer | shared | (layout_qualifier? (in | out))
-identifier_type ::= void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | var_name_type
+storage_qualifier ::= const | uniform | buffer | shared | (layout_qualifier? (in | out | inout))
+identifier_type ::= void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | NATIVE_SAMPLER | NATIVE_IMAGES | NATIVE_VULKAN_TEXTURE | var_name_type
 assign_op ::= EQUAL | MUL_ASSIGN | DIV_ASSIGN | ADD_ASSIGN | SUB_ASSIGN | MOD_ASSIGN | LEFT_ASSIGN | RIGHT_ASSIGN | AND_ASSIGN | XOR_ASSIGN | OR_ASSIGN
 arithmetic_op ::= PLUS | DASH | STAR | SLASH | PERCENT | LEFT_OP | RIGHT_OP | AMPERSAND | CARET | VERTICAL_BAR
 relational_op ::= EQ_OP | ANGLE_L | ANGLE_R | GE_OP | LE_OP | NE_OP | AND_OP | OR_OP | XOR_OP
@@ -145,4 +145,5 @@ var_name_access_member ::= IDENTIFIER {
 
 // Useless token to represent no token
 private useless_expression ::= NULL_TOKEN
+private reserved_keyword ::= reserved_future_keyword
 private recover_to_semicolon ::= !SEMICOLON

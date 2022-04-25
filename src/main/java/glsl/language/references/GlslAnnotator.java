@@ -89,5 +89,12 @@ public class GlslAnnotator implements Annotator {
                         .create();
             }
         }
+        else if (node.getElementType().equals(GlslTypes.RESERVED_FUTURE_KEYWORD)) {
+            // Usage of reserved keyword
+            holder.newAnnotation(HighlightSeverity.ERROR, "Usage of reserved keyword, will result in compile time error")
+                    .textAttributes(GlslSyntaxHighlighter.BAD_CHARACTER)
+                    .range(element)
+                    .create();
+        }
     }
 }

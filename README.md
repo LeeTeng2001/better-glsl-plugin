@@ -20,10 +20,12 @@
 - [x] Support for vec type, swizzle expression
 - [x] Prefix match in auto complete to reduce noise
 - [x] Support for matrix type, double array
+- [x] Samplers & images & textures keywords
+- [ ] Check redefined variable in the same scope
 - [ ] Layout qualifier auto complete
-- [ ] Samplers
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter
+- [ ] Test code example from Glsl manual
 
 ## Feature that's good to have but not in top priority
 - Validate member access like swizzle, array access, valid member name

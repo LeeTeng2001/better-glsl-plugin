@@ -60,7 +60,7 @@ public class GlslSyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(GlslTypes.COMMENT)) {
             return COMMENT_KEYS;
         }
-        if (tokenType.equals(TokenType.BAD_CHARACTER)) {
+        if (tokenType.equals(TokenType.BAD_CHARACTER) || tokenType.equals(GlslTypes.RESERVED_FUTURE_KEYWORD)) {
             return BAD_CHAR_KEYS;
         }
 

@@ -25,6 +25,11 @@ IDENTIFIER=[:jletter:][:jletterdigit:]*
 
 NATIVE_VECTOR=(bvec|ivec|uvec|vec|dvec)[234]
 NATIVE_MATRIX=d?mat[234](x[234])?
+NATIVE_SAMPLER=[iu]?sampler([123]D|Cube|2DRect|[12]DArray|CubeArray|Buffer|2DMS(Array)?)
+NATIVE_SAMPLER_SHADOW=sampler([12]D|Cube|2DRect|[12]DArray|CubeArray)Shadow
+NATIVE_IMAGES=[iu]?image([123]D|Cube|2DRect|[12]DArray|CubeArray|Buffer|2DMS(Array)?)  // essentially same as sampler but with images
+NATIVE_VULKAN_TEXTURE=[iu]?texture([123]D|Cube|2DRect|[12]DArray|CubeArray|Buffer|2DMS(Array)?)
+NATIVE_VULKAN_TEXTURE_EXTRA=(sampler(Shadow)?)|([iu]?subpassInput(MS)?)
 
 %state WAITING_VALUE
 
@@ -45,6 +50,11 @@ false                                { return GlslTypes.FALSE; }
 // Advance type
 <YYINITIAL> {NATIVE_VECTOR}                                { return GlslTypes.NATIVE_VECTOR; }
 <YYINITIAL> {NATIVE_MATRIX}                                { return GlslTypes.NATIVE_MATRIX; }
+<YYINITIAL> {NATIVE_SAMPLER}                                { return GlslTypes.NATIVE_SAMPLER; }
+<YYINITIAL> {NATIVE_SAMPLER_SHADOW}                          { return GlslTypes.NATIVE_SAMPLER; }
+<YYINITIAL> {NATIVE_IMAGES}                          { return GlslTypes.NATIVE_IMAGES; }
+<YYINITIAL> {NATIVE_VULKAN_TEXTURE}                          { return GlslTypes.NATIVE_VULKAN_TEXTURE; }
+<YYINITIAL> {NATIVE_VULKAN_TEXTURE_EXTRA}                          { return GlslTypes.NATIVE_VULKAN_TEXTURE; }
 
 // Control flow keyword ------------------------------------------------
 if                                { return GlslTypes.IF; }
@@ -60,6 +70,66 @@ break                                { return GlslTypes.BREAK; }
 continue                                { return GlslTypes.CONTINUE; }
 return                                { return GlslTypes.RETURN; }
 discard                                { return GlslTypes.DISCARD; }
+
+
+// Storage qualifier ------------------------------------------------
+const                   {return GlslTypes.CONST; }
+in                   {return GlslTypes.IN; }
+out                   {return GlslTypes.OUT; }
+inout                   {return GlslTypes.INOUT; }
+uniform                 {return GlslTypes.UNIFORM; }
+buffer                  {return GlslTypes.BUFFER; }
+shared                  {return GlslTypes.SHARED; }
+layout                  {return GlslTypes.LAYOUT; }
+//attribute               {return GlslTypes.ATTRIBUTE; }  // drop support for deprecated keyword
+//varying                 {return GlslTypes.VARYING; }
+
+// Layout qualifier keyword?
+
+//centroid                {return CENTROID_KEYWORD; }
+//patch                   {return PATCH_KEYWORD; }
+//sample                  {return SAMPLE_KEYWORD; }
+
+// Reserved keyword for future use, result in compile time error ------------
+common                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+partition                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+active                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+asm                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+class                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+union                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+enum                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+typedef                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+template                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+this                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+resource                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+goto                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+inline                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+noinline                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+public                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+static                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+extern                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+external                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+interface                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+long                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+short                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+half                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+fixed                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+unsigned                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+superp                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+input                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+output                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+hvec2                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+hvec3                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+hvec4                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+fvec2                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+fvec3                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+fvec4                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+filter                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+sizeof                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+cast                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+namespace                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+using                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
+sampler3DRect                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
 
 
 // Other symbols ------------------------------------------------
@@ -115,23 +185,6 @@ discard                                { return GlslTypes.DISCARD; }
 "&&"                    {return GlslTypes.AND_OP; }
 "||"                    {return GlslTypes.OR_OP; }
 "^^"                    {return GlslTypes.XOR_OP; }
-
-// Storage qualifier ------------------------------------------------
-const                   {return GlslTypes.CONST; }
-in                   {return GlslTypes.IN; }
-out                   {return GlslTypes.OUT; }
-uniform                 {return GlslTypes.UNIFORM; }
-buffer                  {return GlslTypes.BUFFER; }
-shared                  {return GlslTypes.SHARED; }
-layout                  {return GlslTypes.LAYOUT; }
-//attribute               {return GlslTypes.ATTRIBUTE; }  // drop support for deprecated keyword
-//varying                 {return GlslTypes.VARYING; }
-
-// Layout qualifier keyword?
-
-//centroid                {return CENTROID_KEYWORD; }
-//patch                   {return PATCH_KEYWORD; }
-//sample                  {return SAMPLE_KEYWORD; }
 
 <YYINITIAL> {END_OF_LINE_COMMENT}                           { return GlslTypes.COMMENT; }
 <YYINITIAL> {INTEGER_CONSTANT}                                { return GlslTypes.INTEGER_CONSTANT; }

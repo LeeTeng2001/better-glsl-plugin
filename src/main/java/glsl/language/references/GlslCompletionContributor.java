@@ -22,8 +22,19 @@ public class GlslCompletionContributor extends CompletionContributor {
                                                @NotNull CompletionResultSet resultSet) {
                         var node = parameters.getPosition();
                         var nodeParentType = node.getParent().getNode().getElementType();
+//                        System.out.println("Cur nod parent: " + nodeParentType);
                         var lookBack = node.getPrevSibling();
                         var lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
+//                        System.out.println("Step back: " + 1 + ", " + lookBack + ", " + lookBackType);
+
+                        // Only add prefix, for built-in type, we hardly want to match everything by context
+                        // contextText has IntellijIdeaRulezzz to prevent empty string
+                        var cursorText = node.getText().replace("IntellijIdeaRulezzz", "").toLowerCase();
+//                        System.out.println(cursorText);
+
+                        // Stop if we have numeric number or empty string
+                        if (cursorText.isEmpty() || cursorText.matches("(\\+-)?\\d+(\\.\\d+)?"))
+                            return;
 
                         // Look max 2 step behind (skip whitespace token)
                         for (int i = 0; i < 1; i++) {
@@ -37,27 +48,29 @@ public class GlslCompletionContributor extends CompletionContributor {
 
                             lookBack = lookBack.getPrevSibling();
                             lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
+//                            System.out.println("Step back: " + (i + 2) + ", " + lookBack + ", " + lookBackType);
                         }
 
+                        // only add types & qualifier if we're not access variable
+                        if (!nodeParentType.equals(GlslTypes.VAR_NAME_ACCESS_VAR)) {
+                            // Add primitive types and extra keyword based on context
+                            addMatchingPrefixOnly(cursorText, resultSet, PRIMITIVE_LOOKUP_STRING, PRIMITIVE_LOOKUP);
+                            addExtraByContext(cursorText, resultSet);
 
-                        // Only add prefix, for built-in type, we hardly want to match everything by context
-                        // contextText has IntellijIdeaRulezzz to prevent empty string
-                        var cursorText = node.getText().replace("IntellijIdeaRulezzz", "").toLowerCase();
+                            // Add storage qualifier only if we do not have preceding storage qualifier
+                            if (!GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBackType)) {
+                                addMatchingPrefixOnly(cursorText, resultSet, STORAGE_QUALIFIER_LOOKUP_STRING, STORAGE_QUALIFIER_LOOKUP);
+                            }
 
-                        // Add primitive types
-                        addMatchingPrefixOnly(cursorText, resultSet, PRIMITIVE_LOOKUP_STRING, PRIMITIVE_LOOKUP);
-
-                        // Add storage qualifier only if we do not have preceding storage qualifier
-                        if (!GlslGroupTypes.STORAGE_QUALIFIER_KEYWORDS.contains(lookBackType)) {
-                            addMatchingPrefixOnly(cursorText, resultSet, STORAGE_QUALIFIER_LOOKUP_STRING, STORAGE_QUALIFIER_LOOKUP);
+                            // Add struct names
+                            var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile(), node.getTextOffset());
+                            for (var struct : definedStruct) {
+                                resultSet.addElement(LookupElementBuilder.create(struct.getText())
+                                        .withTypeText("struct").withIcon(Nodes.Class));
+                            }
                         }
 
-                        // Add struct names
-                        var definedStruct = GlslUtil.findDefinedStruct(node.getContainingFile(), node.getTextOffset());
-                        for (var struct : definedStruct) {
-                            resultSet.addElement(LookupElementBuilder.create(struct.getText())
-                                    .withTypeText("struct").withIcon(Nodes.Class));
-                        }
+                        // Add general expression
 
                         // Add functions
                         var definedFunc = GlslUtil.findDefinedFunctions(node.getContainingFile(), node.getTextOffset());

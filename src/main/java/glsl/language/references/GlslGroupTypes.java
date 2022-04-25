@@ -21,6 +21,9 @@ public class GlslGroupTypes {
             BOOL,
             NATIVE_VECTOR,
             NATIVE_MATRIX,
+            NATIVE_SAMPLER,
+            NATIVE_IMAGES,
+            NATIVE_VULKAN_TEXTURE,
             STRUCT
     ).collect(Collectors.toUnmodifiableSet());
 

@@ -6,6 +6,8 @@ import com.intellij.icons.AllIcons;
 import glsl.language.references.handles.GlslCallClause;
 import glsl.language.references.handles.GlslInsertExtraSpaceClause;
 
+import java.util.ArrayList;
+
 import static com.intellij.codeInsight.lookup.LookupElementBuilder.create;
 
 public class GlslCompletionUtils {
@@ -118,6 +120,13 @@ public class GlslCompletionUtils {
             create("index").withTypeText("layoutQ assignment").withIcon(AllIcons.Nodes.Controller),
     };
 
+    // [iu]?texture([123]D|Cube|2DRect|[12]DArray|CubeArray|Buffer|2DMS(Array)?)
+    public static final String[] TEXT_POSTFIX = new String[]{
+            "1D", "2D", "3D", "Cube", "2DRect", "1DArray", "2DArray", "CubeArray",
+            "Buffer", "2DMS", "2DMSArray"
+    };
+    public static final String[] TEXT_PREFIX = new String[]{"", "i", "u"};
+
     private static final GlslInsertExtraSpaceClause extraSpaceHandle = new GlslInsertExtraSpaceClause();
 
     public static void addMatchingPrefixOnly(String curPrefix, CompletionResultSet addTo, final String[] lookupStrings, final LookupElementBuilder[] lookupElements) {
@@ -130,5 +139,28 @@ public class GlslCompletionUtils {
                 addTo.addElement(lookupElements[i].withInsertHandler(extraSpaceHandle));
             }
         }
+    }
+    public static void addExtraByContext(String curPrefix, CompletionResultSet addTo) {
+        var sandwichKeyword = new ArrayList<String>();
+
+        if ("texture".startsWith(curPrefix))
+            sandwichKeyword.add("texture");
+        if ("sampler".startsWith(curPrefix))
+            sandwichKeyword.add("sampler");
+        if ("image".startsWith(curPrefix))
+            sandwichKeyword.add("image");
+
+//        System.out.println("Generating for: " + curPrefix);
+        for (String sandwich : sandwichKeyword) {
+            for (String textPrefix : TEXT_PREFIX) {
+                for (String textPostfix : TEXT_POSTFIX) {
+                    addTo.addElement(LookupElementBuilder.create(textPrefix + sandwich + textPostfix)
+                            .withTypeText(textPrefix + sandwich).withIcon(AllIcons.Nodes.Type)
+                            .withInsertHandler(extraSpaceHandle));
+                }
+            }
+        }
+//        System.out.println("Generating Done");
+
     }
 }
