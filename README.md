@@ -24,11 +24,12 @@
 - [x] Layout qualifier usage validation
 - [x] Common live templates like for, new file etc
 - [x] Check redefined variable in the same scope
-- [ ] Add stub for performance and std library
-- [ ] Better auto complete, smart function name, variable name filter
+- [x] Swap expensive operation to less expesive one like getText -> textMatches
 - [ ] Test code example from Glsl manual
+- [ ] Better auto complete, smart function name, variable name filter
 
 ## Feature that's good to have but not in top priority
+- Add stub for performance and std library (optimise performance)
 - Validate member access like swizzle, array access, valid member name
 - Auto complete for member access
 - Expression validation (no idea where to start)
@@ -70,6 +71,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
 - [Reference provider](https://intellij-support.jetbrains.com/hc/en-us/community/posts/206117609-Problems-to-add-PsiReferenceContributor)
 - [Reference navigation for custom language](https://intellij-support.jetbrains.com/hc/en-us/community/posts/206763465-Navigation-from-usage-to-declaration-for-custom-language)
 - [Code completion and syntax error recovery](https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000081950-Code-completion-and-syntax-error-recovery), talk about pin, error recovery in grammer kit
+- [Performance improvement tips](https://intellij-sdk-docs-cn.github.io/intellij/sdk/docs/reference_guide/performance/performance.html), Very helpful
 
 ---
 Starting plugin template based on the [IntelliJ Platform Plugin Template][template].
