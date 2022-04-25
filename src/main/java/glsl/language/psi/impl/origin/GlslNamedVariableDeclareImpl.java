@@ -40,9 +40,7 @@ public abstract class GlslNamedVariableDeclareImpl extends ASTWrapperPsiElement 
         var definedVariables = GlslUtil.findDefinedVariables(getContainingFile(), getTextOffset());
 
         for (var variable : definedVariables) {
-            var name = variable.getText();
-            if (name == null) continue;
-            if (name.equals(myText)) {
+            if (variable.textMatches(myText)) {
                 candidates.add(variable);
             }
         }

@@ -23,7 +23,7 @@
 - [x] Samplers & images & textures keywords
 - [x] Layout qualifier usage validation
 - [x] Common live templates like for, new file etc
-- [ ] Check redefined variable in the same scope
+- [x] Check redefined variable in the same scope
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter
 - [ ] Test code example from Glsl manual

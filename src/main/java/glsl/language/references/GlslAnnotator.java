@@ -31,14 +31,11 @@ public class GlslAnnotator implements Annotator {
 
             var definedStruct = GlslUtil.findDefinedStruct(element.getContainingFile(), element.getTextOffset());
             boolean isDefined = false;
-            GlslVarNameOriginStruct defined = null;
 
             var myText = element.getText();
             for (var struct : definedStruct) {
-                var structName = struct.getText();
-                if (structName != null && structName.equals(myText)) {
+                if (struct.textMatches(myText)) {
                     isDefined = true;
-                    defined = struct;
                     break;
                 }
             }

@@ -29,9 +29,7 @@ public abstract class GlslNamedVariableAccessFuncImpl extends ASTWrapperPsiEleme
 
         // Remember to check scope!
         for (var variable : definedVariables) {
-            var name = variable.getText();
-            if (name == null) continue;
-            if (name.equals(myText)) {
+            if (variable.textMatches(myText)) {
                 return variable.getReference();
             }
         }
