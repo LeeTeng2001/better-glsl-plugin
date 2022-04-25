@@ -1,4 +1,4 @@
-# better-glsl-jetbrain
+# Better glsl plugin for intellij IDE
 
 [//]: # (![Build]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/workflows/Build/badge.svg&#41;)
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
