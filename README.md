@@ -46,15 +46,28 @@
 
 <!-- Plugin description -->
 
-This is a plugin that try to give you the native intellij IDE experience for Glsl language, you have the familiar code completion, reference symbol, syntax highlighter, common error annotator, standard library function & variable reference.
+Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their ide. I've tried various shader plugin in VSCode, jetbrain, but all they do is simple syntax highlighting only.
 
-I try very hard to make this usable, currently it has some known limitation
+This plugin is still in development, once it's done, it'll bump it version to v1.0.0.
 
+Features 🥰: 
+- Code completion for built-in variables, functions, types and more
+- Usage reference resolution, scope resolution for variables 
+- Syntax highlighter 
+- Common error annotator like redefinition of the same variable
+- Includes standard library functions & variables
+- Formatter to make your code looks good and well indented
+
+Currently, it has some known limitation 🥲:
+
+- Incomplete set of standard library
+- No 100% coverage of glsl expression
 - No member access validation
 - No expression validation
+- No function parameter validation
 - No auto-completion for member access
-- 
 
+Please give it a try and leave me with some feedback, together we can make the graphic community great! For more information and development roadmap about this plugin, please visit the github link below.
 
 <!-- Plugin description end -->
 
