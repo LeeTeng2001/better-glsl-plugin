@@ -22,10 +22,10 @@ public class GlslCompletionContributor extends CompletionContributor {
                                                @NotNull CompletionResultSet resultSet) {
                         var node = parameters.getPosition();
                         var nodeParentType = node.getParent().getNode().getElementType();
-                        System.out.println("Cur nod parent: " + nodeParentType);
+//                        System.out.println("Cur nod parent: " + nodeParentType);
                         var lookBack = node.getPrevSibling();
                         var lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
-                        System.out.println("Step back: " + 1 + ", " + lookBack + ", " + lookBackType);
+//                        System.out.println("Step back: " + 1 + ", " + lookBack + ", " + lookBackType);
 
                         // Only add prefix, for built-in type, we hardly want to match everything by context
                         // contextText has IntellijIdeaRulezzz to prevent empty string
@@ -48,7 +48,7 @@ public class GlslCompletionContributor extends CompletionContributor {
 
                             lookBack = lookBack.getPrevSibling();
                             lookBackType = lookBack == null ? GlslTypes.NULL_TOKEN : lookBack.getNode().getElementType();
-                            System.out.println("Step back: " + (i + 2) + ", " + lookBack + ", " + lookBackType);
+//                            System.out.println("Step back: " + (i + 2) + ", " + lookBack + ", " + lookBackType);
                         }
 
                         // only add types & qualifier if we're not access variable
