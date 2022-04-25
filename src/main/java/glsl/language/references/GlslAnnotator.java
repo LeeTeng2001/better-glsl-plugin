@@ -13,6 +13,9 @@ import glsl.language.utility.GlslSyntaxHighlighter;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
+import static glsl.language.references.GlslCompletionUtils.LAYOUT_QUALIFIER_ASSIGNMENT_STRING;
+import static glsl.language.references.GlslCompletionUtils.LAYOUT_QUALIFIER_ID_ONLY_STRING;
+
 public class GlslAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
@@ -94,6 +97,45 @@ public class GlslAnnotator implements Annotator {
             holder.newAnnotation(HighlightSeverity.ERROR, "Usage of reserved keyword, will result in compile time error")
                     .textAttributes(GlslSyntaxHighlighter.BAD_CHARACTER)
                     .range(element)
+                    .create();
+        }
+        else if (node.getElementType().equals(GlslTypes.LAYOUT_QUALIFIER_PARAM)) {
+            var idNode = node.findChildByType(GlslTypes.IDENTIFIER);
+            var childAssign = node.findChildByType(GlslTypes.INTEGER_CONSTANT);
+            if (idNode == null) return;
+            var idNodeText = idNode.getText();
+
+            // Highlight the key node
+            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(idNode)
+                    .textAttributes(GlslSyntaxHighlighter.KEY)
+                    .create();
+
+            System.out.println(idNodeText + " " + childAssign);
+
+            final String[] compareStrings = childAssign == null ? LAYOUT_QUALIFIER_ID_ONLY_STRING : LAYOUT_QUALIFIER_ASSIGNMENT_STRING;
+            final String[] compareStringsOpposite = childAssign == null ? LAYOUT_QUALIFIER_ASSIGNMENT_STRING : LAYOUT_QUALIFIER_ID_ONLY_STRING;
+            var wrongUsageErrMsg = childAssign == null ? "Qualifier must have assignment" : "Qualifier cannot have assignment";
+
+            // Check for valid keyword
+            for (String compareString : compareStrings) {
+                if (compareString.equals(idNodeText))
+                    return;
+            }
+
+            // Check for wrong usage
+            for (String compareString : compareStringsOpposite) {
+                if (compareString.equals(idNodeText)) {
+                    holder.newAnnotation(HighlightSeverity.ERROR, wrongUsageErrMsg)
+                            .range(node)
+                            .create();
+                    return;
+                }
+            }
+
+            // Otherwise not recognized keyword
+            holder.newAnnotation(HighlightSeverity.ERROR, "Usage of unidentified qualifier keyword")
+                    .range(idNode)
                     .create();
         }
     }

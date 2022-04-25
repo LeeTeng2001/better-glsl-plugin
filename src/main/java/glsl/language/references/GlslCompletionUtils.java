@@ -67,11 +67,6 @@ public class GlslCompletionUtils {
             create("shared").withTypeText("storage qualifier").withIcon(AllIcons.Nodes.Controller),
     };
 
-    public static final String[] BUILD_IN_MACRO_LOOKUP_STRING = new String[]{
-            "define", "undef", "if", "ifdef", "ifndef", "else", "elif", "endif",
-            "error", "pragma", "extension", "version", "line"
-    };
-
     public static final LookupElementBuilder[] BUILT_IN_MACRO_LOOKUP = new LookupElementBuilder[] {
             create("define").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
             create("undef").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
@@ -86,6 +81,14 @@ public class GlslCompletionUtils {
             create("extension").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
             create("version").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
             create("line").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
+    };
+
+//    public static final String[]
+
+    public static final String[] LAYOUT_QUALIFIER_ID_ONLY_STRING = new String[]{
+            "shared", "packed", "std140", "std430", "row_major", "column_major", "push_constant",
+            "triangles", "quads", "isolines", "equal_spacing", "fractional_equal_spacing",
+            "fractional_odd_spacing", "cw", "ccw", "point_mode", "points"
     };
 
     // TODO: Not complete
@@ -107,6 +110,10 @@ public class GlslCompletionUtils {
             create("ccw").withTypeText("layoutQ id only").withIcon(AllIcons.Nodes.Controller),
             create("point_mode").withTypeText("layoutQ id only").withIcon(AllIcons.Nodes.Controller),
             create("points").withTypeText("layoutQ id only").withIcon(AllIcons.Nodes.Controller),
+    };
+
+    public static final String[] LAYOUT_QUALIFIER_ASSIGNMENT_STRING = new String[]{
+            "binding", "offset", "align", "set", "input_attachment_index", "location", "component", "index"
     };
 
     public static final LookupElementBuilder[] LAYOUT_QUALIFIER_ASSIGNMENT = new LookupElementBuilder[] {

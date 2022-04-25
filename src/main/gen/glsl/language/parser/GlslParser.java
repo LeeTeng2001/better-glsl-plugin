@@ -641,15 +641,24 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER (EQUAL INTEGER_CONSTANT)?
+  // (IDENTIFIER | shared) (EQUAL INTEGER_CONSTANT)?
   public static boolean layout_qualifier_param(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "layout_qualifier_param")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    if (!nextTokenIs(b, "<layout qualifier param>", IDENTIFIER, SHARED)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    Marker m = enter_section_(b, l, _NONE_, LAYOUT_QUALIFIER_PARAM, "<layout qualifier param>");
+    r = layout_qualifier_param_0(b, l + 1);
     r = r && layout_qualifier_param_1(b, l + 1);
-    exit_section_(b, m, LAYOUT_QUALIFIER_PARAM, r);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // IDENTIFIER | shared
+  private static boolean layout_qualifier_param_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "layout_qualifier_param_0")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, SHARED);
     return r;
   }
 

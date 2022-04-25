@@ -21,8 +21,8 @@
 - [x] Prefix match in auto complete to reduce noise
 - [x] Support for matrix type, double array
 - [x] Samplers & images & textures keywords
+- [ ] Layout qualifier usage validation
 - [ ] Check redefined variable in the same scope
-- [ ] Layout qualifier auto complete
 - [ ] Add stub for performance and std library
 - [ ] Better auto complete, smart function name, variable name filter
 - [ ] Test code example from Glsl manual

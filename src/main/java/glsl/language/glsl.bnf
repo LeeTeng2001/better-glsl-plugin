@@ -42,7 +42,7 @@ unary_back_op ::= INCREMENT | DECREMENT
 
 // Special qualifier
 layout_qualifier ::= layout PAREN_L layout_qualifier_param? (COMMA layout_qualifier_param)* PAREN_R {pin=2}
-layout_qualifier_param ::= IDENTIFIER (EQUAL INTEGER_CONSTANT)?
+layout_qualifier_param ::= (IDENTIFIER | shared) (EQUAL INTEGER_CONSTANT)?
 
 // Function definition
 function_definition ::= identifier_type var_name_origin_func PAREN_L function_args? PAREN_R (C_BRACKET_L segment* C_BRACKET_R)? SEMICOLON? {pin=3}
