@@ -8,35 +8,35 @@
 <details>
 <summary>Completed</summary>
 <br>
-<input type="checkbox" disabled="disabled"/> Autocomplete function name and variable name
-<input type="checkbox" disabled="disabled"/> Member access
-<input type="checkbox" disabled="disabled"/> Array support
-<input type="checkbox" disabled="disabled"/> Macro, version header
-<input type="checkbox" disabled="disabled"/> Built-in function and variables (the essential first)
-<input type="checkbox" disabled="disabled"/> Initialise with built-in functions & initializer
-<input type="checkbox" disabled="disabled"/> Formatter, auto indentation
-<input type="checkbox" disabled="disabled"/> standard library usage styling
-<input type="checkbox" disabled="disabled"/> for, while, return expression
-<input type="checkbox" disabled="disabled"/> Boolean
-<input type="checkbox" disabled="disabled"/> Variable proper scope reference
-<input type="checkbox" disabled="disabled"/> Unary, prefix, postfix operation
-<input type="checkbox" disabled="disabled"/> Support for vec type, swizzle expression
-<input type="checkbox" disabled="disabled"/> Prefix match in auto complete to reduce noise
-<input type="checkbox" disabled="disabled"/> Support for matrix type, double array
-<input type="checkbox" disabled="disabled"/> Samplers & images & textures keywords
-<input type="checkbox" disabled="disabled"/> Layout qualifier usage validation
-<input type="checkbox" disabled="disabled"/> Common live templates like for, new file etc
-<input type="checkbox" disabled="disabled"/> Check redefined variable in the same scope
-<input type="checkbox" disabled="disabled"/> Swap expensive operation to less expesive one like getText -> textMatches
-<input type="checkbox" disabled="disabled"/> Cache std lib references (custom)
-<input type="checkbox" disabled="disabled"/> Cache references, computation result for whole file
-<input type="checkbox" disabled="disabled"/> Fix stack overflow in origin variable
+- [x] Autocomplete function name and variable name
+- [x] Member access
+- [x] Array support
+- [x] Macro, version header
+- [x] Built-in function and variables (the essential first)
+- [x] Initialise with built-in functions & initializer
+- [x] Formatter, auto indentation
+- [x] standard library usage styling
+- [x] for, while, return expression
+- [x] Boolean
+- [x] Variable proper scope reference
+- [x] Unary, prefix, postfix operation
+- [x] Support for vec type, swizzle expression
+- [x] Prefix match in auto complete to reduce noise
+- [x] Support for matrix type, double array
+- [x] Samplers & images & textures keywords
+- [x] Layout qualifier usage validation
+- [x] Common live templates like for, new file etc
+- [x] Check redefined variable in the same scope
+- [x] Swap expensive operation to less expesive one like getText -> textMatches
+- [x] Cache std lib references (custom)
+- [x] Cache references, computation result for whole file
+- [x] Fix stack overflow in origin variable
 </details>
 
-<input type="checkbox" disabled="disabled"/> Define macro and resolve
-<input type="checkbox" disabled="disabled"/> Test code example from Glsl manual
-<input type="checkbox" disabled="disabled"/> Better auto complete, smart function name, variable name filter
-<input type="checkbox" disabled="disabled"/> Automated unit testing
+<input type="checkbox" disabled="disabled"/> Define macro and resolve <br />
+<input type="checkbox" disabled="disabled"/> Test code example from Glsl manual <br />
+- [ ] Better auto complete, smart function name, variable name filter
+- [ ] Automated unit testing
 
 ## Feature that's good to have but not in top priority
 - Expression like int i, j;
