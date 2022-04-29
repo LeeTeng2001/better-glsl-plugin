@@ -2,10 +2,10 @@
 <idea-plugin>
     <id>com.github.leeteng2001.betterglsljetbrain</id>
     <name>Better Glsl</name>
-    <vendor>leeteng2001</vendor>
+    <vendor email="leeteng2001@gmail.com">leeteng2001</vendor>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.java</depends>
+<!--    <depends>com.intellij.java</depends>-->
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.github.leeteng2001.betterglsljetbrain.services.MyApplicationService"/>

@@ -4,9 +4,9 @@
 
 ## [Unreleased]
 
-
-## [0.0.3] - 2022-04-25
+## [0.0.3] - 2022-04-26
 ### Changed
+- Update vendor name and project information
 - Fix plugin name to fit the platform naming standard
 
 ## [0.0.2] - 2022-04-25
