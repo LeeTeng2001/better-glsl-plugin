@@ -1,6 +1,6 @@
 # Better glsl plugin for intellij IDE
 
-[//]: # (![Build]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/workflows/Build/badge.svg&#41;)
+[//]: # "![Build]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/workflows/Build/badge.svg&#41;"
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
 
@@ -33,7 +33,7 @@
 - [x] Fix stack overflow in origin variable
 </details>
 
-- [ ] Define macro and resolve
+<input type="checkbox" disabled="disabled"/> Define macro and resolve
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
 - [ ] Automated unit testing
@@ -82,12 +82,12 @@ Please give it a try and leave me with some feedback 😀! For more information 
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "better-glsl-jetbrain"</kbd> >
   <kbd>Install Plugin</kbd>
   
-[//]: # (- Manually:)
+[//]: # "- Manually:"
 
-[//]: # ()
-[//]: # (  Download the [latest release]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/releases/latest&#41; and install it manually using)
+[//]: #
+[//]: # "  Download the [latest release]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/releases/latest&#41; and install it manually using"
 
-[//]: # (  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>)
+[//]: # "  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>"
 
 ## Resources I used to build this plugin
 - [Simple language](https://plugins.jetbrains.com/docs/intellij/custom-language-support-tutorial.html), very brief and shallow
