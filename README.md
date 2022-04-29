@@ -5,6 +5,9 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
 
 ## Roadmap
+<details>
+<summary>Completed</summary>
+<br>
 - [x] Autocomplete function name and variable name
 - [x] Member access
 - [x] Array support
@@ -25,6 +28,8 @@
 - [x] Common live templates like for, new file etc
 - [x] Check redefined variable in the same scope
 - [x] Swap expensive operation to less expesive one like getText -> textMatches
+</details>
+
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
 
@@ -34,15 +39,6 @@
 - Auto complete for member access
 - Expression validation (no idea where to start)
 
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Verify the [pluginGroup](/gradle.properties), [plugin ID](/src/main/resources/META-INF/plugin.xml) and [sources package](/src/main/kotlin).
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the Plugin ID in the above README badges.
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 ## Plugin description
 
@@ -92,7 +88,3 @@ Please give it a try and leave me with some feedback, together we can make the g
 - [Code completion and syntax error recovery](https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000081950-Code-completion-and-syntax-error-recovery), talk about pin, error recovery in grammer kit
 - [Performance improvement tips](https://intellij-sdk-docs-cn.github.io/intellij/sdk/docs/reference_guide/performance/performance.html), Very helpful
 
----
-Starting plugin template based on the [IntelliJ Platform Plugin Template][template].
-
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template
