@@ -8,6 +8,7 @@
 ### Added
 ### Changed
 - Better performance for std library query
+- Fix stack overflow from origin variable reference in std lib
 
 ## [0.0.3] - 2022-04-26
 ### Changed

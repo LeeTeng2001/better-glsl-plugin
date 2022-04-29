@@ -29,10 +29,10 @@
 - [x] Check redefined variable in the same scope
 - [x] Swap expensive operation to less expesive one like getText -> textMatches
 - [x] Cache std lib references (custom)
+- [x] Cache references, computation result for whole file
+- [x] Fix stack overflow in origin variable
 </details>
 
-- [x] Cache references, computation result for whole file
-- [ ] Fix stack overflow
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
 
@@ -47,9 +47,9 @@
 
 <!-- Plugin description -->
 
-Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their ide. I've tried various shader plugin in VSCode, jetbrain, but all they do is simple syntax highlighting only.
+Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their favourite ide. I've tried various shader plugins in VSCode, jetbrain, but all they have is simple syntax highlighting only.
 
-This plugin is still in development, once it's done, it'll bump it version to v1.0.0.
+This plugin is still in development, once it's done, it'll bump its version to v1.0.0.
 
 Features 🥰: 
 - Code completion for built-in variables, functions, types and more
@@ -68,7 +68,7 @@ Currently, it has some known limitation 🥲:
 - No function parameter validation
 - No auto-completion for member access
 
-Please give it a try and leave me with some feedback, together we can make the graphic community great! For more information and development roadmap about this plugin, please visit the github link below.
+Please give it a try and leave me with some feedback 😀! For more information and development roadmap about this plugin, please visit the github repo below.
 
 <!-- Plugin description end -->
 
@@ -79,10 +79,12 @@ Please give it a try and leave me with some feedback, together we can make the g
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "better-glsl-jetbrain"</kbd> >
   <kbd>Install Plugin</kbd>
   
-- Manually:
+[//]: # (- Manually:)
 
-  Download the [latest release](https://github.com/LeeTeng2001/better-glsl-jetbrain/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+[//]: # ()
+[//]: # (  Download the [latest release]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/releases/latest&#41; and install it manually using)
+
+[//]: # (  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>)
 
 ## Resources I used to build this plugin
 - [Simple language](https://plugins.jetbrains.com/docs/intellij/custom-language-support-tutorial.html), very brief and shallow
