@@ -5,9 +5,6 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
 
 ## Roadmap
-<details>
-<summary>Completed</summary>
-<br>
 - [x] Autocomplete function name and variable name
 - [x] Member access
 - [x] Array support
@@ -31,10 +28,8 @@
 - [x] Cache std lib references (custom)
 - [x] Cache references, computation result for whole file
 - [x] Fix stack overflow in origin variable
-</details>
-
-<label><input type="checkbox" disabled="disabled"/></label> Define macro and resolve <br />
-<label><input type="checkbox" disabled="disabled"/></label> Test code example from Glsl manual <br />
+- [ ] Define macro and resolve
+- [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
 - [ ] Automated unit testing
 
