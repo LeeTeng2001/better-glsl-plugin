@@ -33,8 +33,8 @@
 - [x] Fix stack overflow in origin variable
 </details>
 
-<input type="checkbox" disabled="disabled"/> Define macro and resolve <br />
-<input type="checkbox" disabled="disabled"/> Test code example from Glsl manual <br />
+<label><input type="checkbox" disabled="disabled"/></label> Define macro and resolve <br />
+<label><input type="checkbox" disabled="disabled"/></label> Test code example from Glsl manual <br />
 - [ ] Better auto complete, smart function name, variable name filter
 - [ ] Automated unit testing
 
