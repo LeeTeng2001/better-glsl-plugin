@@ -75,7 +75,7 @@ Please give it a try and leave me with some feedback 😀! For more information 
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "better-glsl-jetbrain"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "better glsl"</kbd> >
   <kbd>Install Plugin</kbd>
   
 [//]: # "- Manually:"
