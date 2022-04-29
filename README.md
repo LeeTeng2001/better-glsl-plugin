@@ -8,7 +8,7 @@
 
 <!-- Plugin description -->
 
-Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their favourite ide. I've tried various shader plugins in VSCode, jetbrain, but all they have is simple syntax highlighting only.
+Glsl shader language support for intellij based ide. It contains more than just simple syntax highlighting. 
 
 This plugin is still in development, once it's done, it'll bump its version to v1.0.0.
 
