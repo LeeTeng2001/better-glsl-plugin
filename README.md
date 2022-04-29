@@ -1,8 +1,38 @@
 # Better glsl plugin for intellij IDE
 
 [//]: # "![Build]&#40;https://github.com/LeeTeng2001/better-glsl-jetbrain/workflows/Build/badge.svg&#41;"
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/19021-better-glsl)
+![Version](https://img.shields.io/jetbrains/plugin/v/19021)
+![Downloads](https://img.shields.io/jetbrains/plugin/d/19021)
+
+## Plugin description
+
+<!-- Plugin description -->
+
+Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their favourite ide. I've tried various shader plugins in VSCode, jetbrain, but all they have is simple syntax highlighting only.
+
+This plugin is still in development, once it's done, it'll bump its version to v1.0.0.
+
+Features 🥰: 
+- Code completion for built-in variables, functions, types and more
+- Usage reference resolution, scope resolution for variables 
+- Syntax highlighter 
+- Common error annotator like redefinition of the same variable
+- Includes standard library functions & variables
+- Formatter to make your code looks good and well indented
+
+Currently, it has some known limitation 🥲:
+
+- Incomplete set of standard library
+- No 100% coverage of glsl expression
+- No member access validation
+- No expression validation
+- No function parameter validation
+- No auto-completion for member access
+
+Please give it a try and leave me with some feedback 😀! For more information and development roadmap about this plugin, please visit the github repo below.
+
+<!-- Plugin description end -->
+
 
 ## Roadmap
 - [x] Autocomplete function name and variable name
@@ -40,35 +70,6 @@
 - Auto complete for member access
 - Expression validation (no idea where to start)
 
-
-## Plugin description
-
-<!-- Plugin description -->
-
-Who is the target audience for this plugin? Anyone that want to have a smooth, integrated glsl development environment inside their favourite ide. I've tried various shader plugins in VSCode, jetbrain, but all they have is simple syntax highlighting only.
-
-This plugin is still in development, once it's done, it'll bump its version to v1.0.0.
-
-Features 🥰: 
-- Code completion for built-in variables, functions, types and more
-- Usage reference resolution, scope resolution for variables 
-- Syntax highlighter 
-- Common error annotator like redefinition of the same variable
-- Includes standard library functions & variables
-- Formatter to make your code looks good and well indented
-
-Currently, it has some known limitation 🥲:
-
-- Incomplete set of standard library
-- No 100% coverage of glsl expression
-- No member access validation
-- No expression validation
-- No function parameter validation
-- No auto-completion for member access
-
-Please give it a try and leave me with some feedback 😀! For more information and development roadmap about this plugin, please visit the github repo below.
-
-<!-- Plugin description end -->
 
 ## Installation
 
