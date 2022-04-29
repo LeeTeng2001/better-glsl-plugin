@@ -48,14 +48,14 @@ public abstract class GlslNamedVariableDeclareImpl extends ASTWrapperPsiElement 
         }
 
         // check scope
-        if (!candidates.isEmpty()) {
-            var myScope = getClosestScope(this);
-            for (PsiElement candidate : candidates) {
-                var candidateScope = getClosestScope(candidate);
-                if (candidateScope == myScope)
-                    return candidate.getReference();
-            }
-        }
+//        if (!candidates.isEmpty()) {
+//            var myScope = getClosestScope(this);
+//            for (PsiElement candidate : candidates) {
+//                var candidateScope = getClosestScope(candidate);
+//                if (candidateScope == myScope)
+//                    return candidate.getReference();
+//            }
+//        }
 
         return references.length > 0 ? references[0] : null;
     }

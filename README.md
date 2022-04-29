@@ -28,8 +28,11 @@
 - [x] Common live templates like for, new file etc
 - [x] Check redefined variable in the same scope
 - [x] Swap expensive operation to less expesive one like getText -> textMatches
+- [x] Cache std lib references (custom)
 </details>
 
+- [x] Cache references, computation result for whole file
+- [ ] Fix stack overflow
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
 

@@ -1,11 +1,15 @@
 package glsl.language.utility;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.psi.util.PsiTreeUtil;
 import glsl.language.psi.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class GlslUtil {
@@ -25,9 +29,7 @@ public class GlslUtil {
     }
 
     public static List<GlslVarNameOriginFunc> findDefinedFunctions(PsiFile glslFile, int curAt) {
-        GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(glslFile.getProject()).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
-
-        var functionsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginFunc.class);
+        var functionsStd = getStdLibFunctions(glslFile.getProject());
         var functions = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginFunc.class);
 
         List<GlslVarNameOriginFunc> result = new ArrayList<>();
@@ -44,10 +46,8 @@ public class GlslUtil {
     }
 
     public static List<GlslVarNameOriginVariable> findDefinedVariables(PsiFile glslFile, int curAt) {
-        GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(glslFile.getProject()).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
-
         // Not sure about performance impact of findChildren vs getChildren, virtual file vs custom language file
-        var declarationsStd = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginVariable.class);
+        var declarationsStd = getStdLibVariables(glslFile.getProject());
         var declarations = PsiTreeUtil.findChildrenOfType(glslFile, GlslVarNameOriginVariable.class);
 
         List<GlslVarNameOriginVariable> result = new ArrayList<>();
@@ -58,14 +58,41 @@ public class GlslUtil {
                 result.add(node);
             }
         }
+        result.addAll(declarationsStd);
 
-        // Add global node only
-        for (var node : declarationsStd) {
+        return result;
+    }
+
+    // TODO: Custom cache because idk how to use stub and cache manager
+    private static Collection<GlslVarNameOriginVariable> stdLibVariables;
+    private static Collection<GlslVarNameOriginFunc> stdLibFunctions;
+
+    private static Collection<GlslVarNameOriginVariable> getStdLibVariables(Project project) {
+        if (stdLibVariables != null) return stdLibVariables;
+        GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(project).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
+        stdLibVariables = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginVariable.class);
+
+        // Filter global variable node only
+        List<GlslVarNameOriginVariable> result = new ArrayList<>();
+        for (var node : stdLibVariables) {
             if (!node.getParent().getNode().getElementType().equals(GlslTypes.FUNCTION_ARGS)) {
                 result.add(node);
             }
         }
+        stdLibVariables = result;
 
-        return result;
+        return stdLibVariables;
     }
+
+    private static Collection<GlslVarNameOriginFunc> getStdLibFunctions(Project project) {
+        if (stdLibFunctions != null) return stdLibFunctions;
+        GlslFile stdGlslFile = (GlslFile) PsiManager.getInstance(project).findFile(GlslStdLibraryProvider.stdLibFiles.get(0));
+        stdLibFunctions = PsiTreeUtil.findChildrenOfType(stdGlslFile, GlslVarNameOriginFunc.class);
+        return stdLibFunctions;
+    }
+
+//    private void buildCaches(Project project) {
+//        final CachedValuesManager manager = CachedValuesManager.getManager(project);
+//        final Object[] dependencies = {PsiModificationTracker.MODIFICATION_COUNT};
+//    }
 }

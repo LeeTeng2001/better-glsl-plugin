@@ -4,9 +4,10 @@
 
 ## [Unreleased]
 
-## [0.0.4] - 
+## [0.0.4] -
+### Added
 ### Changed
-- 
+- Better performance for std library query
 
 ## [0.0.3] - 2022-04-26
 ### Changed
