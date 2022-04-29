@@ -4,9 +4,11 @@
 
 ## [Unreleased]
 
-## [0.0.4] -
+## [0.0.4] - 2022-04-29
 ### Added
-### Changed
+- More supported extensions (vert, frag...)
+- More std library functions and variables
+### Fixed
 - Better performance for std library query
 - Fix stack overflow from origin variable reference in std lib
 

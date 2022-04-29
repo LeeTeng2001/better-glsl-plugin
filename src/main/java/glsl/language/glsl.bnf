@@ -52,7 +52,7 @@ function_args ::= identifier_type var_name_origin_variable (COMMA function_args)
 struct_definition ::= (layout_qualifier? (in | out))? struct var_name_origin_struct C_BRACKET_L
                         variable_definition* C_BRACKET_R var_name_origin_variable? SEMICOLON {pin=2}
 variable_definition ::= storage_qualifier? identifier_type variable_definition_body (COMMA variable_definition_body)* SEMICOLON {pin=3}
-private variable_definition_body ::= var_name_origin_variable (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)?
+private variable_definition_body ::= var_name_origin_variable (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)? (EQUAL init_val)?
 init_val ::=  true | false | (unary_sign_op? (FLOAT_CONSTANT | INTEGER_CONSTANT)) | member_access_head | initializer
 initializer ::= identifier_type (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)?
                 PAREN_L expression_no_assign? (COMMA expression_no_assign)* PAREN_R

@@ -17,7 +17,7 @@
                 implementationClass="glsl.language.property.GlslFileType"
                 fieldName="INSTANCE"
                 language="Glsl"
-                extensions="glsl"/>
+                extensions="glsl;frag;fsh;vert;vsh;tesc;tese;geom;comp;shader"/>
         <lang.parserDefinition
                 language="Glsl"
                 implementationClass="glsl.language.GlslParserDefinition"/>

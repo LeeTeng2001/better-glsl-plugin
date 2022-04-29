@@ -33,10 +33,13 @@
 - [x] Fix stack overflow in origin variable
 </details>
 
+- [ ] Define macro and resolve
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
+- [ ] Automated unit testing
 
 ## Feature that's good to have but not in top priority
+- Expression like int i, j;
 - Add stub for performance and std library (optimise performance)
 - Validate member access like swizzle, array access, valid member name
 - Auto complete for member access

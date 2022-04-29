@@ -86,16 +86,53 @@ const int gl_MaxTransformFeedbackInterleavedComponents = 64;
 
 const int gl_MaxInputAttachments = 1;  // only present when targeting Vulkan
 
-//
-// // Built in language variable -----------------------------------------------------------------
-// in int gl_VertexID;       // only present when not targeting Vulkan
-// in int gl_InstanceID;     // only present when not targeting Vulkan
-// in int gl_VertexIndex;    // only present when targeting Vulkan
-// in int gl_InstanceIndex;  // only present when targeting Vulkan
-// in int gl_DrawID;
-// in int gl_BaseVertex;
-// in int gl_BaseInstance;
-//
+
+// Built in language variable -----------------------------------------------------------------
+in int gl_VertexID;       // only present when not targeting Vulkan
+in int gl_InstanceID;     // only present when not targeting Vulkan
+in int gl_VertexIndex;    // only present when targeting Vulkan
+in int gl_InstanceIndex;  // only present when targeting Vulkan
+in int gl_DrawID;
+in int gl_BaseVertex;
+in int gl_BaseInstance;
+
+// Per vertex variable
+vec4 gl_Position;
+float gl_PointSize;
+float gl_ClipDistance[];
+float gl_CullDistance[];
+vec4 gl_FrontColor;
+vec4 gl_BackColor;
+vec4 gl_TexCoord[3];
+
+// Geometry
+out int gl_PrimitiveID;
+
+// Fragment
+in vec4 gl_FragCoord;
+in bool gl_FrontFacing;
+in vec2 gl_PointCoord;
+in int gl_SampleID;
+in vec2 gl_SamplePosition;
+in int gl_SampleMaskIn[];
+in int gl_Layer;
+in int gl_ViewportIndex;
+in bool gl_HelperInvocation;
+out float gl_FragDepth;
+out int gl_SampleMask[];
+
+// Compute shader -------
+// workgroup dimensions
+in uvec3 gl_NumWorkGroups;
+const uvec3 gl_WorkGroupSize;
+
+// workgroup and invocation IDs
+in uvec3 gl_WorkGroupID;
+in uvec3 gl_LocalInvocationID;
+
+// derived variables
+in uvec3 gl_GlobalInvocationID;
+in uint gl_LocalInvocationIndex;
 
 // Built in function -- Angle & Trigonometry ------------------------------------------------------------
 float radians(float x);
@@ -178,3 +215,29 @@ bvec4 any(bvec4 x);
 bvec4 all(bvec4 x);
 bvec4 not(bvec4 x);
 
+
+// Built in function -- Textures ------------------------------------------------------------
+int textureSize(sampler1D samp, int lod);
+vec2 textureQueryLod(sampler1D samp, float p);
+int textureQueryLevels(sampler1D samp);
+vec4 texture(sampler1D samp, float P);
+vec4 textureProj(sampler1D samp, float P);
+vec4 textureLod(sampler1D samp, float P);
+vec4 textureOffset(sampler1D samp, float P);
+vec4 texelFetch(sampler1D samp, float P);
+vec4 texelFetchOffset(sampler1D samp, float P);
+vec4 texelProjOffset(sampler1D samp, float P);
+vec4 texelProjLod(sampler1D samp, float P);
+vec4 texelProjLodOffset(sampler1D samp, float P);
+vec4 textureGrad(sampler1D samp, float P);
+vec4 textureGradOffset(sampler1D samp, float P);
+vec4 textureProjGrad(sampler1D samp, float P);
+vec4 textureProjGradOffset(sampler1D samp, float P);
+// More texture function
+
+// Built in function -- Images ------------------------------------------------------------
+int imageSize(image1D image);
+int imageSamples(image1D image);
+int imageLoad(image1D image);
+int imageStore(image1D image);
+// More image functions

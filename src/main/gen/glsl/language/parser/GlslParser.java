@@ -1612,7 +1612,7 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var_name_origin_variable (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)? (EQUAL init_val)?
+  // var_name_origin_variable (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)? (EQUAL init_val)?
   static boolean variable_definition_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_body")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -1625,21 +1625,30 @@ public class GlslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R)?
+  // (S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R)?
   private static boolean variable_definition_body_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_body_1")) return false;
     variable_definition_body_1_0(b, l + 1);
     return true;
   }
 
-  // S_BRACKET_L INTEGER_CONSTANT S_BRACKET_R
+  // S_BRACKET_L INTEGER_CONSTANT? S_BRACKET_R
   private static boolean variable_definition_body_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_definition_body_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, S_BRACKET_L, INTEGER_CONSTANT, S_BRACKET_R);
+    r = consumeToken(b, S_BRACKET_L);
+    r = r && variable_definition_body_1_0_1(b, l + 1);
+    r = r && consumeToken(b, S_BRACKET_R);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // INTEGER_CONSTANT?
+  private static boolean variable_definition_body_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_definition_body_1_0_1")) return false;
+    consumeToken(b, INTEGER_CONSTANT);
+    return true;
   }
 
   // (EQUAL init_val)?

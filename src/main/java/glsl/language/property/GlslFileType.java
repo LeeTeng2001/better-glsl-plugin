@@ -6,9 +6,25 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GlslFileType extends LanguageFileType {
     public static final GlslFileType INSTANCE = new GlslFileType();
+//    public static final Set<String> EXTENSIONS = new HashSet<>();
+//
+//    static {
+//        EXTENSIONS.add("glsl");
+//        EXTENSIONS.add("vert");
+//        EXTENSIONS.add("frag");
+//        EXTENSIONS.add("fsh");
+//        EXTENSIONS.add("vsh");
+//        EXTENSIONS.add("tesc");
+//        EXTENSIONS.add("tese");
+//        EXTENSIONS.add("geom");
+//        EXTENSIONS.add("comp");
+//        EXTENSIONS.add("shader");
+//    }
 
     private GlslFileType() {
         super(GlslLanguage.INSTANCE);

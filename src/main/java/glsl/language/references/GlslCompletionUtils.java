@@ -133,7 +133,6 @@ public class GlslCompletionUtils {
             "1D", "2D", "3D", "Cube", "2DRect", "1DArray", "2DArray", "CubeArray",
             "Buffer", "2DMS", "2DMSArray"
     };
-    public static final String[] TEXT_PREFIX = new String[]{"", "i", "u"};
 
     private static final GlslInsertExtraSpaceClause extraSpaceHandle = new GlslInsertExtraSpaceClause();
 
@@ -151,24 +150,34 @@ public class GlslCompletionUtils {
     public static void addExtraByContext(String curPrefix, CompletionResultSet addTo) {
         var sandwichKeyword = new ArrayList<String>();
 
+        // User are likely searching for those if they contain or prefix is.
         if ("texture".startsWith(curPrefix))
             sandwichKeyword.add("texture");
+        if ("utexture".startsWith(curPrefix))
+            sandwichKeyword.add("utexture");
+        if ("itexture".startsWith(curPrefix))
+            sandwichKeyword.add("itexture");
         if ("sampler".startsWith(curPrefix))
             sandwichKeyword.add("sampler");
+        if ("usampler".startsWith(curPrefix))
+            sandwichKeyword.add("usampler");
+        if ("isampler".startsWith(curPrefix))
+            sandwichKeyword.add("isampler");
         if ("image".startsWith(curPrefix))
             sandwichKeyword.add("image");
+        if ("uimage".startsWith(curPrefix))
+            sandwichKeyword.add("uimage");
+        if ("iimage".startsWith(curPrefix))
+            sandwichKeyword.add("iimage");
 
 //        System.out.println("Generating for: " + curPrefix);
-        for (String sandwich : sandwichKeyword) {
-            for (String textPrefix : TEXT_PREFIX) {
-                for (String textPostfix : TEXT_POSTFIX) {
-                    addTo.addElement(LookupElementBuilder.create(textPrefix + sandwich + textPostfix)
-                            .withTypeText(textPrefix + sandwich).withIcon(AllIcons.Nodes.Type)
-                            .withInsertHandler(extraSpaceHandle));
-                }
+        for (String pref : sandwichKeyword) {
+            for (String textPostfix : TEXT_POSTFIX) {
+                addTo.addElement(LookupElementBuilder.create(pref + textPostfix)
+                        .withTypeText(pref).withIcon(AllIcons.Nodes.Type)
+                        .withInsertHandler(extraSpaceHandle));
             }
         }
 //        System.out.println("Generating Done");
-
     }
 }
