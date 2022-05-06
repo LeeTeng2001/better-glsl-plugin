@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [0.0.5] - 2022-04-29
+### Added
+- Completion for Threejs #include <package> macro
+- Resolve #define macro
+### Changed
+- Update plugin description
+- Better macro syntax highlighter
+
 ## [0.0.4] - 2022-04-29
 ### Added
 - More supported extensions (vert, frag...)

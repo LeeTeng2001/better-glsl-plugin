@@ -28,6 +28,9 @@ public interface GlslTypes {
   IElementType LAYOUT_QUALIFIER = new GlslElementType("LAYOUT_QUALIFIER");
   IElementType LAYOUT_QUALIFIER_PARAM = new GlslElementType("LAYOUT_QUALIFIER_PARAM");
   IElementType MACRO = new GlslElementType("MACRO");
+  IElementType MACRO_DECLARE = new GlslElementType("MACRO_DECLARE");
+  IElementType MACRO_DEFINE = new GlslElementType("MACRO_DEFINE");
+  IElementType MACRO_KEYWORD_GENERIC = new GlslElementType("MACRO_KEYWORD_GENERIC");
   IElementType MEMBER_ACCESS = new GlslElementType("MEMBER_ACCESS");
   IElementType MEMBER_ACCESS_HEAD = new GlslElementType("MEMBER_ACCESS_HEAD");
   IElementType RELATIONAL_OP = new GlslElementType("RELATIONAL_OP");
@@ -74,15 +77,20 @@ public interface GlslTypes {
   IElementType DASH = new GlslTokenType("DASH");
   IElementType DECREMENT = new GlslTokenType("DECREMENT");
   IElementType DEFAULT = new GlslTokenType("default");
+  IElementType DEFINE = new GlslTokenType("define");
   IElementType DISCARD = new GlslTokenType("discard");
   IElementType DIV_ASSIGN = new GlslTokenType("DIV_ASSIGN");
   IElementType DO = new GlslTokenType("do");
   IElementType DOT = new GlslTokenType("DOT");
   IElementType DOUBLE = new GlslTokenType("double");
+  IElementType ELIF = new GlslTokenType("elif");
   IElementType ELSE = new GlslTokenType("else");
+  IElementType ENDIF = new GlslTokenType("endif");
   IElementType EQUAL = new GlslTokenType("EQUAL");
   IElementType EQ_OP = new GlslTokenType("EQ_OP");
+  IElementType ERROR = new GlslTokenType("error");
   IElementType EXCLAMATION = new GlslTokenType("EXCLAMATION");
+  IElementType EXTENSION = new GlslTokenType("extension");
   IElementType FALSE = new GlslTokenType("false");
   IElementType FLOAT = new GlslTokenType("float");
   IElementType FLOAT_CONSTANT = new GlslTokenType("FLOAT_CONSTANT");
@@ -91,7 +99,10 @@ public interface GlslTypes {
   IElementType HASHTAG = new GlslTokenType("HASHTAG");
   IElementType IDENTIFIER = new GlslTokenType("IDENTIFIER");
   IElementType IF = new GlslTokenType("if");
+  IElementType IFDEF = new GlslTokenType("ifdef");
+  IElementType IFNDEF = new GlslTokenType("ifndef");
   IElementType IN = new GlslTokenType("in");
+  IElementType INCLUDE = new GlslTokenType("include");
   IElementType INCREMENT = new GlslTokenType("INCREMENT");
   IElementType INOUT = new GlslTokenType("inout");
   IElementType INT = new GlslTokenType("int");
@@ -100,6 +111,8 @@ public interface GlslTypes {
   IElementType LEFT_ASSIGN = new GlslTokenType("LEFT_ASSIGN");
   IElementType LEFT_OP = new GlslTokenType("LEFT_OP");
   IElementType LE_OP = new GlslTokenType("LE_OP");
+  IElementType LINE = new GlslTokenType("line");
+  IElementType MACRO_TO_END = new GlslTokenType("MACRO_TO_END");
   IElementType MOD_ASSIGN = new GlslTokenType("MOD_ASSIGN");
   IElementType MUL_ASSIGN = new GlslTokenType("MUL_ASSIGN");
   IElementType NATIVE_IMAGES = new GlslTokenType("NATIVE_IMAGES");
@@ -116,6 +129,7 @@ public interface GlslTypes {
   IElementType PAREN_R = new GlslTokenType("PAREN_R");
   IElementType PERCENT = new GlslTokenType("PERCENT");
   IElementType PLUS = new GlslTokenType("PLUS");
+  IElementType PRAGMA = new GlslTokenType("pragma");
   IElementType RESERVED_FUTURE_KEYWORD = new GlslTokenType("reserved_future_keyword");
   IElementType RETURN = new GlslTokenType("return");
   IElementType RIGHT_ASSIGN = new GlslTokenType("RIGHT_ASSIGN");
@@ -131,7 +145,9 @@ public interface GlslTypes {
   IElementType S_BRACKET_R = new GlslTokenType("S_BRACKET_R");
   IElementType TRUE = new GlslTokenType("true");
   IElementType UINT = new GlslTokenType("uint");
+  IElementType UNDEF = new GlslTokenType("undef");
   IElementType UNIFORM = new GlslTokenType("uniform");
+  IElementType VERSION = new GlslTokenType("version");
   IElementType VERTICAL_BAR = new GlslTokenType("VERTICAL_BAR");
   IElementType VOID = new GlslTokenType("void");
   IElementType WHILE = new GlslTokenType("while");
@@ -200,6 +216,15 @@ public interface GlslTypes {
       }
       else if (type == MACRO) {
         return new GlslMacroImpl(node);
+      }
+      else if (type == MACRO_DECLARE) {
+        return new GlslMacroDeclareImpl(node);
+      }
+      else if (type == MACRO_DEFINE) {
+        return new GlslMacroDefineImpl(node);
+      }
+      else if (type == MACRO_KEYWORD_GENERIC) {
+        return new GlslMacroKeywordGenericImpl(node);
       }
       else if (type == MEMBER_ACCESS) {
         return new GlslMemberAccessImpl(node);

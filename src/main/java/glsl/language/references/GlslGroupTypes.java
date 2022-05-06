@@ -53,6 +53,24 @@ public class GlslGroupTypes {
             DISCARD
     ).collect(Collectors.toUnmodifiableSet());
 
+    public static final Set<IElementType> MACRO_KEYWORD = Stream.of(
+            HASHTAG,  // symbol
+            DEFINE,
+            UNDEF,
+            IF,
+            IFDEF,
+            IFNDEF,
+            ELSE,
+            ELIF,
+            ENDIF,
+            ERROR,
+            PRAGMA,
+            EXTENSION,
+            VERSION,
+            LINE,
+            INCLUDE
+    ).collect(Collectors.toUnmodifiableSet());
+
     public static final Set<IElementType> ASSIGNMENT_OP_KEYWORDS = Stream.of(
             EQ_OP,
             ANGLE_L,

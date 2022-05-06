@@ -19,6 +19,8 @@ CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 
 END_OF_LINE_COMMENT="//"[^\r\n]*
+TO_LINE_END=[^\r\n]*[\r\n]
+SPACE_SEPARATOR=[\ ]+
 INTEGER_CONSTANT=\d+(u|U)?
 FLOAT_CONSTANT=\d*\.\d+(lf|f|F|LF)?
 IDENTIFIER=[:jletter:][:jletterdigit:]*
@@ -30,8 +32,13 @@ NATIVE_SAMPLER_SHADOW=sampler([12]D|Cube|2DRect|[12]DArray|CubeArray)Shadow
 NATIVE_IMAGES=[iu]?image([123]D|Cube|2DRect|[12]DArray|CubeArray|Buffer|2DMS(Array)?)  // essentially same as sampler but with images
 NATIVE_VULKAN_TEXTURE=[iu]?texture([123]D|Cube|2DRect|[12]DArray|CubeArray|Buffer|2DMS(Array)?)
 NATIVE_VULKAN_TEXTURE_EXTRA=(sampler(Shadow)?)|([iu]?subpassInput(MS)?)
+MACRO_GENERIC_KEYWORD=(bvec|ivec|uvec|vec|dvec)[234]
 
 %state WAITING_VALUE
+%xstate MACRO_KEYWORD
+%xstate MACRO_SPACE_FIRST
+%xstate MACRO_DEFINE
+%xstate TO_LINE_END
 
 %%
 
@@ -90,6 +97,41 @@ layout                  {return GlslTypes.LAYOUT; }
 //patch                   {return PATCH_KEYWORD; }
 //sample                  {return SAMPLE_KEYWORD; }
 
+// Macro keyword ----------------------------------------------------
+<MACRO_KEYWORD> {
+    define               { yybegin(MACRO_SPACE_FIRST); return GlslTypes.DEFINE; }
+    version               { yybegin(TO_LINE_END); return GlslTypes.VERSION; }
+    include               { yybegin(TO_LINE_END); return GlslTypes.INCLUDE; }
+    undef               { yybegin(TO_LINE_END); return GlslTypes.UNDEF; }
+    if               { yybegin(TO_LINE_END); return GlslTypes.IF; }
+    ifdef               { yybegin(TO_LINE_END); return GlslTypes.IFDEF; }
+    ifndef               { yybegin(TO_LINE_END); return GlslTypes.IFNDEF; }
+    else               { yybegin(TO_LINE_END); return GlslTypes.ELSE; }
+    elif               { yybegin(TO_LINE_END); return GlslTypes.ELIF; }
+    endif               { yybegin(TO_LINE_END); return GlslTypes.ENDIF; }
+    error               { yybegin(TO_LINE_END); return GlslTypes.ERROR; }
+    pragma               { yybegin(TO_LINE_END); return GlslTypes.PRAGMA; }
+    extension               { yybegin(TO_LINE_END); return GlslTypes.EXTENSION; }
+    line               { yybegin(TO_LINE_END); return GlslTypes.LINE; }
+    {IDENTIFIER}  {yybegin(YYINITIAL); return GlslTypes.IDENTIFIER; }  // fallback
+    [^]                 { yybegin(YYINITIAL); return TokenType.BAD_CHARACTER; }
+}
+
+<MACRO_SPACE_FIRST> {
+    {SPACE_SEPARATOR}  {yybegin(MACRO_DEFINE); return TokenType.WHITE_SPACE; }
+    [^]                 { yybegin(YYINITIAL); return TokenType.BAD_CHARACTER; }
+}
+
+<MACRO_DEFINE> {
+    {IDENTIFIER}  {yybegin(TO_LINE_END); return GlslTypes.IDENTIFIER; }
+    [^]                 { yybegin(YYINITIAL); return TokenType.BAD_CHARACTER; }
+}
+
+<TO_LINE_END> {
+    {TO_LINE_END} {yybegin(YYINITIAL); return GlslTypes.MACRO_TO_END; }
+    [^]                 { yybegin(YYINITIAL); return TokenType.BAD_CHARACTER; }
+}
+
 // Reserved keyword for future use, result in compile time error ------------
 common                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
 partition                                { return GlslTypes.RESERVED_FUTURE_KEYWORD; }
@@ -143,7 +185,7 @@ sampler3DRect                                { return GlslTypes.RESERVED_FUTURE_
 ")"                                { return GlslTypes.PAREN_R; }
 ","                                { return GlslTypes.COMMA; }
 "."                                { return GlslTypes.DOT; }
-"#"                                { return GlslTypes.HASHTAG; }
+"#"                                { yybegin(MACRO_KEYWORD); return GlslTypes.HASHTAG; }
 
 // Assignment symbols --------------------------------------------
 "="                     {return GlslTypes.EQUAL; }

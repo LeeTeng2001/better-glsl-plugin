@@ -8,7 +8,7 @@
 
 <!-- Plugin description -->
 
-Glsl shader language support for intellij based ide. It contains more than just simple syntax highlighting. 
+Glsl shader language support for intellij based ide. It has a lot more features than simple syntax highlighting.
 
 This plugin is still in development, once it's done, it'll bump its version to v1.0.0.
 
@@ -19,6 +19,7 @@ Features 🥰:
 - Common error annotator like redefinition of the same variable
 - Includes standard library functions & variables
 - Formatter to make your code looks good and well indented
+- Macro like #include, #define and more (completion and highlighter)
 
 Currently, it has some known limitation 🥲:
 
@@ -29,7 +30,7 @@ Currently, it has some known limitation 🥲:
 - No function parameter validation
 - No auto-completion for member access
 
-Please give it a try and leave me with some feedback 😀! For more information and development roadmap about this plugin, please visit the github repo below.
+Please give it a try and throw me with some feedback 😀! For more information and development roadmap about this plugin, please visit the plugin github repo.
 
 <!-- Plugin description end -->
 
@@ -58,7 +59,9 @@ Please give it a try and leave me with some feedback 😀! For more information 
 - [x] Cache std lib references (custom)
 - [x] Cache references, computation result for whole file
 - [x] Fix stack overflow in origin variable
-- [ ] Define macro and resolve
+- [x] Macro annotator + resolve #define, #include <>
+- [ ] Matrix initialisation expression
+- [ ] Better expression handling for definition initialisation
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
 - [ ] Automated unit testing

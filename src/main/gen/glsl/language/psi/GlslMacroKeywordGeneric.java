@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GlslMacro extends PsiElement {
-
-  @Nullable
-  GlslMacroDeclare getMacroDeclare();
-
-  @Nullable
-  GlslMacroDefine getMacroDefine();
+public interface GlslMacroKeywordGeneric extends PsiElement {
 
 }

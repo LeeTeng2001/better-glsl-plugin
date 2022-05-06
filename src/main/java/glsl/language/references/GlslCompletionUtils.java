@@ -69,19 +69,19 @@ public class GlslCompletionUtils {
     };
 
     public static final LookupElementBuilder[] BUILT_IN_MACRO_LOOKUP = new LookupElementBuilder[] {
-            create("define").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("undef").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("if").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("ifdef").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("ifndef").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("else").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("elif").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("endif").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("error").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("pragma").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("extension").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("version").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
-            create("line").withTypeText("built in macro").withIcon(AllIcons.Nodes.Controller),
+            create("define").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("undef").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("if").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("ifdef").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("ifndef").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("else").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("elif").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("endif").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("error").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("pragma").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("extension").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("version").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
+            create("line").withTypeText("macro keyword").withIcon(AllIcons.Nodes.Controller),
     };
 
 //    public static final String[]

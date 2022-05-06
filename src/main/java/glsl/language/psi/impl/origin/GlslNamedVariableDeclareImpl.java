@@ -42,9 +42,10 @@ public abstract class GlslNamedVariableDeclareImpl extends ASTWrapperPsiElement 
     public PsiReference getReference() {
         final PsiReference[] references = getReferences();
 
-        // Skip if origin from std lib
+        // Skip if origin from std lib | define macro
         var file = getContainingFile();
-        if (file == stdGlslFile) return references.length > 0 ? references[0] : null;
+        if (file == stdGlslFile || getParent().getNode().getElementType().equals(MACRO_DEFINE))
+            return references.length > 0 ? references[0] : null;
 
         // Check redeclaration of same identifier node on variable
         var candidates = new ArrayList<PsiElement>();

@@ -82,24 +82,6 @@ public class GlslAnnotator implements Annotator {
                     .range(element)
                     .create();
         }
-        else if (node.getElementType().equals(GlslTypes.MACRO)) {
-            // Highlight keyword in macro
-            var hashTag = node.findChildByType(GlslTypes.HASHTAG);
-            var id = node.findChildByType(GlslTypes.IDENTIFIER);
-
-            if (hashTag != null) {
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(hashTag)
-                        .textAttributes(GlslSyntaxHighlighter.KEY)
-                        .create();
-            }
-            if (id != null) {
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(id)
-                        .textAttributes(GlslSyntaxHighlighter.KEY)
-                        .create();
-            }
-        }
         else if (node.getElementType().equals(GlslTypes.RESERVED_FUTURE_KEYWORD)) {
             // Usage of reserved keyword
             holder.newAnnotation(HighlightSeverity.ERROR, "Usage of reserved keyword, will result in compile time error")

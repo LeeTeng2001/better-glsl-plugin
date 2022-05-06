@@ -87,6 +87,18 @@ public class GlslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMacroDeclare(@NotNull GlslMacroDeclare o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMacroDefine(@NotNull GlslMacroDefine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMacroKeywordGeneric(@NotNull GlslMacroKeywordGeneric o) {
+    visitPsiElement(o);
+  }
+
   public void visitMemberAccess(@NotNull GlslMemberAccess o) {
     visitPsiElement(o);
   }

@@ -680,52 +680,73 @@ public class GlslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HASHTAG IDENTIFIER IDENTIFIER? ((COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT)?
+  // HASHTAG (macro_define | macro_declare)
   public static boolean macro(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro")) return false;
     if (!nextTokenIs(b, HASHTAG)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, HASHTAG, IDENTIFIER);
-    r = r && macro_2(b, l + 1);
-    r = r && macro_3(b, l + 1);
+    r = consumeToken(b, HASHTAG);
+    r = r && macro_1(b, l + 1);
     exit_section_(b, m, MACRO, r);
     return r;
   }
 
-  // IDENTIFIER?
-  private static boolean macro_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "macro_2")) return false;
-    consumeToken(b, IDENTIFIER);
-    return true;
-  }
-
-  // ((COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT)?
-  private static boolean macro_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "macro_3")) return false;
-    macro_3_0(b, l + 1);
-    return true;
-  }
-
-  // (COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT
-  private static boolean macro_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "macro_3_0")) return false;
+  // macro_define | macro_declare
+  private static boolean macro_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_1")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = macro_3_0_0(b, l + 1);
-    if (!r) r = consumeToken(b, FLOAT_CONSTANT);
-    if (!r) r = consumeToken(b, INTEGER_CONSTANT);
-    exit_section_(b, m, null, r);
+    r = macro_define(b, l + 1);
+    if (!r) r = macro_declare(b, l + 1);
     return r;
   }
 
-  // COLON IDENTIFIER
-  private static boolean macro_3_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "macro_3_0_0")) return false;
+  /* ********************************************************** */
+  // macro_keyword_generic MACRO_TO_END
+  public static boolean macro_declare(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_declare")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, MACRO_DECLARE, "<macro declare>");
+    r = macro_keyword_generic(b, l + 1);
+    r = r && consumeToken(b, MACRO_TO_END);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // define var_name_origin_variable MACRO_TO_END
+  public static boolean macro_define(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_define")) return false;
+    if (!nextTokenIs(b, DEFINE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, COLON, IDENTIFIER);
-    exit_section_(b, m, null, r);
+    r = consumeToken(b, DEFINE);
+    r = r && var_name_origin_variable(b, l + 1);
+    r = r && consumeToken(b, MACRO_TO_END);
+    exit_section_(b, m, MACRO_DEFINE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // undef | if | ifdef | ifndef | else | elif | endif | error | pragma | version | extension | line | include
+  public static boolean macro_keyword_generic(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "macro_keyword_generic")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, MACRO_KEYWORD_GENERIC, "<macro keyword generic>");
+    r = consumeToken(b, UNDEF);
+    if (!r) r = consumeToken(b, IF);
+    if (!r) r = consumeToken(b, IFDEF);
+    if (!r) r = consumeToken(b, IFNDEF);
+    if (!r) r = consumeToken(b, ELSE);
+    if (!r) r = consumeToken(b, ELIF);
+    if (!r) r = consumeToken(b, ENDIF);
+    if (!r) r = consumeToken(b, ERROR);
+    if (!r) r = consumeToken(b, PRAGMA);
+    if (!r) r = consumeToken(b, VERSION);
+    if (!r) r = consumeToken(b, EXTENSION);
+    if (!r) r = consumeToken(b, LINE);
+    if (!r) r = consumeToken(b, INCLUDE);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

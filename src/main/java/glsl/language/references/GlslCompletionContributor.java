@@ -2,13 +2,16 @@ package glsl.language.references;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.icons.AllIcons;
 import com.intellij.icons.AllIcons.Nodes;
 import com.intellij.util.ProcessingContext;
 import glsl.language.psi.GlslTypes;
 import glsl.language.references.handles.GlslCallClause;
+import glsl.language.references.handles.GlslIncludeClause;
 import glsl.language.utility.GlslUtil;
 import org.jetbrains.annotations.NotNull;
 
+import static com.intellij.codeInsight.lookup.LookupElementBuilder.create;
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 import static glsl.language.references.GlslCompletionUtils.*;
 
@@ -96,9 +99,13 @@ public class GlslCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
+                        var includeClause = new GlslIncludeClause();
                         for (var elementBuilder : BUILT_IN_MACRO_LOOKUP) {
                             resultSet.addElement(elementBuilder);
                         }
+                        // Special keyword
+                        resultSet.addElement(create("include").withTypeText("macro include").withInsertHandler(includeClause)
+                                .withIcon(AllIcons.Nodes.Controller));
                     }
                 }
         );

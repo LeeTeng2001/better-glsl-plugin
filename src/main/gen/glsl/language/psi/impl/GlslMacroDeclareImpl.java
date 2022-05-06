@@ -11,14 +11,14 @@ import static glsl.language.psi.GlslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import glsl.language.psi.*;
 
-public class GlslMacroImpl extends ASTWrapperPsiElement implements GlslMacro {
+public class GlslMacroDeclareImpl extends ASTWrapperPsiElement implements GlslMacroDeclare {
 
-  public GlslMacroImpl(@NotNull ASTNode node) {
+  public GlslMacroDeclareImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GlslVisitor visitor) {
-    visitor.visitMacro(this);
+    visitor.visitMacroDeclare(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class GlslMacroImpl extends ASTWrapperPsiElement implements GlslMacro {
   }
 
   @Override
-  @Nullable
-  public GlslMacroDeclare getMacroDeclare() {
-    return findChildByClass(GlslMacroDeclare.class);
-  }
-
-  @Override
-  @Nullable
-  public GlslMacroDefine getMacroDefine() {
-    return findChildByClass(GlslMacroDefine.class);
+  @NotNull
+  public GlslMacroKeywordGeneric getMacroKeywordGeneric() {
+    return findNotNullChildByClass(GlslMacroKeywordGeneric.class);
   }
 
 }

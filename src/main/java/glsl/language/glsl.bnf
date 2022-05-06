@@ -24,12 +24,17 @@ glslFile ::= segment*
 private segment ::= macro | statement | expression | declaration | COMMENT | CRLF
 
 // Important top level segment
-macro ::= HASHTAG IDENTIFIER IDENTIFIER? ((COLON IDENTIFIER) | FLOAT_CONSTANT | INTEGER_CONSTANT)?  // TODO: cannot handle newline!
+macro ::= HASHTAG (macro_define | macro_declare)
 expression ::= (exit_control_return | exit_control_single | expression_assign) SEMICOLON
 declaration ::= struct_definition | function_definition | variable_definition
 statement ::= statement_if | statement_else | statement_switch | statement_do_while | statement_while_normal | statement_for
 
+// Macro
+macro_define ::= define var_name_origin_variable MACRO_TO_END
+macro_declare ::= macro_keyword_generic MACRO_TO_END
+
 // Terminal token
+macro_keyword_generic ::= undef | if | ifdef | ifndef | else | elif | endif | error | pragma | version | extension | line | include
 storage_qualifier ::= const | uniform | buffer | shared | (layout_qualifier? (in | out | inout))
 identifier_type ::= void | int | uint | float | double | bool | NATIVE_VECTOR | NATIVE_MATRIX | NATIVE_SAMPLER | NATIVE_IMAGES | NATIVE_VULKAN_TEXTURE | var_name_type
 assign_op ::= EQUAL | MUL_ASSIGN | DIV_ASSIGN | ADD_ASSIGN | SUB_ASSIGN | MOD_ASSIGN | LEFT_ASSIGN | RIGHT_ASSIGN | AND_ASSIGN | XOR_ASSIGN | OR_ASSIGN
