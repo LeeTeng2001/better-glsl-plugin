@@ -4,7 +4,7 @@
 
 ## [Unreleased]
 
-## [0.0.5] - 2022-04-29
+## [0.0.5] - 2022-05-06
 ### Added
 - Completion for Threejs #include <package> macro
 - Resolve #define macro
