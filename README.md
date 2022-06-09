@@ -61,6 +61,7 @@ Please give it a try and throw me with some feedback 😀! For more information 
 - [x] Fix stack overflow in origin variable
 - [x] Macro annotator + resolve #define, #include <>
 - [ ] Matrix initialisation expression
+- [ ] Good [sample project](https://github.com/lettier/3d-game-shaders-for-beginners) reference
 - [ ] Better expression handling for definition initialisation
 - [ ] Test code example from Glsl manual
 - [ ] Better auto complete, smart function name, variable name filter
